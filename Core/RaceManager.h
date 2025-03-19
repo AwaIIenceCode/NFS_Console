@@ -1,5 +1,6 @@
 //
 // Created by AwallencePC on 18.03.2025.
+// RaceManager: Управляет гонкой (позиции машин, финиш, логика гонки).
 //
 
 #ifndef RACEMANAGER_H

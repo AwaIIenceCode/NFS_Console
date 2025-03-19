@@ -1,3 +1,5 @@
+// main.cpp: Точка входа в игру, создаёт и запускает Game.
+
 #include <SFML/Graphics.hpp>
 
 int main()
