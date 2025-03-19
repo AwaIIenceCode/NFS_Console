@@ -2,7 +2,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Test");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "NFS ConsoleGame");
     while (window.isOpen())
         {
         sf::Event event{};
