@@ -1,0 +1,3 @@
+J:/MyIDE/NFS_Console/cmake-build-debug/CMakeFiles/NFS_Console.dir
+J:/MyIDE/NFS_Console/cmake-build-debug/CMakeFiles/edit_cache.dir
+J:/MyIDE/NFS_Console/cmake-build-debug/CMakeFiles/rebuild_cache.dir
