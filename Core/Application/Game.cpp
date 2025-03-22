@@ -1,13 +1,19 @@
-//
-// Created by AwallencePC on 18.03.2025.
-//
-
 #include "Game.h"
 
 Game::Game()
+    : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(),
+                           GameConfig::getInstance().getWindowHeight()), "NFS Console"),
+      renderer(window)  // Передаём ссылку на window в конструктор renderer
 {
-    window.create(sf::VideoMode(800, 600), "Racing Game");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(GameConfig::getInstance().getMaxFPS());
+    // Логируем старт игры
+    Logger::getInstance().log("Game started");
+}
+
+Game::~Game()
+{
+    // Логируем закрытие игры
+    Logger::getInstance().log("Game closed");
 }
 
 void Game::run()
@@ -34,7 +40,7 @@ void Game::processEvents()
 
 void Game::update()
 {
-    // Пока пусто
+    // Пока пусто, добавлю логику обновления игры тут
 }
 
 void Game::render()

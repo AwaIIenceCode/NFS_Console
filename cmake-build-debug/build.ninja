@@ -52,245 +52,191 @@ build cmake_object_order_depends_target_NFS_Console: phony || .
 build CMakeFiles/NFS_Console.dir/main.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/main.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Application/Game.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Application\Game.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Application
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Audio/AudioManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Audio/AudioManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Audio\AudioManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Audio
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Config/Settings/GameConfig.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Config/Settings/GameConfig.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Config\Settings\GameConfig.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Config\Settings
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Config/Utils/Logger.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Config/Utils/Logger.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Config\Utils\Logger.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Config\Utils
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScoreManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Config/Utils/ScoreManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Config\Utils\ScoreManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Config\Utils
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Config/Utils/Timer.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Config/Utils/Timer.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Config\Utils\Timer.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Config\Utils
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/Physics/CollisionHandler.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/Physics/CollisionHandler.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\Physics\CollisionHandler.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\Physics
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/SaveLoad/SaveManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/SaveLoad/SaveManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\SaveLoad\SaveManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\SaveLoad
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/States/GameOverState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/GameOverState.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\GameOverState.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\States
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/States/MenuState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/MenuState.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\MenuState.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\States
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/States/RaceState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/RaceState.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\RaceState.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\States
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Data/States/StateManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/StateManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\StateManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\States
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Bonus.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Entities/Bonus.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Entities\Bonus.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Entities
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Car.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Entities/Car.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Entities\Car.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Entities
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Entities/EnemyCar.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Entities/EnemyCar.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Entities\EnemyCar.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Entities
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Obstacle.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Entities/Obstacle.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Entities\Obstacle.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Entities
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Entities/PlayerCar.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Entities/PlayerCar.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Entities\PlayerCar.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Entities
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Map/Checkpoint.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Map/Checkpoint.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Map\Checkpoint.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Map
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Map/Track.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Map/Track.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Map\Track.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Map
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Race/RaceManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Race/RaceManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Race\RaceManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Race
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/Renderer.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Rendering/Renderer.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Rendering\Renderer.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Rendering
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/TextureManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/Rendering/TextureManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\Rendering\TextureManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\Rendering
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/EndGame.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/UseCases/EndGame.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\UseCases\EndGame.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\UseCases
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/StartRace.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Domain/UseCases/StartRace.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Domain\UseCases\StartRace.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Domain\UseCases
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/UI/Input/InputHandler.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/UI/Input/InputHandler.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\UI\Input\InputHandler.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\UI\Input
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 build CMakeFiles/NFS_Console.dir/Core/UI/Interface/UIManager.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/UI/Interface/UIManager.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\UI\Interface\UIManager.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\UI\Interface
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
-  TARGET_PDB = NFS_Console.pdb
 
 
 # =============================================================================
@@ -306,10 +252,9 @@ build NFS_Console.exe: CXX_EXECUTABLE_LINKER__NFS_Console_Debug CMakeFiles/NFS_C
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\NFS_Console.dir\
   TARGET_FILE = NFS_Console.exe
   TARGET_IMPLIB = libNFS_Console.dll.a
-  TARGET_PDB = NFS_Console.pdb
+  TARGET_PDB = NFS_Console.exe.dbg
 
 
 #############################################
@@ -356,14 +301,14 @@ build all: phony NFS_Console.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | CMakeCache.txt CMakeFiles/3.30.5/CMakeCCompiler.cmake CMakeFiles/3.30.5/CMakeCXXCompiler.cmake CMakeFiles/3.30.5/CMakeRCCompiler.cmake CMakeFiles/3.30.5/CMakeSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCompilerIdDetection.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerSupport.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineRCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeFindBinUtils.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseImplicitIncludeInfo.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseImplicitLinkInfo.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseLibraryArchitecture.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystem.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCompilerCommon.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestRCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ADSP-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ARMCC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ARMClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/AppleClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Borland-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Bruce-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Clang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Clang-DetermineCompilerInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Compaq-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Cray-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CrayClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Embarcadero-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Fujitsu-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GHS-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-FindBinUtils.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/HP-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/HP-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IAR-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Intel-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/LCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/MSVC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/NVHPC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/NVIDIA-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/OrangeC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/PGI-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/PathScale-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SCO-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SDCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SunPro-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TI-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TIClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Tasking-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Watcom-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XL-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XL-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XLClang-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/zOS-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/FeatureTesting.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Determine-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake J$:/MyIDE/NFS_Console/CMakeLists.txt J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-debug.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-release.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets.cmake
+build build.ninja: RERUN_CMAKE | CMakeCache.txt CMakeFiles/3.30.5/CMakeCCompiler.cmake CMakeFiles/3.30.5/CMakeCXXCompiler.cmake CMakeFiles/3.30.5/CMakeRCCompiler.cmake CMakeFiles/3.30.5/CMakeSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake J$:/MyIDE/NFS_Console/CMakeLists.txt J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-debug.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-release.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build CMakeCache.txt CMakeFiles/3.30.5/CMakeCCompiler.cmake CMakeFiles/3.30.5/CMakeCXXCompiler.cmake CMakeFiles/3.30.5/CMakeRCCompiler.cmake CMakeFiles/3.30.5/CMakeSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCCompilerABI.c J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCompilerIdDetection.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineCompilerSupport.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineRCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeFindBinUtils.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseImplicitIncludeInfo.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseImplicitLinkInfo.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeParseLibraryArchitecture.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCCompiler.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystem.cmake.in J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCXXCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestCompilerCommon.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeTestRCCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ADSP-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ARMCC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/ARMClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/AppleClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Borland-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Bruce-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Clang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Clang-DetermineCompilerInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Compaq-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Cray-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CrayClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Embarcadero-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Fujitsu-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GHS-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-FindBinUtils.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/HP-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/HP-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IAR-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Intel-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/LCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/MSVC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/NVHPC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/NVIDIA-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/OrangeC-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/PGI-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/PathScale-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SCO-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SDCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SunPro-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TI-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TIClang-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Tasking-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/Watcom-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XL-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XL-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XLClang-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/zOS-C-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/CMakeDetermineLinkerId.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Internal/FeatureTesting.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Determine-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake J$:/MyIDE/NFS_Console/CMakeLists.txt J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-debug.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-release.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets.cmake: phony
+build CMakeCache.txt CMakeFiles/3.30.5/CMakeCCompiler.cmake CMakeFiles/3.30.5/CMakeCXXCompiler.cmake CMakeFiles/3.30.5/CMakeRCCompiler.cmake CMakeFiles/3.30.5/CMakeSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCXXInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeRCInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-C.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/Windows.cmake J$:/MyIDE/CLion/bin/cmake/win/x64/share/cmake-3.30/Modules/Platform/WindowsPaths.cmake J$:/MyIDE/NFS_Console/CMakeLists.txt J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-debug.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets-release.cmake J$:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML/SFMLSharedTargets.cmake: phony
 
 
 #############################################

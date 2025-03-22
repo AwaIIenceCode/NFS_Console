@@ -3,3 +3,20 @@
 //
 
 #include "Renderer.h"
+
+Renderer::Renderer(sf::RenderWindow& window) : window(window) {}
+
+void Renderer::clear()
+{
+    window.clear(sf::Color::Black);
+}
+
+void Renderer::render(const sf::Drawable& drawable)
+{
+    window.draw(drawable);
+}
+
+void Renderer::display()
+{
+    window.display();
+}

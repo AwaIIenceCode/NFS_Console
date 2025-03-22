@@ -6,10 +6,32 @@
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
 
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <map>
 
+class TextureManager
+{
+public:
+    // Получить единственный экземпляр (синглтон)
+    static TextureManager& getInstance()
+    {
+        static TextureManager instance;
+        return instance;
+    }
 
-class TextureManager {
+    // Загрузить текстуру по пути, вернуть указатель
+    sf::Texture* loadTexture(const std::string& path);
 
+private:
+    TextureManager() = default;
+    ~TextureManager();
+
+    // Запрещаем копирование
+    TextureManager(const TextureManager&) = delete;
+    TextureManager& operator=(const TextureManager&) = delete;
+
+    std::map<std::string, sf::Texture> textures; // Хранилище текстур
 };
 
 

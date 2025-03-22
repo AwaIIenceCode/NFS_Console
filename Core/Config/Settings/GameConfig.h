@@ -7,10 +7,33 @@
 #ifndef GAMECONFIG_H
 #define GAMECONFIG_H
 
+class GameConfig
+{
+public:
+    // Получить единственный экземпляр (синглтон)
+    static GameConfig& getInstance()
+    {
+        static GameConfig instance;
+        return instance;
+    }
 
+    // Геттеры для настроек
+    int getWindowWidth() const { return windowWidth; }
+    int getWindowHeight() const { return windowHeight; }
+    int getMaxFPS() const { return maxFPS; }
 
-class GameConfig {
+private:
+    // Приватный конструктор для синглтона
+    GameConfig() : windowWidth(800), windowHeight(600), maxFPS(60) {}
 
+    // Запрещаем копирование
+    GameConfig(const GameConfig&) = delete;
+    GameConfig& operator=(const GameConfig&) = delete;
+
+    // Настройки
+    int windowWidth;
+    int windowHeight;
+    int maxFPS;
 };
 
 

@@ -7,10 +7,18 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <SFML/Graphics.hpp>
 
+class Renderer
+{
+public:
+    Renderer(sf::RenderWindow& window);
+    void clear();
+    void render(const sf::Drawable& drawable);
+    void display();
 
-class Renderer {
-
+private:
+    sf::RenderWindow& window;
 };
 
 

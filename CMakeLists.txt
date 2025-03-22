@@ -1,3 +1,4 @@
+#[[
 # CMakeLists.txt: Файл сборки проекта (настройка CMake для компиляции).
 
 cmake_minimum_required(VERSION 3.20)
@@ -17,6 +18,33 @@ set(SOURCES main.cpp ${CORE_SOURCES})
 
 # Создать исполняемый файл
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Указываем директории для заголовочных файлов
+include_directories(Core)
+
+# Линковка с SFML
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)]]
+
+cmake_minimum_required(VERSION 3.20)
+project(NFS_Console)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# Путь к SFML
+set(SFML_DIR "J:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML")
+find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics window system)
+
+# Собрать все .cpp файлы из Core/
+file(GLOB_RECURSE CORE_SOURCES "Core/*.cpp")
+
+# Источники проекта
+set(SOURCES main.cpp ${CORE_SOURCES})
+
+# Создаём исполняемый файл
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Указываем корень проекта для поиска заголовков
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
 
 # Линковка с SFML
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
