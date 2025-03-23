@@ -14,6 +14,13 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
         Logger::getInstance().log("Failed to load font for MainMenuState");
     }
 
+    // Загружаем звук для переключения пунктов меню
+    if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav"))
+    {
+        Logger::getInstance().log("Failed to load menu select sound");
+    }
+    selectSound.setBuffer(selectSoundBuffer);
+
     initializeMenu();
 }
 
@@ -29,11 +36,6 @@ void MainMenuState::initializeMenu()
     for (auto& item : menuItems)
     {
         item.setFont(font);
-        // Устанавливаем начальный размер текста в зависимости от режима
-        if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(150); } // Больший размер в полноэкранном режиме
-
-        else { item.setCharacterSize(50); } // Обычный размер в оконном режиме
-
         item.setFillColor(sf::Color::White);
     }
 
@@ -54,7 +56,7 @@ void MainMenuState::updateMenuPositions()
     for (auto& item : menuItems)
     {
         if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(80); } // Больший размер в полноэкранном режиме
-        else { item.setCharacterSize(40);} // Обычный размер в оконном режиме
+        else { item.setCharacterSize(40); } // Обычный размер в оконном режиме
     }
 }
 
@@ -68,6 +70,7 @@ void MainMenuState::processEvents(sf::Event& event)
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
+            selectSound.play();
         }
 
         if (event.key.code == sf::Keyboard::Down)
@@ -76,13 +79,14 @@ void MainMenuState::processEvents(sf::Event& event)
             int current = static_cast<int>(selectedOption);
             current = (current + 1) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
+            selectSound.play();
         }
 
         if (event.key.code == sf::Keyboard::Enter)
         {
             // Подтверждение выбора
             switch (selectedOption)
-           {
+            {
                 case MenuOption::START_GAME:
                     // Переключаем состояние на GameplayState
                     game->setState(new GameplayState(game, background));
@@ -101,12 +105,12 @@ void MainMenuState::processEvents(sf::Event& event)
     }
 }
 
-void MainMenuState::update(float deltaTime) {
+void MainMenuState::update(float deltaTime)
+{
     // Обновляем подсветку выбранной опции
     for (size_t i = 0; i < menuItems.size(); ++i)
     {
         if (i == static_cast<size_t>(selectedOption)) { menuItems[i].setFillColor(sf::Color::Yellow); }
-
         else { menuItems[i].setFillColor(sf::Color::White); }
     }
 
@@ -117,6 +121,5 @@ void MainMenuState::update(float deltaTime) {
 void MainMenuState::render(Renderer& renderer)
 {
     renderer.render(*background);
-
     for (const auto& item : menuItems) { renderer.render(item); }
 }

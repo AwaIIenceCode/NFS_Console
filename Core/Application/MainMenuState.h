@@ -10,6 +10,7 @@
 #include "../Config/Settings/GameConfig.h"
 #include "../Config/Utils/Logger.h"
 #include <vector>
+#include <SFML/Audio.hpp>
 
 class MainMenuState : public GameState
 {
@@ -32,6 +33,8 @@ private:
     sf::Font font;
     std::vector<sf::Text> menuItems;
     MenuOption selectedOption;
+    sf::SoundBuffer selectSoundBuffer; // Буфер для звука выбора
+    sf::Sound selectSound; // Звук выбора
     void initializeMenu();
     void updateMenuPositions(); // Добавляем метод для обновления позиций
 };

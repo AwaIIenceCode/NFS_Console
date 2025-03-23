@@ -137,6 +137,11 @@
 			},
 			{
 				"backtrace" : 2,
+				"fragment" : "J:\\MyIDE\\SFML\\SFML-2.5.1\\lib\\libsfml-audio-d.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
 				"fragment" : "J:\\MyIDE\\SFML\\SFML-2.5.1\\lib\\libsfml-system-d.a",
 				"role" : "libraries"
 			},
