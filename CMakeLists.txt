@@ -13,7 +13,13 @@ file(GLOB_RECURSE CORE_SOURCES "Core/*.cpp")
 # Источники проекта
 set(SOURCES main.cpp ${CORE_SOURCES}
         Core/Config/Utils/ScaleManager.cpp
-        Core/Config/Utils/ScaleManager.h)
+        Core/Config/Utils/ScaleManager.h
+        Core/Application/GameState.cpp
+        Core/Application/GameState.h
+        Core/Application/MainMenuState.cpp
+        Core/Application/MainMenuState.h
+        Core/Application/GameplayState.cpp
+        Core/Application/GameplayState.h)
 
 # Создаём исполняемый файл
 add_executable(${PROJECT_NAME} ${SOURCES})

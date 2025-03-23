@@ -5,7 +5,7 @@
 #include "Game.h"
 
 Game::Game()
-    : window(), renderer(window), playerCar("Assets/Textures/player_car.png")
+    : window(), renderer(window), currentState(nullptr)
 {
     updateWindowSettings();
 
@@ -19,16 +19,15 @@ Game::Game()
 
     else { Logger::getInstance().log("Failed to load background texture, using default color"); }
 
-    // Устанавливаем начальную позицию машины
-    playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f,
-                          GameConfig::getInstance().getWindowHeight() / 2.0f);
-    ScaleManager::getInstance().scaleSprite(playerCar.getSprite()); // Масштабируем машину
+    // Устанавливаем начальное состояние — главное меню
+    currentState = new MainMenuState(this, &background);
 
     Logger::getInstance().log("Game started");
 }
 
 Game::~Game()
 {
+    delete currentState;
     Logger::getInstance().log("Game closed");
 }
 
@@ -53,12 +52,10 @@ void Game::processEvents()
             window.close();
         }
 
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F)
-        {
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
             GameConfig::getInstance().setFullscreen(!GameConfig::getInstance().isFullscreen());
             updateWindowSettings();
             ScaleManager::getInstance().scaleSpriteToFill(background);
-            ScaleManager::getInstance().scaleSprite(playerCar.getSprite());
         }
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
@@ -68,31 +65,43 @@ void Game::processEvents()
                 GameConfig::getInstance().setFullscreen(false);
                 updateWindowSettings();
                 ScaleManager::getInstance().scaleSpriteToFill(background);
-                ScaleManager::getInstance().scaleSprite(playerCar.getSprite());
             }
         }
+
+        currentState->processEvents(event);
     }
 }
 
 void Game::update(float deltaTime)
 {
-    playerCar.update(deltaTime);
+    currentState->update(deltaTime);
 }
 
 void Game::render()
 {
     renderer.clear();
-    renderer.render(background);
-    playerCar.render(renderer);
+    currentState->render(renderer);
     renderer.display();
+}
+
+void Game::setState(GameState* newState)
+{
+    delete currentState;
+    currentState = newState;
+}
+
+void Game::close()
+{
+    window.close();
 }
 
 void Game::updateWindowSettings()
 {
     GameConfig& config = GameConfig::getInstance();
     if (config.isFullscreen())
-    {
+     {
         auto modes = sf::VideoMode::getFullscreenModes();
+
         if (!modes.empty())
         {
             sf::VideoMode fullscreenMode = modes[0];
@@ -100,10 +109,16 @@ void Game::updateWindowSettings()
             window.create(fullscreenMode, "NFS Console", sf::Style::Fullscreen);
         }
 
-        else { window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Fullscreen); }
+        else
+        {
+            window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Fullscreen);
+        }
     }
 
-    else { window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Default); }
+    else
+    {
+        window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Default);
+    }
 
     window.setFramerateLimit(config.getMaxFPS());
 }

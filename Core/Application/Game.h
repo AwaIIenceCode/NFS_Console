@@ -1,18 +1,18 @@
 //
-// Created by AwallencePC on 19.03.2025.
+//Created by AwallencePC on 19.03.2025.
 //
 
 #ifndef GAME_H
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include "GameState.h"
+#include "MainMenuState.h"
 #include "../Config/Settings/GameConfig.h"
 #include "../Config/Utils/Logger.h"
 #include "../Config/Utils/ScaleManager.h"
 #include "../Domain/Rendering/Renderer.h"
 #include "../Domain/Rendering/TextureManager.h"
-#include "../Domain/Entities/Car.h"
-#include "../Domain/Entities/PlayerCar.h"
 
 class Game
 {
@@ -20,17 +20,19 @@ public:
     Game();
     ~Game();
     void run();
+    void setState(GameState* newState);
+    void close();
 
 private:
     sf::RenderWindow window;
     Renderer renderer;
     sf::Sprite background;
-    PlayerCar playerCar; // Машина игрока
-    sf::Clock clock; // Для вычисления deltaTime
+    GameState* currentState;
+    sf::Clock clock;
     void processEvents();
     void update(float deltaTime);
     void render();
-    void updateWindowSettings(); // Новый метод для обновления настроек окна
+    void updateWindowSettings();
 };
 
 #endif
