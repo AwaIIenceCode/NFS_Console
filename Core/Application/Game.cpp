@@ -3,9 +3,32 @@
 Game::Game()
     : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(),
                            GameConfig::getInstance().getWindowHeight()), "NFS Console"),
-      renderer(window)  // Передаём ссылку на window в конструктор renderer
+      renderer(window)
 {
     window.setFramerateLimit(GameConfig::getInstance().getMaxFPS());
+
+    // Загружаем текстуру фона через TextureManager
+    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/background.jpg");
+    if (backgroundTexture)
+    {
+        background.setTexture(*backgroundTexture);
+
+        // Масштабируем спрайт с сохранением пропорций
+        float scaleX = static_cast<float>(GameConfig::getInstance().getWindowWidth()) / backgroundTexture->getSize().x;
+        float scaleY = static_cast<float>(GameConfig::getInstance().getWindowHeight()) / backgroundTexture->getSize().y;
+        float scale = std::min(scaleX, scaleY); // Используем меньший коэффициент
+        background.setScale(scale, scale);
+
+        // Центрируем спрайт
+        sf::FloatRect bounds = background.getLocalBounds();
+        background.setPosition(
+            (GameConfig::getInstance().getWindowWidth() - bounds.width * scale) / 2.0f,
+            (GameConfig::getInstance().getWindowHeight() - bounds.height * scale) / 2.0f
+        );
+    }
+
+    else { Logger::getInstance().log("Failed to load background texture, using default color"); }
+
     // Логируем старт игры
     Logger::getInstance().log("Game started");
 }
@@ -40,11 +63,12 @@ void Game::processEvents()
 
 void Game::update()
 {
-    // Пока пусто, добавлю логику обновления игры тут
+    // Пока пусто
 }
 
 void Game::render()
 {
-    window.clear(sf::Color::Black);
-    window.display();
+    renderer.clear();
+    renderer.render(background); // Отрисовываем фон
+    renderer.display();
 }

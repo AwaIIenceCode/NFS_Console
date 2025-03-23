@@ -12,6 +12,6 @@ J:\MyIDE\CLion\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
 -- Found SFML 2.5.1 in J:/MyIDE/SFML/SFML-2.5.1/lib/cmake/SFML
--- Configuring done (6.8s)
+-- Configuring done (6.7s)
 -- Generating done (0.1s)
 -- Build files have been written to: J:/MyIDE/NFS_Console/cmake-build-debug

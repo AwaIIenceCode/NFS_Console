@@ -21,9 +21,9 @@ public:
 
 private:
     sf::RenderWindow window;
-    void processEvents();
     Renderer renderer;
     sf::Sprite background; // Спрайт для фона
+    void processEvents();
     void update();
     void render();
 };
