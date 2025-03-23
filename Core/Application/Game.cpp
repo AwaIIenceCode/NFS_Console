@@ -1,41 +1,25 @@
 #include "Game.h"
 
 Game::Game()
-    : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(),
-                           GameConfig::getInstance().getWindowHeight()), "NFS Console"),
-      renderer(window)
+    : window(), renderer(window)
 {
-    window.setFramerateLimit(GameConfig::getInstance().getMaxFPS());
+    updateWindowSettings();
 
     // Загружаем текстуру фона через TextureManager
     sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/background.jpg");
     if (backgroundTexture)
     {
         background.setTexture(*backgroundTexture);
-
-        // Масштабируем спрайт с сохранением пропорций
-        float scaleX = static_cast<float>(GameConfig::getInstance().getWindowWidth()) / backgroundTexture->getSize().x;
-        float scaleY = static_cast<float>(GameConfig::getInstance().getWindowHeight()) / backgroundTexture->getSize().y;
-        float scale = std::min(scaleX, scaleY); // Используем меньший коэффициент
-        background.setScale(scale, scale);
-
-        // Центрируем спрайт
-        sf::FloatRect bounds = background.getLocalBounds();
-        background.setPosition(
-            (GameConfig::getInstance().getWindowWidth() - bounds.width * scale) / 2.0f,
-            (GameConfig::getInstance().getWindowHeight() - bounds.height * scale) / 2.0f
-        );
+        ScaleManager::getInstance().scaleSprite(background);
     }
 
     else { Logger::getInstance().log("Failed to load background texture, using default color"); }
 
-    // Логируем старт игры
     Logger::getInstance().log("Game started");
 }
 
 Game::~Game()
 {
-    // Логируем закрытие игры
     Logger::getInstance().log("Game closed");
 }
 
@@ -58,6 +42,20 @@ void Game::processEvents()
         {
             window.close();
         }
+        // Переключение в полноэкранный режим по клавише F
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
+            GameConfig::getInstance().setFullscreen(!GameConfig::getInstance().isFullscreen());
+            updateWindowSettings();
+            ScaleManager::getInstance().scaleSprite(background);
+        }
+        // Выход из полноэкранного режима по клавише Esc
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            if (GameConfig::getInstance().isFullscreen()) {
+                GameConfig::getInstance().setFullscreen(false);
+                updateWindowSettings();
+                ScaleManager::getInstance().scaleSprite(background);
+            }
+        }
     }
 }
 
@@ -69,6 +67,36 @@ void Game::update()
 void Game::render()
 {
     renderer.clear();
-    renderer.render(background); // Отрисовываем фон
+    renderer.render(background);
     renderer.display();
+}
+
+void Game::updateWindowSettings()
+{
+    GameConfig& config = GameConfig::getInstance();
+    if (config.isFullscreen())
+    {
+        // Получаем доступные полноэкранные режимы
+        auto modes = sf::VideoMode::getFullscreenModes();
+        if (!modes.empty())
+        {
+            // Используем первый режим (обычно максимальное разрешение)
+            sf::VideoMode fullscreenMode = modes[0];
+            config.setWindowSize(fullscreenMode.width, fullscreenMode.height);
+            window.create(fullscreenMode, "NFS Console", sf::Style::Fullscreen);
+        }
+
+        else
+        {
+            // Если не удалось получить режимы, используем текущие размеры
+            window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Fullscreen);
+        }
+    }
+
+    else
+    {
+        window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Default);
+    }
+
+    window.setFramerateLimit(config.getMaxFPS());
 }

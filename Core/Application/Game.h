@@ -1,16 +1,12 @@
-//
-// Created by AwallencePC on 18.03.2025.
-// Game: Главный класс игры, управляет игровым циклом, состояниями и событиями.
-//
-
 #ifndef GAME_H
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
 #include "../Config/Settings/GameConfig.h"
 #include "../Config/Utils/Logger.h"
-#include "../../Core/Domain/Rendering/Renderer.h"
-#include "../../Core/Domain/Rendering/TextureManager.h"
+#include "../Config/Utils/ScaleManager.h"
+#include "../Domain/Rendering/Renderer.h"
+#include "../Domain/Rendering/TextureManager.h"
 
 class Game
 {
@@ -22,12 +18,11 @@ public:
 private:
     sf::RenderWindow window;
     Renderer renderer;
-    sf::Sprite background; // Спрайт для фона
+    sf::Sprite background;
     void processEvents();
     void update();
     void render();
+    void updateWindowSettings(); // Новый метод для обновления настроек окна
 };
 
-
-
-#endif //GAME_H
+#endif

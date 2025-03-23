@@ -1,41 +1,53 @@
-//
-// Created by AwallencePC on 19.03.2025.
-// Папка Config: Хранит конфигурации игры (размер окна, параметры машин).
-// GameConfig: Хранит настройки игры (размер окна, FPS, параметры машин).
-//
-
 #ifndef GAMECONFIG_H
 #define GAMECONFIG_H
 
 class GameConfig
 {
 public:
-    // Получить единственный экземпляр (синглтон)
     static GameConfig& getInstance()
     {
         static GameConfig instance;
         return instance;
     }
 
-    // Геттеры для настроек
     int getWindowWidth() const { return windowWidth; }
     int getWindowHeight() const { return windowHeight; }
+    int getOriginalWindowWidth() const { return originalWindowWidth; }
+    int getOriginalWindowHeight() const { return originalWindowHeight; }
     int getMaxFPS() const { return maxFPS; }
+    bool isFullscreen() const { return fullscreen; }
+
+    void setWindowSize(int width, int height)
+    {
+        windowWidth = width;
+        windowHeight = height;
+    }
+
+    void setFullscreen(bool enable)
+    {
+        fullscreen = enable;
+        if (!enable)
+        {
+            // Восстанавливаем оригинальные размеры при выходе из полноэкранного режима
+            windowWidth = originalWindowWidth;
+            windowHeight = originalWindowHeight;
+        }
+    }
 
 private:
-    // Приватный конструктор для синглтона
-    GameConfig() : windowWidth(800), windowHeight(600), maxFPS(60) {}
-
-    // Запрещаем копирование
+    GameConfig()
+        : originalWindowWidth(800), originalWindowHeight(600),
+          windowWidth(800), windowHeight(600),
+          maxFPS(60), fullscreen(false) {}
     GameConfig(const GameConfig&) = delete;
     GameConfig& operator=(const GameConfig&) = delete;
 
-    // Настройки
-    int windowWidth;
+    int originalWindowWidth;  // Оригинальные размеры для оконного режима
+    int originalWindowHeight;
+    int windowWidth;          // Текущие размеры (могут меняться в полноэкранном режиме)
     int windowHeight;
     int maxFPS;
+    bool fullscreen;
 };
 
-
-
-#endif //GAMECONFIG_H
+#endif

@@ -11,7 +11,9 @@ find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics window system)
 file(GLOB_RECURSE CORE_SOURCES "Core/*.cpp")
 
 # Источники проекта
-set(SOURCES main.cpp ${CORE_SOURCES})
+set(SOURCES main.cpp ${CORE_SOURCES}
+        Core/Config/Utils/ScaleManager.cpp
+        Core/Config/Utils/ScaleManager.h)
 
 # Создаём исполняемый файл
 add_executable(${PROJECT_NAME} ${SOURCES})

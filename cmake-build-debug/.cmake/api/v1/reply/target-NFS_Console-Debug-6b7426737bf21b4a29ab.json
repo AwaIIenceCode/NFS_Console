@@ -29,19 +29,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 17,
+				"line" : 19,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 23,
+				"line" : 25,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 20,
+				"line" : 22,
 				"parent" : 0
 			}
 		]
@@ -104,7 +104,8 @@
 				23,
 				24,
 				25,
-				26
+				26,
+				27
 			]
 		}
 	],
@@ -182,7 +183,15 @@
 				23,
 				24,
 				25,
-				26
+				26,
+				27
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				28
 			]
 		}
 	],
@@ -216,6 +225,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Core/Config/Utils/Logger.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Core/Config/Utils/ScaleManager.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -349,6 +364,11 @@
 			"compileGroupIndex" : 0,
 			"path" : "Core/UI/Interface/UIManager.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Core/Config/Utils/ScaleManager.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
