@@ -11,6 +11,8 @@
 #include "../Config/Utils/ScaleManager.h"
 #include "../Domain/Rendering/Renderer.h"
 #include "../Domain/Rendering/TextureManager.h"
+#include "../Domain/Entities/Car.h"
+#include "../Domain/Entities/PlayerCar.h"
 
 class Game
 {
@@ -23,8 +25,10 @@ private:
     sf::RenderWindow window;
     Renderer renderer;
     sf::Sprite background;
+    PlayerCar playerCar; // Машина игрока
+    sf::Clock clock; // Для вычисления deltaTime
     void processEvents();
-    void update();
+    void update(float deltaTime);
     void render();
     void updateWindowSettings(); // Новый метод для обновления настроек окна
 };

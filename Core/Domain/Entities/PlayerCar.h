@@ -6,10 +6,18 @@
 #ifndef PLAYERCAR_H
 #define PLAYERCAR_H
 
+#include <cmath>
+#include "Car.h"
 
+class PlayerCar : public Car
+{
+public:
+    PlayerCar(const std::string& texturePath);
+    void update(float deltaTime) override;
 
-class PlayerCar {
-
+private:
+    float acceleration; // Ускорение
+    float rotationSpeed; // Скорость поворота
 };
 
 

@@ -6,12 +6,27 @@
 #ifndef CAR_H
 #define CAR_H
 
+#include <SFML/Graphics.hpp>
+#include "../Rendering/Renderer.h"
 
+class Car
+{
+public:
+    Car(const std::string& texturePath);
+    virtual ~Car() = default;
 
-class Car {
+    virtual void update(float deltaTime);
+    void render(Renderer& renderer);
 
+    // Геттеры и сеттеры
+    sf::Vector2f getPosition() const { return sprite.getPosition(); }
+    void setPosition(float x, float y) { sprite.setPosition(x, y); }
+    sf::Sprite& getSprite() { return sprite; } // Для масштабирования
+
+protected:
+    sf::Sprite sprite;
+    float speed;
+    float rotation; // Угол поворота в градусах
 };
 
-
-
-#endif //CAR_H
+#endif
