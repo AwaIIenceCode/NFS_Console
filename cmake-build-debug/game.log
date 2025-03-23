@@ -130,3 +130,10 @@
 [Sun Mar 23 15:30:26 2025] Loaded texture: J:/MyIDE/NFS_Console/Assets/Textures/background.jpg
 [Sun Mar 23 15:30:26 2025] Game started
 [Sun Mar 23 15:31:39 2025] Game closed
+[Sun Mar 23 15:49:05 2025] Failed to load texture: Assets/Textures/background.jpg
+[Sun Mar 23 15:49:05 2025] Failed to load background texture, using default color
+[Sun Mar 23 15:49:05 2025] Game started
+[Sun Mar 23 15:49:08 2025] Game closed
+[Sun Mar 23 15:49:39 2025] Loaded texture: J:/MyIDE/NFS_Console/Assets/Textures/background.jpg
+[Sun Mar 23 15:49:39 2025] Game started
+[Sun Mar 23 15:50:09 2025] Game closed

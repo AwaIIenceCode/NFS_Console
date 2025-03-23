@@ -44,3 +44,10 @@
 843	1034	7644393833568423	NFS_Console.exe	12c29da7f6ae64d4
 13	1085	7644394929926403	CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj	3e69d856a0689a37
 1085	1299	7644394940650643	NFS_Console.exe	12c29da7f6ae64d4
+63	587	7644409419773308	CMakeFiles/NFS_Console.dir/Core/Config/Settings/GameConfig.cpp.obj	bdd0c7c73bb8ff56
+68	1333	7644409419813217	CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScaleManager.cpp.obj	8a67ade70097cb2b
+27	1400	7644409419412871	CMakeFiles/NFS_Console.dir/main.cpp.obj	553dc59e424c7101
+60	1730	7644409419743391	CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj	3e69d856a0689a37
+1730	2711	7644409436435345	NFS_Console.exe	12c29da7f6ae64d4
+12	1026	7644409777881289	CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj	3e69d856a0689a37
+1027	1218	7644409788032062	NFS_Console.exe	12c29da7f6ae64d4

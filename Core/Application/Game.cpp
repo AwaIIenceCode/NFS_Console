@@ -1,3 +1,7 @@
+//
+// Created by AwallencePC on 19.03.2025.
+//
+
 #include "Game.h"
 
 Game::Game()
@@ -7,13 +11,12 @@ Game::Game()
 
     // Загружаем текстуру фона через TextureManager
     sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/background.jpg");
-    if (backgroundTexture)
-    {
+    if (backgroundTexture) {
         background.setTexture(*backgroundTexture);
-        ScaleManager::getInstance().scaleSprite(background);
+        ScaleManager::getInstance().scaleSpriteToFill(background); // Заполняем окно
+    } else {
+        Logger::getInstance().log("Failed to load background texture, using default color");
     }
-
-    else { Logger::getInstance().log("Failed to load background texture, using default color"); }
 
     Logger::getInstance().log("Game started");
 }
@@ -46,14 +49,14 @@ void Game::processEvents()
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
             GameConfig::getInstance().setFullscreen(!GameConfig::getInstance().isFullscreen());
             updateWindowSettings();
-            ScaleManager::getInstance().scaleSprite(background);
+            ScaleManager::getInstance().scaleSpriteToFill(background); // Перемасштабируем фон
         }
         // Выход из полноэкранного режима по клавише Esc
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
             if (GameConfig::getInstance().isFullscreen()) {
                 GameConfig::getInstance().setFullscreen(false);
                 updateWindowSettings();
-                ScaleManager::getInstance().scaleSprite(background);
+                ScaleManager::getInstance().scaleSpriteToFill(background); // Перемасштабируем фон
             }
         }
     }
@@ -74,29 +77,17 @@ void Game::render()
 void Game::updateWindowSettings()
 {
     GameConfig& config = GameConfig::getInstance();
-    if (config.isFullscreen())
-    {
-        // Получаем доступные полноэкранные режимы
+    if (config.isFullscreen()) {
         auto modes = sf::VideoMode::getFullscreenModes();
-        if (!modes.empty())
-        {
-            // Используем первый режим (обычно максимальное разрешение)
+        if (!modes.empty()) {
             sf::VideoMode fullscreenMode = modes[0];
             config.setWindowSize(fullscreenMode.width, fullscreenMode.height);
             window.create(fullscreenMode, "NFS Console", sf::Style::Fullscreen);
-        }
-
-        else
-        {
-            // Если не удалось получить режимы, используем текущие размеры
+        } else {
             window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Fullscreen);
         }
-    }
-
-    else
-    {
+    } else {
         window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Default);
     }
-
     window.setFramerateLimit(config.getMaxFPS());
 }
