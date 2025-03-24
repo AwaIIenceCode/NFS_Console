@@ -63,13 +63,6 @@ build CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj: CXX_COMPILER__NF
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
   OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Application
 
-build CMakeFiles/NFS_Console.dir/Core/Application/GameState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Application/GameState.cpp || cmake_object_order_depends_target_NFS_Console
-  DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Application\GameState.cpp.obj.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
-  OBJECT_DIR = CMakeFiles\NFS_Console.dir
-  OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Application
-
 build CMakeFiles/NFS_Console.dir/Core/Application/GameplayState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Application/GameplayState.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Application\GameplayState.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
@@ -142,6 +135,13 @@ build CMakeFiles/NFS_Console.dir/Core/Data/SaveLoad/SaveManager.cpp.obj: CXX_COM
 
 build CMakeFiles/NFS_Console.dir/Core/Data/States/GameOverState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/GameOverState.cpp || cmake_object_order_depends_target_NFS_Console
   DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\GameOverState.cpp.obj.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
+  OBJECT_DIR = CMakeFiles\NFS_Console.dir
+  OBJECT_FILE_DIR = CMakeFiles\NFS_Console.dir\Core\Data\States
+
+build CMakeFiles/NFS_Console.dir/Core/Data/States/GameState.cpp.obj: CXX_COMPILER__NFS_Console_unscanned_Debug J$:/MyIDE/NFS_Console/Core/Data/States/GameState.cpp || cmake_object_order_depends_target_NFS_Console
+  DEP_FILE = CMakeFiles\NFS_Console.dir\Core\Data\States\GameState.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -IJ:/MyIDE/NFS_Console -isystem J:/MyIDE/SFML/SFML-2.5.1/include
   OBJECT_DIR = CMakeFiles\NFS_Console.dir
@@ -274,7 +274,7 @@ build CMakeFiles/NFS_Console.dir/Core/UI/Interface/UIManager.cpp.obj: CXX_COMPIL
 #############################################
 # Link the executable NFS_Console.exe
 
-build NFS_Console.exe: CXX_EXECUTABLE_LINKER__NFS_Console_Debug CMakeFiles/NFS_Console.dir/main.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/GameState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/GameplayState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/MainMenuState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Audio/AudioManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Settings/GameConfig.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/Logger.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScaleManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScoreManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/Timer.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/Physics/CollisionHandler.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/SaveLoad/SaveManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/GameOverState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/MenuState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/RaceState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/StateManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Bonus.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Car.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/EnemyCar.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Obstacle.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/PlayerCar.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Map/Checkpoint.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Map/Track.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Race/RaceManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/Renderer.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/TextureManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/EndGame.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/StartRace.cpp.obj CMakeFiles/NFS_Console.dir/Core/UI/Input/InputHandler.cpp.obj CMakeFiles/NFS_Console.dir/Core/UI/Interface/UIManager.cpp.obj | J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-graphics-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-window-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-audio-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-system-d.a
+build NFS_Console.exe: CXX_EXECUTABLE_LINKER__NFS_Console_Debug CMakeFiles/NFS_Console.dir/main.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/Game.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/GameplayState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Application/MainMenuState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Audio/AudioManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Settings/GameConfig.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/Logger.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScaleManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/ScoreManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Config/Utils/Timer.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/Physics/CollisionHandler.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/SaveLoad/SaveManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/GameOverState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/GameState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/MenuState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/RaceState.cpp.obj CMakeFiles/NFS_Console.dir/Core/Data/States/StateManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Bonus.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Car.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/EnemyCar.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/Obstacle.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Entities/PlayerCar.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Map/Checkpoint.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Map/Track.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Race/RaceManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/Renderer.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/Rendering/TextureManager.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/EndGame.cpp.obj CMakeFiles/NFS_Console.dir/Core/Domain/UseCases/StartRace.cpp.obj CMakeFiles/NFS_Console.dir/Core/UI/Input/InputHandler.cpp.obj CMakeFiles/NFS_Console.dir/Core/UI/Interface/UIManager.cpp.obj | J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-graphics-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-window-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-audio-d.a J$:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-system-d.a
   FLAGS = -g
   LINK_LIBRARIES = J:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-graphics-d.a  J:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-window-d.a  J:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-audio-d.a  J:/MyIDE/SFML/SFML-2.5.1/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\NFS_Console.dir

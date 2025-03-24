@@ -5,7 +5,7 @@
 #ifndef GAMEPLAYSTATE_H
 #define GAMEPLAYSTATE_H
 
-#include "GameState.h"
+#include "../Data/States/GameState.h"
 #include "Game.h"
 #include "../Domain/Entities/PlayerCar.h"
 #include "../Config/Settings/GameConfig.h"

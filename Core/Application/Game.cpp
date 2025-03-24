@@ -10,7 +10,7 @@ Game::Game()
     updateWindowSettings();
 
     // Загружаем текстуру фона через TextureManager
-    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
+    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("Assets/Textures/BackgroundMenu.jpg");
     if (backgroundTexture)
     {
         background.setTexture(*backgroundTexture);

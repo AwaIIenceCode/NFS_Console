@@ -14,8 +14,8 @@ file(GLOB_RECURSE CORE_SOURCES "Core/*.cpp")
 set(SOURCES main.cpp ${CORE_SOURCES}
         Core/Config/Utils/ScaleManager.cpp
         Core/Config/Utils/ScaleManager.h
-        Core/Application/GameState.cpp
-        Core/Application/GameState.h
+        Core/Data/States/GameState.cpp
+        Core/Data/States/GameState.h
         Core/Application/MainMenuState.cpp
         Core/Application/MainMenuState.h
         Core/Application/GameplayState.cpp

@@ -5,7 +5,7 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
-#include "GameState.h"
+#include "../Data/States/GameState.h"
 #include "Game.h"
 #include "../Config/Settings/GameConfig.h"
 #include "../Config/Utils/Logger.h"

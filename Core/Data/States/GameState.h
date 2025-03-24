@@ -6,7 +6,7 @@
 #define GAMESTATE_H
 
 #include <SFML/Graphics.hpp>
-#include "../Domain/Rendering/Renderer.h"
+#include "../../Domain/Rendering/Renderer.h"
 
 class Game;
 

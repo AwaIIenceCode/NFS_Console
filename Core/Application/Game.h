@@ -6,7 +6,7 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
-#include "GameState.h"
+#include "../Data/States/GameState.h"
 #include "MainMenuState.h"
 #include "../Config/Settings/GameConfig.h"
 #include "../Config/Utils/Logger.h"
