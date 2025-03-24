@@ -12,12 +12,13 @@
 class PlayerCar : public Car
 {
 public:
-    PlayerCar(const std::string& texturePath);
-    void update(float deltaTime) override;
+PlayerCar(const std::string& texturePath);
+void update(float deltaTime) override;
+void update(float deltaTime, float roadLeft, float roadRight); // Для движения с границами
 
 private:
-    float acceleration; // Ускорение
-    float rotationSpeed; // Скорость поворота
+float moveSpeed; // Скорость движения влево/вправо
+float scaleFactor; // Масштаб текстуры
 };
 
 

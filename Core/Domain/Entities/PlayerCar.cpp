@@ -5,40 +5,18 @@
 #include "PlayerCar.h"
 
 PlayerCar::PlayerCar(const std::string& texturePath)
-    : Car(texturePath), acceleration(300.0f), rotationSpeed(180.0f) {}
+    : Car(texturePath), moveSpeed(300.0f), scaleFactor(0.33f) { // Уменьшаем в 2 раза
+    sprite.setScale(scaleFactor, scaleFactor);
+}
 
-void PlayerCar::update(float deltaTime)
+void PlayerCar::update(float deltaTime) {}
+
+void PlayerCar::update(float deltaTime, float roadLeft, float roadRight)
 {
-    // Управление
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        // Движение вперёд
-        float rad = rotation * 3.14159f / 180.0f; // Градусы в радианы
-        float moveX = std::cos(rad) * speed * deltaTime;
-        float moveY = std::sin(rad) * speed * deltaTime;
-        sprite.move(moveX, moveY);
-    }
+    float moveX = 0.0f;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        // Движение назад
-        float rad = rotation * 3.14159f / 180.0f;
-        float moveX = std::cos(rad) * speed * deltaTime;
-        float moveY = std::sin(rad) * speed * deltaTime;
-        sprite.move(-moveX, -moveY);
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) { moveX -= moveSpeed * deltaTime; }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) { moveX += moveSpeed * deltaTime; }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
-        // Поворот влево
-        rotation -= rotationSpeed * deltaTime;
-        sprite.setRotation(rotation);
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        // Поворот вправо
-        rotation += rotationSpeed * deltaTime;
-        sprite.setRotation(rotation);
-    }
+    sprite.move(moveX, 0.0f);
 }

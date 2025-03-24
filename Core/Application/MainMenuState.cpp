@@ -3,7 +3,7 @@
 //
 
 #include "MainMenuState.h"
-#include "GameplayState.h"
+#include "../Data/States/GameModeSelectionState.h"
 #include "../Config/Utils/Logger.h"
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
@@ -88,18 +88,17 @@ void MainMenuState::processEvents(sf::Event& event)
             switch (selectedOption)
             {
                 case MenuOption::START_GAME:
-                    // Переключаем состояние на GameplayState
-                    game->setState(new GameplayState(game, background));
-                    break;
+                    // Переходим в меню выбора режима
+                        game->setState(new GameModeSelectionState(game, background));
+                break;
 
                 case MenuOption::SETTINGS:
-                    // Заглушка для настроек
                     Logger::getInstance().log("Settings selected (not implemented yet)");
-                    break;
+                break;
 
                 case MenuOption::EXIT_GAME:
                     game->close();
-                    break;
+                break;
             }
         }
     }
