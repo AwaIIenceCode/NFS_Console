@@ -12,9 +12,9 @@
 #include "../../Config/Settings/GameConfig.h"
 #include "../../Config/Utils/ScaleManager.h"
 #include <SFML/Audio.hpp>
+#include <iomanip>
 
-class GameplayState : public GameState
-{
+class GameplayState : public GameState {
 public:
     GameplayState(Game* game, sf::Sprite* background, GameMode mode);
     void processEvents(sf::Event& event) override;
@@ -37,16 +37,30 @@ private:
     void updateCountdown();
 
     // Переменные для трассы
-    sf::Texture roadTexture; // Текстура дороги
-    sf::Sprite road1; // Первый спрайт дороги
-    sf::Sprite road2; // Второй спрайт дороги
-    float roadWidth; // Ширина
-    float roadHeight; // Переменная для высоты после масштабирования
-    float roadSpeed; // Скорость прокрутки дороги
-    float totalDistance; // Общая длина трассы
-    float passedDistance; // Сколько проехали
+    sf::Texture roadTexture;
+    sf::Sprite road1;
+    sf::Sprite road2;
+    float roadWidth;
+    float roadHeight;
+    float roadSpeed;
+    float totalDistance;
+    float passedDistance;
     void initializeRoad();
     void updateRoad(float deltaTime);
+
+    // Переменные для таймера
+    sf::Clock gameTimer;
+    sf::Text timerText;
+    bool timerStarted;
+    void updateTimer();
+
+    // Переменные для прогресса
+    sf::Text progressText; // Текст для отображения прогресса
+    void updateProgress(); // Метод для обновления прогресса
+
+    // Переменные для финиша
+    float finishTime; // Время финиша в секундах
+    bool raceFinished; // Флаг, что гонка завершена
 };
 
 #endif //GAMEPLAYSTATE_H

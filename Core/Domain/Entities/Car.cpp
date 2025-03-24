@@ -6,13 +6,15 @@
 #include "../Rendering/TextureManager.h"
 #include "../../Config/Utils/Logger.h"
 
-Car::Car(const std::string& texturePath) : speed(200.0f), rotation(0.0f)
+Car::Car(const std::string& texturePath) : speed(200.0f)
 {
     sf::Texture* texture = TextureManager::getInstance().loadTexture(texturePath);
+
     if (texture)
     {
         sprite.setTexture(*texture);
-        sprite.setOrigin(texture->getSize().x / 2.0f, texture->getSize().y / 2.0f); // Центр спрайта
+        // Устанавливаем origin в центре текстуры
+        sprite.setOrigin(texture->getSize().x / 2.0f, texture->getSize().y / 2.0f);
     }
 
     else { Logger::getInstance().log("Failed to load car texture: " + texturePath); }

@@ -7,24 +7,31 @@
 #include "../../Config/Utils/Logger.h"
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
-    : GameState(game), background(background), playerCar("Assets/Textures/RedCar_1.png"),
-      gameMode(mode), isCountingDown(true), roadSpeed(200.0f), totalDistance(8000.0f), passedDistance(0.0f) {
-    // Устанавливаем начальную позицию машины (центр по X, нижняя треть по Y)
+    : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
+      gameMode(mode), isCountingDown(true), roadSpeed(200.0f), totalDistance(8000.0f), passedDistance(0.0f),
+      timerStarted(false), finishTime(0.0f), raceFinished(false) {
     playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f,
                           GameConfig::getInstance().getWindowHeight() * 2.0f / 3.0f);
-    // Убираем ScaleManager для машины, так как масштаб уже задан в PlayerCar
-    // ScaleManager::getInstance().scaleSprite(playerCar.getSprite());
 
     if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for GameplayState");
     }
+
+    timerText.setFont(font);
+    timerText.setCharacterSize(40);
+    timerText.setFillColor(sf::Color::White);
+    timerText.setPosition(20.0f, 20.0f);
+
+    progressText.setFont(font);
+    progressText.setCharacterSize(40);
+    progressText.setFillColor(sf::Color::White);
+    progressText.setPosition(20.0f, 70.0f);
 
     initializeCountdown();
     initializeRoad();
 }
 
 void GameplayState::initializeCountdown() {
-    // Настраиваем текст отсчёта
     countdownText.setFont(font);
     countdownText.setCharacterSize(100);
     countdownText.setFillColor(sf::Color::White);
@@ -32,12 +39,11 @@ void GameplayState::initializeCountdown() {
                              GameConfig::getInstance().getWindowHeight() / 2.0f - 50.0f);
     countdownText.setString("3");
 
-    // Загружаем звук отсчёта
     if (!countdownBuffer.loadFromFile("Assets/Sounds/StartSound_1.wav")) {
         Logger::getInstance().log("Failed to load countdown sound");
     }
     countdownSound.setBuffer(countdownBuffer);
-    countdownSound.play(); // Проигрываем звук сразу
+    countdownSound.play();
 }
 
 void GameplayState::updateCountdown() {
@@ -68,11 +74,9 @@ void GameplayState::initializeRoad() {
     road1.setTexture(roadTexture);
     road2.setTexture(roadTexture);
 
-    // Устанавливаем ширину и высоту трассы до масштабирования
     roadWidth = static_cast<float>(roadTexture.getSize().x);
     roadHeight = static_cast<float>(roadTexture.getSize().y);
 
-    // Центрируем дорогу по X
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
     float roadX = (windowWidth - roadWidth) / 2.0f;
@@ -87,10 +91,8 @@ void GameplayState::initializeRoad() {
     roadHeight *= scaleY;
 
     // Устанавливаем начальные позиции так, чтобы дорога покрывала весь экран
-    // road1 должен начинаться так, чтобы его верхняя часть была на верхней границе экрана (y = 0)
-    road1.setPosition(roadX, 0.0f);
-    // road2 должен начинаться сразу над road1
-    road2.setPosition(roadX, -roadHeight);
+    road1.setPosition(roadX, -roadHeight + windowHeight); // Нижняя часть road1 на нижней границе экрана
+    road2.setPosition(roadX, -roadHeight * 2.0f + windowHeight); // road2 сразу над road1
 
     // Логируем для отладки
     Logger::getInstance().log("Window height: " + std::to_string(windowHeight));
@@ -106,14 +108,37 @@ void GameplayState::updateRoad(float deltaTime) {
         road2.move(0.0f, moveDistance);
         passedDistance += moveDistance;
 
-        // Если спрайт ушёл за нижнюю границу, перемещаем его наверх
-        if (road1.getPosition().y >= GameConfig::getInstance().getWindowHeight()) {
+        float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+        if (road1.getPosition().y >= windowHeight) {
             road1.setPosition(road1.getPosition().x, road2.getPosition().y - roadHeight);
         }
-        if (road2.getPosition().y >= GameConfig::getInstance().getWindowHeight()) {
+        if (road2.getPosition().y >= windowHeight) {
             road2.setPosition(road2.getPosition().x, road1.getPosition().y - roadHeight);
         }
     }
+}
+
+void GameplayState::updateTimer() {
+    if (timerStarted) {
+        sf::Time elapsed = gameTimer.getElapsedTime();
+        int minutes = static_cast<int>(elapsed.asSeconds()) / 60;
+        int seconds = static_cast<int>(elapsed.asSeconds()) % 60;
+        int milliseconds = static_cast<int>(elapsed.asMilliseconds()) % 1000 / 10;
+
+        std::stringstream ss;
+        ss << std::setfill('0') << std::setw(2) << minutes << ":"
+           << std::setfill('0') << std::setw(2) << seconds << ":"
+           << std::setfill('0') << std::setw(2) << milliseconds;
+        timerText.setString(ss.str());
+    }
+}
+
+void GameplayState::updateProgress() {
+    float progress = (passedDistance / totalDistance) * 100.0f;
+    if (progress > 100.0f) progress = 100.0f;
+    std::stringstream ss;
+    ss << "Progress: " << static_cast<int>(progress) << "%";
+    progressText.setString(ss.str());
 }
 
 void GameplayState::processEvents(sf::Event& event) {
@@ -127,15 +152,25 @@ void GameplayState::processEvents(sf::Event& event) {
 void GameplayState::update(float deltaTime) {
     if (isCountingDown) {
         updateCountdown();
-    } else {
+        if (!isCountingDown) {
+            timerStarted = true;
+            gameTimer.restart();
+        }
+    } else if (!raceFinished) {
         updateRoad(deltaTime);
-
-        // Ограничиваем движение машины по ширине трассы
         float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
         float roadLeft = (windowWidth - roadWidth) / 2.0f;
         float roadRight = roadLeft + roadWidth;
-
         playerCar.update(deltaTime, roadLeft, roadRight);
+        updateTimer();
+        updateProgress();
+
+        if (passedDistance >= totalDistance) {
+            raceFinished = true;
+            finishTime = gameTimer.getElapsedTime().asSeconds();
+            Logger::getInstance().log("Race finished! Time: " + std::to_string(finishTime) + " seconds");
+            game->setState(new MainMenuState(game, background));
+        }
     }
 }
 
@@ -146,4 +181,6 @@ void GameplayState::render(Renderer& renderer) {
     if (isCountingDown) {
         renderer.render(countdownText);
     }
+    renderer.render(timerText);
+    renderer.render(progressText);
 }
