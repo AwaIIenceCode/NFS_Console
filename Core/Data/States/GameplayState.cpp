@@ -4,19 +4,26 @@
 
 #include "GameplayState.h"
 #include "../../Application/MainMenuState.h"
+#include "FinishState.h"
 #include "../../Config/Utils/Logger.h"
 #include <fstream>
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), isCountingDown(true), roadSpeed(200.0f), totalDistance(8000.0f), passedDistance(0.0f),
-      timerStarted(false), finishTime(0.0f), raceFinished(false) {
+      timerStarted(false), finishTime(0.0f), raceFinished(false), isPaused(false),
+      selectedPauseOption(PauseOption::RESUME) {
     playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f,
                           GameConfig::getInstance().getWindowHeight() * 2.0f / 3.0f);
 
     if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for GameplayState");
     }
+
+    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav")) {
+        Logger::getInstance().log("Failed to load menu select sound");
+    }
+    selectSound.setBuffer(selectSoundBuffer);
 
     timerText.setFont(font);
     timerText.setCharacterSize(40);
@@ -30,6 +37,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
 
     initializeCountdown();
     initializeRoad();
+    initializePauseMenu();
 }
 
 void GameplayState::initializeCountdown() {
@@ -102,8 +110,50 @@ void GameplayState::initializeRoad() {
     Logger::getInstance().log("road2 position: " + std::to_string(road2.getPosition().y));
 }
 
+void GameplayState::initializePauseMenu() {
+    pauseMessage.setFont(font);
+    pauseMessage.setFillColor(sf::Color::White);
+    pauseMessage.setString("Paused");
+
+    pauseMenuItems.resize(static_cast<size_t>(PauseOption::COUNT));
+    pauseMenuItems[static_cast<size_t>(PauseOption::RESUME)].setString("Resume");
+    pauseMenuItems[static_cast<size_t>(PauseOption::MAIN_MENU)].setString("Main Menu");
+
+    for (auto& item : pauseMenuItems) {
+        item.setFont(font);
+        item.setFillColor(sf::Color::White);
+    }
+
+    updatePauseMenuPositions();
+}
+
+void GameplayState::updatePauseMenuPositions() {
+    float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
+    float startY = GameConfig::getInstance().isFullscreen() ? 150.0f : 75.0f;
+    float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f;
+    float verticalSpacing = GameConfig::getInstance().isFullscreen() ? 75.0f : 40.0f;
+
+    pauseMessage.setPosition(windowWidth - rightOffset, startY);
+
+    for (size_t i = 0; i < pauseMenuItems.size(); ++i) {
+        pauseMenuItems[i].setPosition(windowWidth - rightOffset, startY + (1 + i) * verticalSpacing);
+    }
+
+    if (GameConfig::getInstance().isFullscreen()) {
+        pauseMessage.setCharacterSize(80);
+        for (auto& item : pauseMenuItems) {
+            item.setCharacterSize(40);
+        }
+    } else {
+        pauseMessage.setCharacterSize(40);
+        for (auto& item : pauseMenuItems) {
+            item.setCharacterSize(20);
+        }
+    }
+}
+
 void GameplayState::updateRoad(float deltaTime) {
-    if (!isCountingDown) {
+    if (!isCountingDown && !isPaused) {
         float moveDistance = roadSpeed * deltaTime;
         road1.move(0.0f, moveDistance);
         road2.move(0.0f, moveDistance);
@@ -120,7 +170,7 @@ void GameplayState::updateRoad(float deltaTime) {
 }
 
 void GameplayState::updateTimer() {
-    if (timerStarted) {
+    if (timerStarted && !isPaused) {
         sf::Time elapsed = gameTimer.getElapsedTime();
         int minutes = static_cast<int>(elapsed.asSeconds()) / 60;
         int seconds = static_cast<int>(elapsed.asSeconds()) % 60;
@@ -144,8 +194,35 @@ void GameplayState::updateProgress() {
 
 void GameplayState::processEvents(sf::Event& event) {
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Escape) {
-            game->setState(new MainMenuState(game, background));
+        if (event.key.code == sf::Keyboard::Escape && !isCountingDown && !raceFinished) {
+            isPaused = !isPaused; // Переключаем состояние паузы
+        }
+
+        if (isPaused) {
+            if (event.key.code == sf::Keyboard::Up) {
+                int current = static_cast<int>(selectedPauseOption);
+                current = (current - 1 + static_cast<int>(PauseOption::COUNT)) % static_cast<int>(PauseOption::COUNT);
+                selectedPauseOption = static_cast<PauseOption>(current);
+                selectSound.play();
+            }
+
+            if (event.key.code == sf::Keyboard::Down) {
+                int current = static_cast<int>(selectedPauseOption);
+                current = (current + 1) % static_cast<int>(PauseOption::COUNT);
+                selectedPauseOption = static_cast<PauseOption>(current);
+                selectSound.play();
+            }
+
+            if (event.key.code == sf::Keyboard::Enter) {
+                switch (selectedPauseOption) {
+                    case PauseOption::RESUME:
+                        isPaused = false;
+                        break;
+                    case PauseOption::MAIN_MENU:
+                        game->setState(new MainMenuState(game, background));
+                        break;
+                }
+            }
         }
     }
 }
@@ -157,7 +234,7 @@ void GameplayState::update(float deltaTime) {
             timerStarted = true;
             gameTimer.restart();
         }
-    } else if (!raceFinished) {
+    } else if (!raceFinished && !isPaused) {
         updateRoad(deltaTime);
         float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
         float roadLeft = (windowWidth - roadWidth) / 2.0f;
@@ -182,8 +259,20 @@ void GameplayState::update(float deltaTime) {
                 Logger::getInstance().log("Failed to open records.txt for saving");
             }
 
-            game->setState(new MainMenuState(game, background));
+            // Переходим на экран финиша
+            game->setState(new FinishState(game, gameMode, finishTime));
         }
+    }
+
+    if (isPaused) {
+        for (size_t i = 0; i < pauseMenuItems.size(); ++i) {
+            if (i == static_cast<size_t>(selectedPauseOption)) {
+                pauseMenuItems[i].setFillColor(sf::Color::Yellow);
+            } else {
+                pauseMenuItems[i].setFillColor(sf::Color::White);
+            }
+        }
+        updatePauseMenuPositions();
     }
 }
 
@@ -196,4 +285,11 @@ void GameplayState::render(Renderer& renderer) {
     }
     renderer.render(timerText);
     renderer.render(progressText);
+
+    if (isPaused) {
+        renderer.render(pauseMessage);
+        for (const auto& item : pauseMenuItems) {
+            renderer.render(item);
+        }
+    }
 }

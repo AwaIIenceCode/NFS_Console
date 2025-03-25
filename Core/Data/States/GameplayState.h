@@ -13,6 +13,7 @@
 #include "../../Config/Utils/ScaleManager.h"
 #include <SFML/Audio.hpp>
 #include <iomanip>
+#include <vector>
 
 class GameplayState : public GameState {
 public:
@@ -61,6 +62,21 @@ private:
     // Переменные для финиша
     float finishTime; // Время финиша в секундах
     bool raceFinished; // Флаг, что гонка завершена
+
+    // Переменные для паузы
+    bool isPaused; // Флаг паузы
+    enum class PauseOption {
+        RESUME,
+        MAIN_MENU,
+        COUNT
+    };
+    sf::Text pauseMessage;
+    std::vector<sf::Text> pauseMenuItems;
+    PauseOption selectedPauseOption;
+    sf::SoundBuffer selectSoundBuffer;
+    sf::Sound selectSound;
+    void initializePauseMenu();
+    void updatePauseMenuPositions();
 };
 
 #endif //GAMEPLAYSTATE_H
