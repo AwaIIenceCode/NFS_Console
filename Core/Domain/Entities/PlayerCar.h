@@ -9,18 +9,14 @@
 #include <cmath>
 #include "Car.h"
 
-class PlayerCar : public Car
-{
+class PlayerCar : public Car {
 public:
-PlayerCar(const std::string& texturePath);
-void update(float deltaTime) override;
-void update(float deltaTime, float roadLeft, float roadRight); // Для движения с границами
+    PlayerCar(const std::string& texturePath);
+    void update(float deltaTime, float roadLeft, float roadRight); // Оставляем только этот метод
 
 private:
-float moveSpeed; // Скорость движения влево/вправо
-float scaleFactor; // Масштаб текстуры
+    float moveSpeed; // Скорость движения влево/вправо
+    float scaleFactor; // Масштаб текстуры
 };
-
-
 
 #endif //PLAYERCAR_H

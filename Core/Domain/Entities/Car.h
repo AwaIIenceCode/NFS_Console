@@ -9,14 +9,14 @@
 #include <SFML/Graphics.hpp>
 #include "../Rendering/Renderer.h"
 
-class Car
-{
+class Car {
 public:
     Car(const std::string& texturePath);
     virtual ~Car() = default;
 
     virtual void update(float deltaTime);
     void render(Renderer& renderer);
+    sf::FloatRect getBounds() const; // Добавляем метод для получения границ
 
     // Геттеры и сеттеры
     sf::Vector2f getPosition() const { return sprite.getPosition(); }
@@ -29,4 +29,4 @@ protected:
     float rotation; // Угол поворота в градусах
 };
 
-#endif
+#endif //CAR_H

@@ -1,82 +1,85 @@
-//
 // Created by AwallencePC on 23.03.2025.
 //
 
-#ifndef GAMEPLAYSTATE_H
-#define GAMEPLAYSTATE_H
+#ifndef NFS_CONSOLE_GAMEPLAYSTATE_H
+#define NFS_CONSOLE_GAMEPLAYSTATE_H
 
 #include "GameState.h"
-#include "../../Application/Game.h"
-#include "../../Application/GameMode.h"
 #include "../../Domain/Entities/PlayerCar.h"
+#include "../../Domain/Entities/Lightning.h"
 #include "../../Config/Settings/GameConfig.h"
+#include "../../Application/GameMode.h"
 #include "../../Config/Utils/ScaleManager.h"
-#include <SFML/Audio.hpp>
-#include <iomanip>
 #include <vector>
+#include <sstream>
+#include <iomanip>
+#include <SFML/Audio.hpp>
 
 class GameplayState : public GameState {
 public:
+    enum class PauseOption {
+        RESUME,
+        MAIN_MENU,
+        COUNT
+    };
+
     GameplayState(Game* game, sf::Sprite* background, GameMode mode);
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
 
 private:
+    void initializeCountdown();
+    void updateCountdown();
+    void initializeRoad();
+    void updateRoad(float deltaTime);
+    void initializePauseMenu();
+    void updatePauseMenuPositions();
+    void spawnLightning();
+    void updateLightnings(float deltaTime);
+    void checkLightningCollisions();
+    void updateBoost(float deltaTime);
+    void updateTimer();
+    void updateProgress();
+
     sf::Sprite* background;
     PlayerCar playerCar;
     GameMode gameMode;
-
-    // Переменные для отсчёта
-    bool isCountingDown;
-    sf::Clock countdownClock;
-    sf::Text countdownText;
-    sf::Font font;
-    sf::SoundBuffer countdownBuffer;
-    sf::Sound countdownSound;
-    void initializeCountdown();
-    void updateCountdown();
-
-    // Переменные для трассы
+    sf::Sprite road1, road2;
     sf::Texture roadTexture;
-    sf::Sprite road1;
-    sf::Sprite road2;
-    float roadWidth;
-    float roadHeight;
+    float roadWidth, roadHeight;
     float roadSpeed;
+    float baseRoadSpeed;
+    float currentRoadSpeed; // Текущая скорость прокрутки дороги
+    float initialRoadSpeed; // Начальная скорость
+    float accelerationTime; // Время, за которое достигается максимальная скорость
     float totalDistance;
     float passedDistance;
-    void initializeRoad();
-    void updateRoad(float deltaTime);
-
-    // Переменные для таймера
-    sf::Clock gameTimer;
-    sf::Text timerText;
     bool timerStarted;
-    void updateTimer();
-
-    // Переменные для прогресса
-    sf::Text progressText; // Текст для отображения прогресса
-    void updateProgress(); // Метод для обновления прогресса
-
-    // Переменные для финиша
-    float finishTime; // Время финиша в секундах
-    bool raceFinished; // Флаг, что гонка завершена
-
-    // Переменные для паузы
-    bool isPaused; // Флаг паузы
-    enum class PauseOption {
-        RESUME,
-        MAIN_MENU,
-        COUNT
-    };
+    sf::Clock gameTimer;
+    float finishTime;
+    bool raceFinished;
+    sf::Text timerText;
+    sf::Text progressText;
+    sf::Font font;
+    bool isCountingDown;
+    sf::Text countdownText;
+    sf::Clock countdownClock;
+    sf::SoundBuffer countdownBuffer;
+    sf::Sound countdownSound;
+    bool isPaused;
+    PauseOption selectedPauseOption;
     sf::Text pauseMessage;
     std::vector<sf::Text> pauseMenuItems;
-    PauseOption selectedPauseOption;
     sf::SoundBuffer selectSoundBuffer;
     sf::Sound selectSound;
-    void initializePauseMenu();
-    void updatePauseMenuPositions();
+    std::vector<Lightning> lightnings;
+    float lightningSpawnInterval;
+    sf::Clock lightningSpawnClock;
+    bool isBoosted;
+    float boostDuration;
+    float boostTimer;
+    float boostMultiplier;
 };
 
-#endif //GAMEPLAYSTATE_H
+#endif //NFS_CONSOLE_GAMEPLAYSTATE_H
