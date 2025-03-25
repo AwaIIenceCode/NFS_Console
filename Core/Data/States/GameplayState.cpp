@@ -5,6 +5,7 @@
 #include "GameplayState.h"
 #include "../../Application/MainMenuState.h"
 #include "../../Config/Utils/Logger.h"
+#include <fstream>
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
@@ -169,6 +170,18 @@ void GameplayState::update(float deltaTime) {
             raceFinished = true;
             finishTime = gameTimer.getElapsedTime().asSeconds();
             Logger::getInstance().log("Race finished! Time: " + std::to_string(finishTime) + " seconds");
+
+            // Сохраняем результат в файл
+            std::ofstream file("records.txt", std::ios::app); // Открываем файл в режиме добавления
+            if (file.is_open()) {
+                std::string modeStr = (gameMode == GameMode::TIME_TRIAL) ? "TimeTrial" : "Unknown";
+                file << modeStr << " " << finishTime << "\n";
+                file.close();
+                Logger::getInstance().log("Result saved: " + modeStr + " " + std::to_string(finishTime));
+            } else {
+                Logger::getInstance().log("Failed to open records.txt for saving");
+            }
+
             game->setState(new MainMenuState(game, background));
         }
     }
