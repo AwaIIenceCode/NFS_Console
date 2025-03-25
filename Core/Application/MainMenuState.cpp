@@ -6,17 +6,20 @@
 #include "../Data/States/GameModeSelectionState.h"
 #include "../Config/Utils/Logger.h"
 
+// Core/Application/MainMenuState.cpp
+#include "MainMenuState.h"
+#include "../Data/States/GameModeSelectionState.h"
+#include "../Data/States/RecordsModeSelectionState.h"
+#include "../Config/Utils/Logger.h"
+
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
-    : GameState(game), background(background), selectedOption(MenuOption::START_GAME)
-{
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf"))
-    {
+    : GameState(game), background(background), selectedOption(MenuOption::START_GAME) {
+    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for MainMenuState");
     }
 
     // Загружаем звук для переключения пунктов меню
-    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav"))
-    {
+    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav")) {
         Logger::getInstance().log("Failed to load menu select sound");
     }
     selectSound.setBuffer(selectSoundBuffer);
@@ -24,17 +27,16 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     initializeMenu();
 }
 
-void MainMenuState::initializeMenu()
-{
+void MainMenuState::initializeMenu() {
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
     // Настраиваем текст для каждой опции
     menuItems[static_cast<size_t>(MenuOption::START_GAME)].setString("Start Game");
+    menuItems[static_cast<size_t>(MenuOption::RECORDS)].setString("Records");
     menuItems[static_cast<size_t>(MenuOption::SETTINGS)].setString("Settings");
     menuItems[static_cast<size_t>(MenuOption::EXIT_GAME)].setString("Exit Game");
 
-    for (auto& item : menuItems)
-    {
+    for (auto& item : menuItems) {
         item.setFont(font);
         item.setFillColor(sf::Color::White);
     }
@@ -42,8 +44,7 @@ void MainMenuState::initializeMenu()
     updateMenuPositions(); // Вызываем для начальной установки позиций
 }
 
-void MainMenuState::updateMenuPositions()
-{
+void MainMenuState::updateMenuPositions() {
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float startY = GameConfig::getInstance().isFullscreen() ? 300.0f : 150.0f; // Разное начальное положение
     float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f; // Разный отступ в зависимости от режима
@@ -53,19 +54,18 @@ void MainMenuState::updateMenuPositions()
     }
 
     // Обновляем размер текста при изменении режима
-    for (auto& item : menuItems)
-    {
-        if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(80); } // Больший размер в полноэкранном режиме
-        else { item.setCharacterSize(40); } // Обычный размер в оконном режиме
+    for (auto& item : menuItems) {
+        if (GameConfig::getInstance().isFullscreen()) {
+            item.setCharacterSize(80); // Больший размер в полноэкранном режиме
+        } else {
+            item.setCharacterSize(40); // Обычный размер в оконном режиме
+        }
     }
 }
 
-void MainMenuState::processEvents(sf::Event& event)
-{
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::Up)
-        {
+void MainMenuState::processEvents(sf::Event& event) {
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
             // Переключаем выбор вверх
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
@@ -73,8 +73,7 @@ void MainMenuState::processEvents(sf::Event& event)
             selectSound.play();
         }
 
-        if (event.key.code == sf::Keyboard::Down)
-        {
+        if (event.key.code == sf::Keyboard::Down) {
             // Переключаем выбор вниз
             int current = static_cast<int>(selectedOption);
             current = (current + 1) % static_cast<int>(MenuOption::COUNT);
@@ -82,43 +81,44 @@ void MainMenuState::processEvents(sf::Event& event)
             selectSound.play();
         }
 
-        if (event.key.code == sf::Keyboard::Enter)
-        {
+        if (event.key.code == sf::Keyboard::Enter) {
             // Подтверждение выбора
-            switch (selectedOption)
-            {
+            switch (selectedOption) {
                 case MenuOption::START_GAME:
                     // Переходим в меню выбора режима
-                        game->setState(new GameModeSelectionState(game, background));
-                break;
-
+                    game->setState(new GameModeSelectionState(game, background));
+                    break;
+                case MenuOption::RECORDS:
+                    game->setState(new RecordsModeSelectionState(game));
+                    break;
                 case MenuOption::SETTINGS:
                     Logger::getInstance().log("Settings selected (not implemented yet)");
-                break;
-
+                    break;
                 case MenuOption::EXIT_GAME:
                     game->close();
-                break;
+                    break;
             }
         }
     }
 }
 
-void MainMenuState::update(float deltaTime)
-{
+void MainMenuState::update(float deltaTime) {
     // Обновляем подсветку выбранной опции
-    for (size_t i = 0; i < menuItems.size(); ++i)
-    {
-        if (i == static_cast<size_t>(selectedOption)) { menuItems[i].setFillColor(sf::Color::Yellow); }
-        else { menuItems[i].setFillColor(sf::Color::White); }
+    for (size_t i = 0; i < menuItems.size(); ++i) {
+        if (i == static_cast<size_t>(selectedOption)) {
+            menuItems[i].setFillColor(sf::Color::Yellow);
+        } else {
+            menuItems[i].setFillColor(sf::Color::White);
+        }
     }
 
     // Обновляем позиции текста при изменении размера окна
     updateMenuPositions();
 }
 
-void MainMenuState::render(Renderer& renderer)
-{
+void MainMenuState::render(Renderer& renderer) {
     renderer.render(*background);
-    for (const auto& item : menuItems) { renderer.render(item); }
+    for (const auto& item : menuItems) {
+        renderer.render(item);
+    }
 }

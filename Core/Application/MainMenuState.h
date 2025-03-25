@@ -24,6 +24,7 @@ private:
     enum class MenuOption
     {
         START_GAME,
+        RECORDS,
         SETTINGS,
         EXIT_GAME,
         COUNT // Для подсчёта количества опций
@@ -35,6 +36,7 @@ private:
     MenuOption selectedOption;
     sf::SoundBuffer selectSoundBuffer; // Буфер для звука выбора
     sf::Sound selectSound; // Звук выбора
+
     void initializeMenu();
     void updateMenuPositions(); // Добавляем метод для обновления позиций
 };
