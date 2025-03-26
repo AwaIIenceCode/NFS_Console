@@ -9,19 +9,31 @@
 
 class SpeedEffectManager {
 public:
-    SpeedEffectManager(float initialSpeed); // Добавляем параметр
+    SpeedEffectManager(float initialSpeed);
     void update(float deltaTime, float& currentSpeed, float baseSpeed);
     void applyBoost(float& currentSpeed);
     void applySlowdown(float& currentSpeed);
 
 private:
-    bool isBoosted;
-    bool isSlowed;
-    float effectDuration;
-    float effectTimer;
-    float boostMultiplier;
-    float slowdownMultiplier;
-    float initialSpeed; // Добавляем начальную скорость
+    struct BoostEffect {
+        bool isActive;
+        float timer;
+        float duration;
+        float multiplier;
+        float preEffectSpeed;
+        BoostEffect() : isActive(false), timer(0.0f), duration(1.5f), multiplier(1.5f), preEffectSpeed(0.0f) {}
+    };
+
+    struct SlowdownEffect {
+        bool isActive;
+        float timer;
+        float duration;
+        SlowdownEffect() : isActive(false), timer(0.0f), duration(1.5f) {}
+    };
+
+    BoostEffect boostEffect;
+    SlowdownEffect slowdownEffect;
+    float initialSpeed;
 };
 
 #endif //SPEEDEFFECTMANAGER_H

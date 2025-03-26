@@ -4,33 +4,42 @@
 #include "SpeedEffectManager.h"
 
 SpeedEffectManager::SpeedEffectManager(float initialSpeed)
-    : isBoosted(false), isSlowed(false), effectDuration(1.5f), effectTimer(0.0f),
-      boostMultiplier(1.5f), slowdownMultiplier(0.5f), initialSpeed(initialSpeed) {}
+    : initialSpeed(initialSpeed) {}
 
 void SpeedEffectManager::update(float deltaTime, float& currentSpeed, float baseSpeed) {
-    if (isBoosted || isSlowed) {
-        effectTimer += deltaTime;
-        if (effectTimer >= effectDuration) {
-            isBoosted = false;
-            isSlowed = false;
-            currentSpeed = baseSpeed;
-            Logger::getInstance().log("Speed effect ended. Speed returned to " + std::to_string(currentSpeed));
+    // Обновляем эффект ускорения
+    if (boostEffect.isActive) {
+        boostEffect.timer += deltaTime;
+        if (boostEffect.timer >= boostEffect.duration) {
+            boostEffect.isActive = false;
+            currentSpeed = boostEffect.preEffectSpeed; // Восстанавливаем скорость после ускорения
+            Logger::getInstance().log("Boost effect ended. Speed restored to " + std::to_string(currentSpeed));
+        }
+    }
+
+    // Обновляем эффект замедления
+    if (slowdownEffect.isActive) {
+        slowdownEffect.timer += deltaTime;
+        if (slowdownEffect.timer >= slowdownEffect.duration) {
+            slowdownEffect.isActive = false;
+            // Не восстанавливаем скорость, так как resetAcceleration уже всё сделал
+            Logger::getInstance().log("Slowdown effect ended. Speed remains at " + std::to_string(currentSpeed));
         }
     }
 }
 
 void SpeedEffectManager::applyBoost(float& currentSpeed) {
-    isBoosted = true;
-    isSlowed = false; // Отменяем замедление, если оно было
-    effectTimer = 0.0f;
-    currentSpeed *= boostMultiplier;
+    boostEffect.preEffectSpeed = currentSpeed; // Сохраняем текущую скорость
+    boostEffect.isActive = true;
+    slowdownEffect.isActive = false; // Отменяем замедление
+    boostEffect.timer = 0.0f;
+    currentSpeed *= boostEffect.multiplier;
     Logger::getInstance().log("Boost applied. New speed: " + std::to_string(currentSpeed));
 }
 
 void SpeedEffectManager::applySlowdown(float& currentSpeed) {
-    isSlowed = true;
-    isBoosted = false; // Отменяем ускорение, если оно было
-    effectTimer = 0.0f;
-    currentSpeed = initialSpeed; // Сбрасываем скорость до начальной
-    Logger::getInstance().log("Slowdown applied. Speed reset to " + std::to_string(currentSpeed));
+    slowdownEffect.isActive = true;
+    boostEffect.isActive = false; // Отменяем ускорение
+    slowdownEffect.timer = 0.0f;
+    Logger::getInstance().log("Slowdown effect applied.");
 }
