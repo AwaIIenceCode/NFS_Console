@@ -11,11 +11,10 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timerManager(25000.0f), lightningManager(0.0f), obstacleManager(nullptr),
       speedEffectManager(50.0f),
-      baseRoadSpeed(420.0f), currentRoadSpeed(50.0f), initialRoadSpeed(50.0f), accelerationTime(3.8f),
+      baseRoadSpeed(500.0f), currentRoadSpeed(50.0f), initialRoadSpeed(50.0f), accelerationTime(3.8f),
       passedDistance(0.0f), raceFinished(false), finishTime(0.0f) {
     Logger::getInstance().log("GameplayState created");
 
-    // Сдвигаем машинку ниже на 100 пикселей (примерно корпус)
     float initialY = GameConfig::getInstance().getWindowHeight() * 2.0f / 3.0f + 100.0f;
     playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f, initialY);
 
