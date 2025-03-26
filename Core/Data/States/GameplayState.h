@@ -11,15 +11,19 @@
 #include "../Managers/TimerManager.h"
 #include "../Managers/PauseMenuManager.h"
 #include "../Managers/LightningManager.h"
-#include "../Managers/BoostManager.h"
+#include "../Managers/SpeedEffectManager.h"
 
-class GameplayState : public GameState
-{
+// Предварительное объявление класса ObstacleManager
+class ObstacleManager;
+
+class GameplayState : public GameState {
 public:
     GameplayState(Game* game, sf::Sprite* background, GameMode mode);
+    virtual ~GameplayState();
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
+    void resetAcceleration();
 
 private:
     sf::Sprite* background;
@@ -29,7 +33,8 @@ private:
     TimerManager timerManager;
     PauseMenuManager pauseMenuManager;
     LightningManager lightningManager;
-    BoostManager boostManager;
+    SpeedEffectManager speedEffectManager;
+    ObstacleManager* obstacleManager;
 
     float baseRoadSpeed;
     float currentRoadSpeed;
@@ -38,6 +43,7 @@ private:
     float passedDistance;
     bool raceFinished;
     float finishTime;
+    sf::Clock accelerationTimer; // Добавляем таймер для ускорения
 };
 
 #endif //NFS_CONSOLE_GAMEPLAYSTATE_H

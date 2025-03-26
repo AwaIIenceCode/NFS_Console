@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "BoostManager.h"
+#include "SpeedEffectManager.h"
 #include "../../Config/Settings/GameConfig.h"
 #include "../../Config/Utils/Logger.h"
 #include "../../Domain/Entities/Lightning.h"
@@ -19,7 +19,7 @@ public:
     LightningManager(float roadWidth);
     void initialize();
     void update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused);
-    void checkCollisions(PlayerCar& playerCar, BoostManager& boostManager, float& currentSpeed);
+    void checkCollisions(PlayerCar& playerCar, SpeedEffectManager& boostManager, float& currentSpeed);
     void render(Renderer& renderer);
 
 private:

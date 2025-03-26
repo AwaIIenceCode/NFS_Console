@@ -5,7 +5,7 @@
 #include "LightningManager.h"
 
 LightningManager::LightningManager(float roadWidth)
-    : roadWidth(roadWidth), lightningSpawnInterval(5.0f) {}
+    : roadWidth(roadWidth), lightningSpawnInterval(10.0f) {} // Увеличиваем с 5.0f до 10.0f
 
 void LightningManager::initialize()
 {
@@ -53,7 +53,7 @@ void LightningManager::spawnLightning()
     Logger::getInstance().log("Spawned a lightning");
 }
 
-void LightningManager::checkCollisions(PlayerCar& playerCar, BoostManager& boostManager, float& currentSpeed)
+void LightningManager::checkCollisions(PlayerCar& playerCar, SpeedEffectManager& boostManager, float& currentSpeed)
 {
     sf::FloatRect playerBounds = playerCar.getBounds();
 

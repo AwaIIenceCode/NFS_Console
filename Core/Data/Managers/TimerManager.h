@@ -1,4 +1,3 @@
-//
 // Created by AwallencePC on 26.03.2025.
 //
 
@@ -9,13 +8,13 @@
 #include <SFML/Audio.hpp>
 #include "../../Domain/Rendering/Renderer.h"
 
-class TimerManager
-{
+class TimerManager {
 public:
     TimerManager(float totalDistance);
     void initialize();
     void update(float deltaTime, float passedDistance, bool isPaused);
     void render(Renderer& renderer);
+    void updateSpeedometer(float currentSpeed);
 
     bool isCountingDown() const { return isCountingDownFlag; }
     bool isTimerStarted() const { return timerStarted; }
@@ -33,6 +32,7 @@ private:
     sf::Clock gameTimer;
     sf::Text timerText;
     sf::Text progressText;
+    sf::Text speedText;
     sf::Font font;
     bool isCountingDownFlag;
     sf::Text countdownText;
