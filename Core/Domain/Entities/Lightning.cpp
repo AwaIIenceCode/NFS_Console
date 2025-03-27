@@ -20,7 +20,8 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
     }
 
     sprite.setTexture(texture);
-    sprite.setScale(0.05f, 0.05f);
+    // Увеличиваем масштаб до 0.2f (20% от исходного размера)
+    sprite.setScale(0.07f, 0.07f);
 
     // Новый способ генерации xPos с учётом тротуаров
     float textureWidth = texture.getSize().x * sprite.getScale().x;
@@ -38,10 +39,12 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
 
     sprite.setPosition(xPos, 0.0f);
 
-    Logger::getInstance().log("Lightning created at position: (" + std::to_string(xPos) + ", " +
-                             std::to_string(0.0f) + ")");
-    Logger::getInstance().log("Lightning scale: (" + std::to_string(sprite.getScale().x) + ", " +
-                             std::to_string(sprite.getScale().y) + ")");
+    // Логируем границы молнии после создания
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    Logger::getInstance().log("Lightning created with bounds: (left: " + std::to_string(bounds.left) +
+                             ", top: " + std::to_string(bounds.top) +
+                             ", width: " + std::to_string(bounds.width) +
+                             ", height: " + std::to_string(bounds.height) + ")");
 }
 
 sf::Vector2f Lightning::getPosition() const {

@@ -1,25 +1,22 @@
-//
 // Created by AwallencePC on 25.03.2025.
 //
-
 
 #ifndef NFS_CONSOLE_LIGHTNING_H
 #define NFS_CONSOLE_LIGHTNING_H
 
-#include <SFML/Graphics.hpp>
-#include "../../../Core/Domain/Rendering/Renderer.h"
+#include "SpawnableEntity.h"
 #include "../../Config/Settings/GameConfig.h"
-#include "../../Config/Utils/ScaleManager.h"
+#include "../../Config/Utils/Logger.h"
 
-class Lightning
-{
+class Lightning : public SpawnableEntity {
 public:
     Lightning(const std::string& texturePath, float roadLeft, float roadRight);
-    void update(float deltaTime, float roadSpeed);
-    void render(Renderer& renderer) const;
-    sf::FloatRect getBounds() const;
-    bool isOffScreen() const;
-    sf::Vector2f getPosition() const;
+    void update(float deltaTime, float roadSpeed) override;
+    void render(Renderer& renderer) const override;
+    sf::FloatRect getBounds() const override;
+    bool isOffScreen() const override;
+    sf::Vector2f getPosition() const override;
+
 private:
     sf::Texture texture;
     sf::Sprite sprite;

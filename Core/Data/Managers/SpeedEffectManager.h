@@ -28,7 +28,8 @@ private:
         bool isActive;
         float timer;
         float duration;
-        SlowdownEffect() : isActive(false), timer(0.0f), duration(1.5f) {}
+        float multiplier; // Добавляем множитель для замедления
+        SlowdownEffect() : isActive(false), timer(0.0f), duration(1.5f), multiplier(0.5f) {} // Замедление в 2 раза
     };
 
     BoostEffect boostEffect;

@@ -1,5 +1,3 @@
-// main.cpp: Точка входа в игру, создаёт и запускает Game.
-
 #include "Core/Application/Game.h"
 
 int main()

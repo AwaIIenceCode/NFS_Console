@@ -1,30 +1,26 @@
-//
 // Created by AwallencePC on 19.03.2025.
-// Obstacle: Препятствие на трассе (например, камни, барьеры).
 //
 
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
-#include <SFML/Graphics.hpp>
-#include "../Rendering/Renderer.h"
+#include "SpawnableEntity.h"
+#include "../../Config/Settings/GameConfig.h"
+#include "../../Config/Utils/Logger.h"
 
-class Obstacle
-{
+class Obstacle : public SpawnableEntity {
 public:
     Obstacle(const std::string& texturePath, float roadLeft, float roadRight);
-    void update(float deltaTime, float roadSpeed);
-    void render(Renderer& renderer) const;
-    sf::FloatRect getBounds() const;
-    bool isOffScreen() const;
-    sf::Vector2f getPosition() const;
+    void update(float deltaTime, float roadSpeed) override;
+    void render(Renderer& renderer) const override;
+    sf::FloatRect getBounds() const override;
+    bool isOffScreen() const override;
+    sf::Vector2f getPosition() const override;
 
 private:
     sf::Sprite sprite;
     sf::Texture texture;
     float speed;
 };
-
-
 
 #endif //OBSTACLE_H

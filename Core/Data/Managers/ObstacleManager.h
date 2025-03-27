@@ -10,13 +10,11 @@
 #include "../../Domain/Entities/Obstacle.h"
 #include "../../Domain/Entities/PlayerCar.h"
 #include "SpeedEffectManager.h"
-
-// Предварительное объявление класса GameplayState
-class GameplayState;
+#include "../Managers/Interfaces/SpeedController.h"
 
 class ObstacleManager {
 public:
-    ObstacleManager(float roadWidth, GameplayState* gameplayState); // Добавляем указатель на GameplayState
+    ObstacleManager(float roadWidth, SpeedController* speedController);
     void initialize();
     void update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused);
     void checkCollisions(PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed);
@@ -29,7 +27,7 @@ private:
     std::vector<Obstacle> obstacles;
     float obstacleSpawnInterval;
     sf::Clock obstacleSpawnClock;
-    GameplayState* gameplayState; // Указатель на GameplayState
+    SpeedController* speedController;
 };
 
 #endif //NFS_CONSOLE_OBSTACLEMANAGER_H

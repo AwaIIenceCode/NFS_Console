@@ -2,10 +2,9 @@
 //
 
 #include "ObstacleManager.h"
-#include "../States/GameplayState.h"
 
-ObstacleManager::ObstacleManager(float roadWidth, GameplayState* gameplayState)
-    : roadWidth(roadWidth), obstacleSpawnInterval(6.0f), gameplayState(gameplayState) {}
+ObstacleManager::ObstacleManager(float roadWidth, SpeedController* speedController)
+    : roadWidth(roadWidth), obstacleSpawnInterval(6.0f), speedController(speedController) {}
 
 void ObstacleManager::initialize() {
     Logger::getInstance().log("ObstacleManager initialized with spawn interval: " + std::to_string(obstacleSpawnInterval));
@@ -50,7 +49,7 @@ void ObstacleManager::checkCollisions(PlayerCar& playerCar, SpeedEffectManager& 
         if (playerBounds.intersects(obstacleBounds)) {
             Logger::getInstance().log("Player hit an obstacle! Applying speed reduction.");
             speedEffectManager.applySlowdown(currentSpeed);
-            gameplayState->resetAcceleration();
+            speedController->resetAcceleration();
             it = obstacles.erase(it);
         } else {
             ++it;

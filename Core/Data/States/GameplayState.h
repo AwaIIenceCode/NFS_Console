@@ -8,42 +8,42 @@
 #include "../../Application/GameMode.h"
 #include "../../Domain/Entities/PlayerCar.h"
 #include "../Managers/RoadManager.h"
-#include "../Managers/TimerManager.h"
+#include "../Managers/Timer.h"
+#include "../Managers/Countdown.h"
+#include "../Managers/HUD.h"
 #include "../Managers/PauseMenuManager.h"
-#include "../Managers/LightningManager.h"
+#include "../Managers/EntityManager.h"
 #include "../Managers/SpeedEffectManager.h"
+#include "../Managers/SpeedManager.h"
+#include "../../Data/Managers/Interfaces/SpeedController.h"
 
-// Предварительное объявление класса ObstacleManager
-class ObstacleManager;
-
-class GameplayState : public GameState {
+class GameplayState : public GameState, public SpeedController {
 public:
     GameplayState(Game* game, sf::Sprite* background, GameMode mode);
     virtual ~GameplayState();
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
-    void resetAcceleration();
+    void resetAcceleration() override;
 
 private:
     sf::Sprite* background;
     PlayerCar playerCar;
     GameMode gameMode;
     RoadManager roadManager;
-    TimerManager timerManager;
+    Timer timer;
+    Countdown countdown;
+    HUD hud;
     PauseMenuManager pauseMenuManager;
-    LightningManager lightningManager;
+    EntityManager obstacleManager;
+    EntityManager lightningManager;
     SpeedEffectManager speedEffectManager;
-    ObstacleManager* obstacleManager;
+    SpeedManager speedManager;
 
-    float baseRoadSpeed;
-    float currentRoadSpeed;
-    float initialRoadSpeed;
-    float accelerationTime;
+    float totalDistance;
     float passedDistance;
     bool raceFinished;
     float finishTime;
-    sf::Clock accelerationTimer; // Добавляем таймер для ускорения
 };
 
 #endif //NFS_CONSOLE_GAMEPLAYSTATE_H

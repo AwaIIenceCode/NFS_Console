@@ -41,5 +41,6 @@ void SpeedEffectManager::applySlowdown(float& currentSpeed) {
     slowdownEffect.isActive = true;
     boostEffect.isActive = false; // Отменяем ускорение
     slowdownEffect.timer = 0.0f;
-    Logger::getInstance().log("Slowdown effect applied.");
+    currentSpeed *= slowdownEffect.multiplier; // Уменьшаем скорость
+    Logger::getInstance().log("Slowdown applied. New speed: " + std::to_string(currentSpeed));
 }
