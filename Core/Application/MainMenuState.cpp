@@ -3,13 +3,8 @@
 //
 
 #include "MainMenuState.h"
-#include "../Data/States/GameModeSelectionState.h"
-#include "../Config/Utils/Logger.h"
-
-// Core/Application/MainMenuState.cpp
-#include "MainMenuState.h"
-#include "../Data/States/GameModeSelectionState.h"
-#include "../Data/States/RecordsModeSelectionState.h"
+#include "../Data/States/Menu/GameModeSelectionState.h"
+#include "../Data/States/Menu/RecordsModeSelectionState.h"
 #include "../Config/Utils/Logger.h"
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)

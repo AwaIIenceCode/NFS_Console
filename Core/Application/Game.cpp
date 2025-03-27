@@ -2,7 +2,6 @@
 // Created by AwallencePC on 19.03.2025.
 //
 
-// Core/Application/Game.cpp
 #include "Game.h"
 
 Game::Game()
