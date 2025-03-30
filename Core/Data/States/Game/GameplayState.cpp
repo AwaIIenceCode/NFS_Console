@@ -8,7 +8,7 @@
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), countdown(), hud(25000.0f),
-      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f),
+      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f), // Обновили параметры, как ты сказал
       audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
                       [](float roadLeft, float roadRight) {
@@ -51,7 +51,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                }
                            }
                        }, this),
-      trafficManager(0.0f, 1.5f, // Спавн каждые 1.5 секунды вместо 3
+      trafficManager(0.0f, 1.5f,
                      [](float roadLeft, float roadRight) {
                          static const std::vector<std::string> trafficTextures = {
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
@@ -71,7 +71,8 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                      [](PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&) {
                          // Пока коллизий нет, пустая функция
                      }, nullptr),
-      totalDistance(25000.0f), passedDistance(0.0f), raceFinished(false), finishTime(0.0f) {
+      totalDistance(25000.0f), passedDistance(0.0f), raceFinished(false), finishTime(0.0f),
+      trafficSpawnDelayTimer(0.0f) { // Инициализируем таймер задержки
     Logger::getInstance().log("GameplayState created");
 
     audioManager.loadSound("engine", "Assets/Sounds/EngineSounds.wav");
@@ -129,7 +130,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                              }
                                          }
                                      }, this);
-    trafficManager = EntityManager(roadWidth, 1.5f, // Спавн каждые 1.5 секунды
+    trafficManager = EntityManager(roadWidth, 1.5f,
                                   [](float roadLeft, float roadRight) {
                                       static const std::vector<std::string> trafficTextures = {
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
@@ -211,7 +212,11 @@ void GameplayState::update(float deltaTime) {
         lightningManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
         lightningManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
 
-        trafficManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+        // Обновляем таймер задержки спавна трафика
+        trafficSpawnDelayTimer += deltaTime;
+        if (trafficSpawnDelayTimer >= 5.0f) { // Спавним трафик только после 5 секунд
+            trafficManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+        }
 
         speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
         speedManager.setCurrentSpeed(currentSpeed);

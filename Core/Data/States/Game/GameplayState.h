@@ -46,6 +46,7 @@ private:
     float passedDistance;
     bool raceFinished;
     float finishTime;
+    float trafficSpawnDelayTimer;
 };
 
 #endif //NFS_CONSOLE_GAMEPLAYSTATE_H

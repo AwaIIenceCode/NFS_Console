@@ -8,8 +8,8 @@
 
 TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roadRight)
     : Car(texturePath), scaleFactor(0.2f) {
-    // Устанавливаем рандомную скорость в диапазоне 200-500 пикселей/сек
-    trafficSpeed = 200.0f + static_cast<float>(rand() % 301); // от 200 до 500
+    // Устанавливаем рандомную скорость в диапазоне 300-750 пикселей/сек (200-500 * 1.5)
+    trafficSpeed = 300.0f + static_cast<float>(rand() % 451); // от 300 до 750
     Logger::getInstance().log("TrafficCar spawned with speed: " + std::to_string(trafficSpeed));
 
     // Масштабируем машинку, как PlayerCar
@@ -19,9 +19,12 @@ TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roa
     // Позиция: рандомно в пределах дороги с отступами от тротуаров
     float sidewalkWidth = 100.0f;
     float carWidth = sprite.getGlobalBounds().width;
-    float spawnRange = (roadRight - sidewalkWidth) - (roadLeft + sidewalkWidth) - carWidth;
+    float spawnMargin = 60.0f; // Дополнительный отступ, как в Obstacle
+    float adjustedRoadLeft = roadLeft + sidewalkWidth + spawnMargin + (carWidth / 2.0f);
+    float adjustedRoadRight = roadRight - sidewalkWidth - spawnMargin - (carWidth / 2.0f);
+    float spawnRange = adjustedRoadRight - adjustedRoadLeft;
     if (spawnRange < 0) spawnRange = 0;
-    float xPos = (roadLeft + sidewalkWidth) + static_cast<float>(rand() % static_cast<int>(spawnRange));
+    float xPos = adjustedRoadLeft + static_cast<float>(rand() % static_cast<int>(spawnRange));
     sprite.setPosition(xPos, -sprite.getGlobalBounds().height); // Спавним выше экрана
 
     Logger::getInstance().log("TrafficCar spawned at x: " + std::to_string(xPos));
