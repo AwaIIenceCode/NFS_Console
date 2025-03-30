@@ -8,9 +8,9 @@
 #include "../SpawnableEntity.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
+#include "Core/Config/Utils/ScaleManager.h"
 
-class TrafficCar : public Car, public SpawnableEntity
-{
+class TrafficCar : public Car, public SpawnableEntity {
 public:
     TrafficCar(const std::string& texturePath, float roadLeft, float roadRight);
     void update(float deltaTime, float roadSpeed) override;
@@ -20,7 +20,8 @@ public:
     sf::Vector2f getPosition() const override;
 
 private:
-    float trafficSpeed;
+    float trafficSpeed; // Скорость конкретной машинки
+    float scaleFactor; // Масштаб текстуры, как у PlayerCar
 };
 
 #endif //TRAFFICCAR_H

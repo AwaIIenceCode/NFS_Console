@@ -6,15 +6,15 @@
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
 
-
 TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roadRight)
-    : Car(texturePath) {
-    // Устанавливаем рандомную скорость в диапазоне 100-300 пикселей/сек
-    trafficSpeed = 100.0f + static_cast<float>(rand() % 201); // от 100 до 300
+    : Car(texturePath), scaleFactor(0.2f) {
+    // Устанавливаем рандомную скорость в диапазоне 200-500 пикселей/сек
+    trafficSpeed = 200.0f + static_cast<float>(rand() % 301); // от 200 до 500
     Logger::getInstance().log("TrafficCar spawned with speed: " + std::to_string(trafficSpeed));
 
-    // Масштабируем машинку (как PlayerCar, чтобы не была огромной)
-    sprite.setScale(0.2f, 0.2f);
+    // Масштабируем машинку, как PlayerCar
+    ScaleManager::getInstance().scaleSprite(sprite);
+    sprite.setScale(sprite.getScale().x * scaleFactor, sprite.getScale().y * scaleFactor);
 
     // Позиция: рандомно в пределах дороги с отступами от тротуаров
     float sidewalkWidth = 100.0f;

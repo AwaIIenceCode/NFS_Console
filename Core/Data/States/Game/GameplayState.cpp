@@ -8,7 +8,7 @@
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), countdown(), hud(25000.0f),
-      speedEffectManager(50.0f), speedManager(20.0f, 480.0f, 5.8f),
+      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f),
       audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
                       [](float roadLeft, float roadRight) {
@@ -51,8 +51,8 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                }
                            }
                        }, this),
-      trafficManager(0.0f, 3.0f, // Спавн каждые 3 секунды
-                     [](float roadLeft, float roadRight) { // Исправили лямбду
+      trafficManager(0.0f, 1.5f, // Спавн каждые 1.5 секунды вместо 3
+                     [](float roadLeft, float roadRight) {
                          static const std::vector<std::string> trafficTextures = {
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",
@@ -129,8 +129,8 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                              }
                                          }
                                      }, this);
-    trafficManager = EntityManager(roadWidth, 3.0f,
-                                  [](float roadLeft, float roadRight) { // Исправили лямбду
+    trafficManager = EntityManager(roadWidth, 1.5f, // Спавн каждые 1.5 секунды
+                                  [](float roadLeft, float roadRight) {
                                       static const std::vector<std::string> trafficTextures = {
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",

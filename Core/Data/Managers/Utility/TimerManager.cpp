@@ -2,8 +2,8 @@
 //
 
 #include "TimerManager.h"
-#include "../../Config/Settings/GameConfig.h"
-#include "../../Config/Utils/Logger.h"
+#include "../../../Config/Settings/GameConfig.h"
+#include "../../../Config/Utils/Logger.h"
 #include <sstream>
 #include <iomanip>
 
@@ -11,7 +11,7 @@ TimerManager::TimerManager(float totalDistance)
     : totalDistance(totalDistance), passedDistance(0.0f), timerStarted(false), isCountingDownFlag(true) {}
 
 void TimerManager::initialize() {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for TimerManager");
     }
 
@@ -40,7 +40,7 @@ void TimerManager::initialize() {
                              GameConfig::getInstance().getWindowHeight() / 2.0f - 50.0f);
     countdownText.setString("3");
 
-    if (!countdownBuffer.loadFromFile("Assets/Sounds/StartSound_1.wav")) {
+    if (!countdownBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/StartSound_2.wav")) {
         Logger::getInstance().log("Failed to load countdown sound");
     }
 
