@@ -10,11 +10,11 @@
 
 RecordsModeSelectionState::RecordsModeSelectionState(Game* game)
     : GameState(game), background(game->getRecordsBackground()), selectedOption(MenuOption::TIME_TRIAL) {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for RecordsModeSelectionState");
     }
 
-    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav")) {
+    if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav")) {
         Logger::getInstance().log("Failed to load menu select sound");
     }
     selectSound.setBuffer(selectSoundBuffer);

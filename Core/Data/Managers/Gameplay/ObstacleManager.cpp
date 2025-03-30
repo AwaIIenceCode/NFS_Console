@@ -38,7 +38,7 @@ void ObstacleManager::spawnObstacle() {
     float roadRight = roadLeft + roadWidth;
     Logger::getInstance().log("Spawning obstacle at roadLeft: " + std::to_string(roadLeft) +
                              ", roadRight: " + std::to_string(roadRight));
-    obstacles.emplace_back("Assets/Textures/Rock.png", roadLeft, roadRight);
+    obstacles.emplace_back("J:/MyIDE/NFS_Console/Assets/Textures/Rock.png", roadLeft, roadRight);
     Logger::getInstance().log("Spawned an obstacle");
 }
 

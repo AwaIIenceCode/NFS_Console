@@ -49,7 +49,7 @@ void LightningManager::spawnLightning()
     float roadRight = roadLeft + roadWidth;
     Logger::getInstance().log("Spawning lightning at roadLeft: " + std::to_string(roadLeft) +
                              ", roadRight: " + std::to_string(roadRight));
-    lightnings.emplace_back("Assets/Textures/Lightning.png", roadLeft, roadRight);
+    lightnings.emplace_back("J:/MyIDE/NFS_Console/Assets/Textures/Lightning.png", roadLeft, roadRight);
     Logger::getInstance().log("Spawned a lightning");
 }
 

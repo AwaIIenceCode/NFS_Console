@@ -9,12 +9,12 @@ PauseMenuManager::PauseMenuManager() : isPausedFlag(false), selectedPauseOption(
 
 void PauseMenuManager::initialize()
 {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf"))
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
     {
         Logger::getInstance().log("Failed to load font for PauseMenuManager");
     }
 
-    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav"))
+    if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav"))
     {
         Logger::getInstance().log("Failed to load menu select sound");
     }

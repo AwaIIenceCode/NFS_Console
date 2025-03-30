@@ -10,7 +10,7 @@ RoadManager::RoadManager() : roadWidth(0.0f), roadHeight(0.0f) {}
 
 void RoadManager::initialize()
 {
-    if (!roadTexture.loadFromFile("Assets/Textures/TimeTrialRoad.png"))
+    if (!roadTexture.loadFromFile("J:/MyIDE/NFS_Console/Assets/Textures/TimeTrialRoad.png"))
     {
         Logger::getInstance().log("Failed to load road texture");
         sf::Image image;

@@ -5,13 +5,13 @@
 #include "../GameState.h"
 #include "../../../Application/GameMode.h"
 #include "../../../Domain/Entities/Cars/PlayerCar.h"
+#include "../../../Domain/Entities/Cars/TrafficCar.h"
 #include "../../Managers/Gameplay/RoadManager.h"
 #include "../../Managers/Utility/Timer.h"
 #include "../../Managers/UI/Countdown.h"
 #include "../../Managers/UI/HUD.h"
 #include "../../Managers/UI/PauseMenuManager.h"
 #include "../../Managers/../Managers/Gameplay/EntityManager.h"
-
 #include "../../Managers/Gameplay/SpeedEffectManager.h"
 #include "../../Managers/Gameplay/SpeedManager.h"
 #include "../../../Audio/AudioManager.h"
@@ -37,9 +37,10 @@ private:
     PauseMenuManager pauseMenuManager;
     EntityManager obstacleManager;
     EntityManager lightningManager;
+    EntityManager trafficManager;
     SpeedEffectManager speedEffectManager;
     SpeedManager speedManager;
-    AudioManager& audioManager; // Поле для AudioManager
+    AudioManager& audioManager;
 
     float totalDistance;
     float passedDistance;

@@ -13,7 +13,7 @@
 GameModeSelectionState::GameModeSelectionState(Game* game, sf::Sprite* background)
     : GameState(game), background(background), selectedOption(MenuOption::TIME_TRIAL)
 {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf"))
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
     {
         Logger::getInstance().log("Failed to load font for GameModeSelectionState");
     }

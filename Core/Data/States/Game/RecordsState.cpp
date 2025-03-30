@@ -9,7 +9,7 @@
 
 RecordsState::RecordsState(Game* game, GameMode mode)
     : GameState(game), background(game->getRecordsBackground()), mode(mode) {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for RecordsState");
     }
 

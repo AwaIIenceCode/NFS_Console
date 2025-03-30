@@ -9,7 +9,7 @@ Game::Game()
     updateWindowSettings();
 
     // Загружаем текстуру основного фона через TextureManager
-    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("Assets/Textures/BackgroundMenu.jpg");
+    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
     if (backgroundTexture) {
         background.setTexture(*backgroundTexture);
         ScaleManager::getInstance().scaleSpriteToFill(background);
@@ -18,7 +18,7 @@ Game::Game()
     }
 
     // Загружаем текстуру фона для экрана рекордов через TextureManager
-    sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("Assets/Textures/BackgroundRecords.jpg");
+    sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundRecords.jpg");
     if (recordsBackgroundTexture) {
         recordsBackground.setTexture(*recordsBackgroundTexture);
         ScaleManager::getInstance().scaleSpriteToFill(recordsBackground);

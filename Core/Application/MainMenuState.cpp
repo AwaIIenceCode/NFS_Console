@@ -9,12 +9,12 @@
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     : GameState(game), background(background), selectedOption(MenuOption::START_GAME) {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for MainMenuState");
     }
 
     // Загружаем звук для переключения пунктов меню
-    if (!selectSoundBuffer.loadFromFile("Assets/Sounds/ChangeChoice.wav")) {
+    if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav")) {
         Logger::getInstance().log("Failed to load menu select sound");
     }
     selectSound.setBuffer(selectSoundBuffer);

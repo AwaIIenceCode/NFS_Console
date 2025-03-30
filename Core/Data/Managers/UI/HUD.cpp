@@ -8,7 +8,7 @@
 HUD::HUD(float totalDistance) : totalDistance(totalDistance) {}
 
 void HUD::initialize() {
-    if (!font.loadFromFile("Assets/Fonts/Pencils.ttf")) {
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for HUD");
     }
 

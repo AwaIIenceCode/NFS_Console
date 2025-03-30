@@ -1,15 +1,15 @@
 #include "GameplayState.h"
 #include "FinishState.h"
-#include "../../../Domain/Entities/Obstacles/Obstacle.h"
-#include "../../../Domain/Entities/Bonuses/Lightning.h"
-#include "../../../Config/Utils/Logger.h"
+#include "Core/Domain/Entities/Obstacles/Obstacle.h"
+#include "Core/Domain/Entities/Bonuses/Lightning.h"
+#include "Core/Config/Utils/Logger.h"
 #include <fstream>
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), countdown(), hud(25000.0f),
       speedEffectManager(50.0f), speedManager(20.0f, 480.0f, 5.8f),
-      audioManager(AudioManager::getInstance()), // Инициализируем AudioManager
+      audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
                       [](float roadLeft, float roadRight) {
                           return std::make_unique<Obstacle>("Assets/Textures/Rock.png", roadLeft, roadRight);
@@ -26,7 +26,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                   Logger::getInstance().log("Player hit an obstacle! Applying speed reduction.");
                                   speedEffectManager.applySlowdown(currentSpeed);
                                   speedController->resetAcceleration();
-                                  audioManager.playSound("collision"); // Проигрываем звук столкновения
+                                  audioManager.playSound("collision");
                                   it = entities.erase(it);
                               } else {
                                   ++it;
@@ -44,22 +44,39 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                if (playerBounds.intersects(bounds)) {
                                    Logger::getInstance().log("Player picked up a lightning! Applying speed boost.");
                                    speedEffectManager.applyBoost(currentSpeed);
-                                   audioManager.playSound("boost"); // Проигрываем звук буста
+                                   audioManager.playSound("boost");
                                    it = entities.erase(it);
                                } else {
                                    ++it;
                                }
                            }
                        }, this),
+      trafficManager(0.0f, 3.0f, // Спавн каждые 3 секунды
+                     [](float roadLeft, float roadRight) { // Исправили лямбду
+                         static const std::vector<std::string> trafficTextures = {
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_3.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_4.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_5.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_6.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_7.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_8.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_9.png",
+                             "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_10.png"
+                         };
+                         int index = rand() % trafficTextures.size();
+                         return std::make_unique<TrafficCar>(trafficTextures[index], roadLeft, roadRight);
+                     },
+                     [](PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&) {
+                         // Пока коллизий нет, пустая функция
+                     }, nullptr),
       totalDistance(25000.0f), passedDistance(0.0f), raceFinished(false), finishTime(0.0f) {
     Logger::getInstance().log("GameplayState created");
 
-    // Загружаем звуки
     audioManager.loadSound("engine", "Assets/Sounds/EngineSounds.wav");
     audioManager.loadSound("boost", "Assets/Sounds/LightningSounds.wav");
     audioManager.loadSound("collision", "Assets/Sounds/RockSounds.wav");
-
-    // Запускаем звук движка в цикле
     audioManager.playLoopingSound("engine");
 
     float initialY = GameConfig::getInstance().getWindowHeight() * 2.0f / 3.0f + 100.0f;
@@ -87,7 +104,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                             Logger::getInstance().log("Player hit an obstacle! Applying speed reduction.");
                                             speedEffectManager.applySlowdown(currentSpeed);
                                             speedController->resetAcceleration();
-                                            audioManager.playSound("collision"); // Проигрываем звук столкновения
+                                            audioManager.playSound("collision");
                                             it = entities.erase(it);
                                         } else {
                                             ++it;
@@ -105,19 +122,40 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                              if (playerBounds.intersects(bounds)) {
                                                  Logger::getInstance().log("Player picked up a lightning! Applying speed boost.");
                                                  speedEffectManager.applyBoost(currentSpeed);
-                                                 audioManager.playSound("boost"); // Проигрываем звук буста
+                                                 audioManager.playSound("boost");
                                                  it = entities.erase(it);
                                              } else {
                                                  ++it;
                                              }
                                          }
                                      }, this);
+    trafficManager = EntityManager(roadWidth, 3.0f,
+                                  [](float roadLeft, float roadRight) { // Исправили лямбду
+                                      static const std::vector<std::string> trafficTextures = {
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_3.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_4.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_5.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_6.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_7.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_8.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_9.png",
+                                          "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_10.png"
+                                      };
+                                      int index = rand() % trafficTextures.size();
+                                      return std::make_unique<TrafficCar>(trafficTextures[index], roadLeft, roadRight);
+                                  },
+                                  [](PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&) {
+                                      // Пока коллизий нет
+                                  }, nullptr);
+
     obstacleManager.initialize();
     lightningManager.initialize();
+    trafficManager.initialize();
 }
 
 GameplayState::~GameplayState() {
-    // Останавливаем звук движка при выходе из состояния
     audioManager.stopLoopingSound("engine");
 }
 
@@ -142,8 +180,7 @@ void GameplayState::update(float deltaTime) {
         float currentSpeed = speedManager.getCurrentSpeed();
         Logger::getInstance().log("Speed before effects: " + std::to_string(currentSpeed));
 
-        // Обновляем высоту тона звука движка в зависимости от скорости
-        float pitch = 0.5f + (currentSpeed - 50.0f) / (450.0f - 50.0f); // От 0.5 до 1.5
+        float pitch = 0.5f + (currentSpeed - 50.0f) / (450.0f - 50.0f);
         audioManager.setPitch("engine", pitch);
 
         roadManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
@@ -157,7 +194,6 @@ void GameplayState::update(float deltaTime) {
         hud.updateTimer(timer.getElapsedTime());
         hud.updateProgress(passedDistance);
 
-        // Логируем границы игрока перед проверкой столкновений с камнями
         sf::FloatRect playerBounds = playerCar.getBounds();
         Logger::getInstance().log("Player bounds before obstacle collision: (left: " + std::to_string(playerBounds.left) +
                                  ", top: " + std::to_string(playerBounds.top) +
@@ -167,7 +203,6 @@ void GameplayState::update(float deltaTime) {
         obstacleManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
         obstacleManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
 
-        // Логируем границы игрока перед проверкой столкновений с молнией
         Logger::getInstance().log("Player bounds before lightning collision: (left: " + std::to_string(playerBounds.left) +
                                  ", top: " + std::to_string(playerBounds.top) +
                                  ", width: " + std::to_string(playerBounds.width) +
@@ -175,9 +210,10 @@ void GameplayState::update(float deltaTime) {
 
         lightningManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
         lightningManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
-        speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
 
-        // Синхронизируем скорость с SpeedManager после применения эффектов
+        trafficManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+
+        speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
         speedManager.setCurrentSpeed(currentSpeed);
         Logger::getInstance().log("Speed after effects: " + std::to_string(currentSpeed));
 
@@ -187,9 +223,7 @@ void GameplayState::update(float deltaTime) {
             raceFinished = true;
             finishTime = timer.getElapsedTime();
             Logger::getInstance().log("Race finished! Time: " + std::to_string(finishTime) + " seconds");
-
-            SaveManager::getInstance().saveRecord(gameMode, finishTime); // Сохраняем через SaveManager
-
+            SaveManager::getInstance().saveRecord(gameMode, finishTime);
             game->setState(new FinishState(game, gameMode, finishTime));
         }
     }
@@ -201,6 +235,7 @@ void GameplayState::render(Renderer& renderer) {
     roadManager.render(renderer);
     obstacleManager.render(renderer);
     lightningManager.render(renderer);
+    trafficManager.render(renderer);
     playerCar.render(renderer);
     countdown.render(renderer);
     hud.render(renderer);
