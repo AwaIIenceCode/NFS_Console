@@ -9,7 +9,7 @@
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), timerManager(25000.0f), hud(25000.0f),
-      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f),
+      speedEffectManager(20.0f), speedManager(40.0f, 600.0f, 16.0f),
       audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
                       [](float roadLeft, float roadRight) {

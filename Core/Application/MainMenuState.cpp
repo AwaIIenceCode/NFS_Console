@@ -17,6 +17,19 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     }
     selectSound.setBuffer(selectSoundBuffer);
 
+    // Проверяем, есть ли текстура у фона
+    if (!background->getTexture()) {
+        Logger::getInstance().log("Background texture is missing! Reloading...");
+        sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
+        if (backgroundTexture) {
+            background->setTexture(*backgroundTexture);
+            background->setPosition(0.0f, 0.0f);
+            ScaleManager::getInstance().scaleSprite(*background); // Раскомментируем
+        } else {
+            Logger::getInstance().log("Failed to reload background texture!");
+        }
+    }
+
     initializeMenu();
 }
 
@@ -115,7 +128,17 @@ void MainMenuState::update(float deltaTime) {
 
 void MainMenuState::render(Renderer& renderer) {
     renderer.clear(sf::Color::Black); // Очищаем экран чёрным цветом
-    renderer.render(*background);
+    if (background->getTexture()) {
+        Logger::getInstance().log("Rendering background in MainMenuState at position: (" +
+                                 std::to_string(background->getPosition().x) + ", " +
+                                 std::to_string(background->getPosition().y) + ")");
+        Logger::getInstance().log("Background scale: (" +
+                                 std::to_string(background->getScale().x) + ", " +
+                                 std::to_string(background->getScale().y) + ")");
+        renderer.render(*background);
+    } else {
+        Logger::getInstance().log("Background texture is missing in MainMenuState!");
+    }
     for (const auto& item : menuItems) {
         renderer.render(item);
     }

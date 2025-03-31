@@ -11,7 +11,7 @@ Game::Game()
     sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
     if (backgroundTexture) {
         background.setTexture(*backgroundTexture);
-        ScaleManager::getInstance().scaleSprite(background); // Масштабируем фон
+        ScaleManager::getInstance().scaleSprite(background); // Раскомментируем
     } else {
         Logger::getInstance().log("Failed to load background texture");
     }
@@ -20,7 +20,7 @@ Game::Game()
     sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundRecords.jpg");
     if (recordsBackgroundTexture) {
         recordsBackground.setTexture(*recordsBackgroundTexture);
-        ScaleManager::getInstance().scaleSprite(recordsBackground); // Масштабируем фон
+        ScaleManager::getInstance().scaleSprite(recordsBackground); // Раскомментируем
     } else {
         Logger::getInstance().log("Failed to load records background texture");
     }
