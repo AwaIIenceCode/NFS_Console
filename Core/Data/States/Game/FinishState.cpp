@@ -1,9 +1,7 @@
 //
 // Created by AwallencePC on 25.03.2025.
 //
-
-#include "FinishState.h"
-
+// Core/Data/States/Game/FinishState.cpp
 #include "FinishState.h"
 #include "GameplayState.h"
 #include "../../../Application/MainMenuState.h"
@@ -14,6 +12,7 @@
 FinishState::FinishState(Game* game, GameMode mode, float finishTime)
     : GameState(game), background(game->getRecordsBackground()), mode(mode), finishTime(finishTime),
       selectedOption(MenuOption::RESTART) {
+    Logger::getInstance().log("FinishState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for FinishState");
     }
@@ -44,6 +43,10 @@ FinishState::FinishState(Game* game, GameMode mode, float finishTime)
     initializeMenu();
 }
 
+FinishState::~FinishState() {
+    Logger::getInstance().log("FinishState destructor called");
+}
+
 void FinishState::initializeMenu() {
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
@@ -59,19 +62,18 @@ void FinishState::initializeMenu() {
 }
 
 void FinishState::determineMedal() {
-    // Устанавливаем пороговые значения для медалей (в секундах)
-    const float goldThreshold = 30.0f;  // Золото: меньше 30 секунд
-    const float silverThreshold = 45.0f;  // Серебро: меньше 45 секунд
-    const float bronzeThreshold = 60.0f;  // Бронза: меньше 60 секунд
+    const float goldThreshold = 30.0f;
+    const float silverThreshold = 45.0f;
+    const float bronzeThreshold = 60.0f;
 
     if (finishTime <= goldThreshold) {
-        medalText.setFillColor(sf::Color::Yellow); // Золотой цвет
+        medalText.setFillColor(sf::Color::Yellow);
         medalText.setString("Gold Medal!");
     } else if (finishTime <= silverThreshold) {
-        medalText.setFillColor(sf::Color(192, 192, 192)); // Серебряный цвет
+        medalText.setFillColor(sf::Color(192, 192, 192));
         medalText.setString("Silver Medal!");
     } else if (finishTime <= bronzeThreshold) {
-        medalText.setFillColor(sf::Color(205, 127, 50)); // Бронзовый цвет
+        medalText.setFillColor(sf::Color(205, 127, 50));
         medalText.setString("Bronze Medal!");
     } else {
         medalText.setFillColor(sf::Color::White);
@@ -152,11 +154,18 @@ void FinishState::update(float deltaTime) {
 }
 
 void FinishState::render(Renderer& renderer) {
-    renderer.render(*background);
+    Logger::getInstance().log("Rendering FinishState");
+    renderer.clear(sf::Color::Black); // Очищаем экран
+    if (background->getTexture()) {
+        renderer.render(*background);
+    } else {
+        Logger::getInstance().log("FinishState background texture is missing!");
+    }
     renderer.render(finishMessage);
     renderer.render(timeText);
     renderer.render(medalText);
     for (const auto& item : menuItems) {
         renderer.render(item);
     }
+    renderer.display();
 }

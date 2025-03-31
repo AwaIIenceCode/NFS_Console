@@ -8,7 +8,6 @@
 #include "../GameState.h"
 #include "../../../Application/Game.h"
 #include "../../../Application/GameMode.h"
-#include "../../../Config/Settings/GameConfig.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -16,6 +15,7 @@ class FinishState : public GameState
 {
 public:
     FinishState(Game* game, GameMode mode, float finishTime);
+    ~FinishState();
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
@@ -43,7 +43,5 @@ private:
     void updateMenuPositions();
     void determineMedal();
 };
-
-
 
 #endif //FINISHSTATE_H
