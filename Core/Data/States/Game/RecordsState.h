@@ -17,6 +17,7 @@
 class RecordsState : public GameState {
 public:
     RecordsState(Game* game, GameMode mode);
+    ~RecordsState(); // Добавляем деструктор
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
@@ -25,7 +26,7 @@ private:
     sf::Sprite* background;
     sf::Font font;
     sf::Text titleText;
-    sf::Text noRecordsText; // Текст для случая, если рекордов нет
+    sf::Text noRecordsText;
     std::vector<sf::Text> recordTexts;
     sf::Text backText;
     GameMode mode;
@@ -33,7 +34,7 @@ private:
 
     void loadRecords();
     void updatePositions();
-    std::string formatTime(float time); // Новый метод для форматирования времени
+    std::string formatTime(float time);
 };
 
 #endif //RECORDSSTATE_H

@@ -9,6 +9,7 @@
 
 RecordsState::RecordsState(Game* game, GameMode mode)
     : GameState(game), background(game->getRecordsBackground()), mode(mode) {
+    Logger::getInstance().log("RecordsState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for RecordsState");
     }
@@ -27,6 +28,12 @@ RecordsState::RecordsState(Game* game, GameMode mode)
 
     loadRecords();
     updatePositions();
+
+}
+
+RecordsState::~RecordsState()
+{
+    Logger::getInstance().log("RecordsState destructor called");
 }
 
 std::string RecordsState::formatTime(float time) {
@@ -111,7 +118,13 @@ void RecordsState::update(float deltaTime) {
 }
 
 void RecordsState::render(Renderer& renderer) {
-    renderer.render(*background);
+    Logger::getInstance().log("Rendering RecordsState");
+    renderer.clear(sf::Color::Black); // Очищаем экран
+    if (background->getTexture()) {
+        renderer.render(*background);
+    } else {
+        Logger::getInstance().log("Records background texture is missing in RecordsState!");
+    }
     renderer.render(titleText);
     if (records.empty()) {
         renderer.render(noRecordsText);
@@ -121,4 +134,5 @@ void RecordsState::render(Renderer& renderer) {
         }
     }
     renderer.render(backText);
+    renderer.display();
 }

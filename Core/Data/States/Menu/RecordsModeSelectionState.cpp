@@ -1,7 +1,3 @@
-//
-// Created by AwallencePC on 25.03.2025.
-//
-
 // Core/Data/States/RecordsModeSelectionState.cpp
 #include "RecordsModeSelectionState.h"
 #include "../../../Application/MainMenuState.h"
@@ -10,6 +6,7 @@
 
 RecordsModeSelectionState::RecordsModeSelectionState(Game* game)
     : GameState(game), background(game->getRecordsBackground()), selectedOption(MenuOption::TIME_TRIAL) {
+    Logger::getInstance().log("RecordsModeSelectionState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for RecordsModeSelectionState");
     }
@@ -20,6 +17,10 @@ RecordsModeSelectionState::RecordsModeSelectionState(Game* game)
     selectSound.setBuffer(selectSoundBuffer);
 
     initializeMenu();
+}
+
+RecordsModeSelectionState::~RecordsModeSelectionState() {
+    Logger::getInstance().log("RecordsModeSelectionState destructor called");
 }
 
 void RecordsModeSelectionState::initializeMenu() {
@@ -96,8 +97,15 @@ void RecordsModeSelectionState::update(float deltaTime) {
 }
 
 void RecordsModeSelectionState::render(Renderer& renderer) {
-    renderer.render(*background);
+    Logger::getInstance().log("Rendering RecordsModeSelectionState");
+    renderer.clear(sf::Color::Black); // Очищаем экран
+    if (background->getTexture()) {
+        renderer.render(*background);
+    } else {
+        Logger::getInstance().log("Records background texture is missing!");
+    }
     for (const auto& item : menuItems) {
         renderer.render(item);
     }
+    renderer.display(); // Обновляем экран
 }

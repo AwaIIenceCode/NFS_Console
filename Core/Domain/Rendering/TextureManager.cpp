@@ -6,6 +6,7 @@ sf::Texture* TextureManager::loadTexture(const std::string& path) {
     // Проверяем, есть ли текстура в хранилище
     auto it = textures.find(path);
     if (it != textures.end()) {
+        Logger::getInstance().log("Returning existing texture: " + path);
         return &it->second;
     }
 

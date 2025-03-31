@@ -1,7 +1,4 @@
-//
-// Created by AwallencePC on 25.03.2025.
-//
-
+// Core/Data/States/RecordsModeSelectionState.h
 #ifndef RECORDSMODESELECTIONSTATE_H
 #define RECORDSMODESELECTIONSTATE_H
 
@@ -15,6 +12,7 @@ class RecordsModeSelectionState : public GameState
 {
 public:
     RecordsModeSelectionState(Game* game);
+    ~RecordsModeSelectionState();
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
@@ -36,7 +34,5 @@ private:
     void initializeMenu();
     void updateMenuPositions();
 };
-
-
 
 #endif //RECORDSMODESELECTIONSTATE_H
