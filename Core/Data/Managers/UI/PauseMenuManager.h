@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "../../States/GameState.h"
+#include "../../../Application/MainMenuState.h"
 
 class PauseMenuManager
 {

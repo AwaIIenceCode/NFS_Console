@@ -4,6 +4,7 @@
 
 #include "PauseMenuManager.h"
 #include "../../../Application/MainMenuState.h"
+#include "../../States/GameState.h"
 
 PauseMenuManager::PauseMenuManager() : isPausedFlag(false), selectedPauseOption(PauseOption::RESUME) {}
 

@@ -2,6 +2,7 @@
 // Created by AwallencePC on 23.03.2025.
 //
 
+// Core/Application/MainMenuState.h
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
@@ -16,6 +17,7 @@ class MainMenuState : public GameState
 {
 public:
     MainMenuState(Game* game, sf::Sprite* background);
+    virtual ~MainMenuState(); // Объявляем виртуальный деструктор
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;

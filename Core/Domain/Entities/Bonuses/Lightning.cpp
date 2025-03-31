@@ -8,23 +8,28 @@
 #include "../../../Config/Settings/GameConfig.h"
 
 Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadRight) {
-    if (!texture.loadFromFile(texturePath)) {
+    sf::Texture* texture = TextureManager::getInstance().loadTexture(texturePath);
+    if (!texture) {
         Logger::getInstance().log("Failed to load lightning texture: " + texturePath);
         sf::Image image;
         image.create(30, 30, sf::Color::Yellow);
-        if (!texture.loadFromImage(image)) {
+        sf::Texture placeholder;
+        if (!placeholder.loadFromImage(image)) {
             Logger::getInstance().log("Failed to create lightning texture placeholder");
+        } else {
+            // Добавляем заглушку в TextureManager
+            texture = TextureManager::getInstance().addTexture(texturePath + "_placeholder", placeholder);
         }
     } else {
         Logger::getInstance().log("Successfully loaded lightning texture: " + texturePath);
     }
 
-    sprite.setTexture(texture);
-    // Увеличиваем масштаб до 0.2f (20% от исходного размера)
+    sprite.setTexture(*texture);
+    // Увеличиваем масштаб до 0.07f (7% от исходного размера)
     sprite.setScale(0.07f, 0.07f);
 
     // Новый способ генерации xPos с учётом тротуаров
-    float textureWidth = texture.getSize().x * sprite.getScale().x;
+    float textureWidth = texture->getSize().x * sprite.getScale().x;
     float sidewalkWidth = 100.0f; // Ширина тротуара с каждой стороны
     float spawnRange = (roadRight - sidewalkWidth) - (roadLeft + sidewalkWidth) - textureWidth;
     if (spawnRange < 0) {

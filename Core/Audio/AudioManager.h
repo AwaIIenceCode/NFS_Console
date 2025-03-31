@@ -19,7 +19,6 @@ public:
         return instance;
     }
 
-    // Загружаем звук по пути и даём ему имя
     void loadSound(const std::string& name, const std::string& path)
     {
         sf::SoundBuffer buffer;
@@ -34,7 +33,6 @@ public:
         Logger::getInstance().log("Loaded sound: " + path);
     }
 
-
     void playSound(const std::string& name)
     {
         auto it = sounds.find(name);
@@ -43,7 +41,6 @@ public:
             it->second.stop();
             it->second.play();
         }
-
         else
         {
             Logger::getInstance().log("Sound not found: " + name);
@@ -53,13 +50,11 @@ public:
     void playLoopingSound(const std::string& name)
     {
         auto it = sounds.find(name);
-
         if (it != sounds.end())
         {
             it->second.setLoop(true);
             it->second.play();
         }
-
         else
         {
             Logger::getInstance().log("Looping sound not found: " + name);
@@ -73,13 +68,23 @@ public:
         {
             it->second.setLoop(false);
             it->second.stop();
+            Logger::getInstance().log("Stopped looping sound: " + name);
+        }
+    }
+
+    void stopAllSounds()
+    {
+        for (auto& sound : sounds)
+        {
+            sound.second.stop();
+            sound.second.setLoop(false);
+            Logger::getInstance().log("Stopped sound: " + sound.first);
         }
     }
 
     void setPitch(const std::string& name, float pitch)
     {
         auto it = sounds.find(name);
-
         if (it != sounds.end())
         {
             it->second.setPitch(pitch);
@@ -89,13 +94,19 @@ public:
     void setVolume(const std::string& name, float volume)
     {
         auto it = sounds.find(name);
-
-        if (it != sounds.end())  { it->second.setVolume(volume); }
+        if (it != sounds.end()) { it->second.setVolume(volume); }
     }
 
 private:
     AudioManager() = default;
-    ~AudioManager() = default;
+    ~AudioManager()
+    {
+        Logger::getInstance().log("AudioManager destructor called");
+        stopAllSounds();
+        sounds.clear();
+        soundBuffers.clear();
+        Logger::getInstance().log("AudioManager destructor finished");
+    }
     AudioManager(const AudioManager&) = delete;
     AudioManager& operator=(const AudioManager&) = delete;
 

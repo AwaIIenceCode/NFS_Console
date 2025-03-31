@@ -1,11 +1,6 @@
-//
-// Created by AwallencePC on 24.03.2025.
-//
-
+// Core/Data/States/Menu/GameModeSelectionState.cpp
 #include "GameModeSelectionState.h"
-
 #include <Core/Data/States/Game/GameplayState.h>
-
 #include "../GameState.h"
 #include "../../../Config/Utils/Logger.h"
 #include "../../../Application/GameMode.h"
@@ -13,6 +8,7 @@
 GameModeSelectionState::GameModeSelectionState(Game* game, sf::Sprite* background)
     : GameState(game), background(background), selectedOption(MenuOption::TIME_TRIAL)
 {
+    Logger::getInstance().log("GameModeSelectionState created"); // Добавляем лог
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
     {
         Logger::getInstance().log("Failed to load font for GameModeSelectionState");
@@ -34,7 +30,6 @@ void GameModeSelectionState::initializeMenu()
         item.setFont(font);
 
         if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(80); }
-
         else { item.setCharacterSize(40); }
 
         item.setFillColor(sf::Color::White);
@@ -67,7 +62,7 @@ void GameModeSelectionState::processEvents(sf::Event& event)
     if (event.type == sf::Event::KeyPressed)
     {
         if (event.key.code == sf::Keyboard::Up)
-         {
+        {
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
@@ -81,11 +76,11 @@ void GameModeSelectionState::processEvents(sf::Event& event)
         }
 
         if (event.key.code == sf::Keyboard::Enter)
-         {
+        {
             // Подтверждение выбора
             GameMode selectedMode;
             switch (selectedOption)
-             {
+            {
                 case MenuOption::TIME_TRIAL:
                     selectedMode = GameMode::TIME_TRIAL;
                     break;
@@ -119,7 +114,6 @@ void GameModeSelectionState::update(float deltaTime)
     for (size_t i = 0; i < menuItems.size(); ++i)
     {
         if (i == static_cast<size_t>(selectedOption)) { menuItems[i].setFillColor(sf::Color::Yellow); }
-
         else { menuItems[i].setFillColor(sf::Color::White); }
     }
 
@@ -128,7 +122,9 @@ void GameModeSelectionState::update(float deltaTime)
 
 void GameModeSelectionState::render(Renderer& renderer)
 {
+    Logger::getInstance().log("Rendering GameModeSelectionState");
+    renderer.clear(sf::Color::Black); // Очищаем экран
     renderer.render(*background);
-
     for (const auto& item : menuItems) { renderer.render(item); }
+    renderer.display(); // Обновляем экран
 }

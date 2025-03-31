@@ -1,3 +1,4 @@
+// Core/Data/States/Game/GameplayState.cpp
 #include "GameplayState.h"
 #include "FinishState.h"
 #include "Core/Domain/Entities/Obstacles/Obstacle.h"
@@ -7,8 +8,8 @@
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
-      gameMode(mode), timer(), countdown(), hud(25000.0f),
-      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f), // Обновили параметры, как ты сказал
+      gameMode(mode), timer(), timerManager(25000.0f), hud(25000.0f),
+      speedEffectManager(20.0f), speedManager(20.0f, 600.0f, 20.0f),
       audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
                       [](float roadLeft, float roadRight) {
@@ -68,11 +69,22 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                          int index = rand() % trafficTextures.size();
                          return std::make_unique<TrafficCar>(trafficTextures[index], roadLeft, roadRight);
                      },
-                     [](PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&) {
-                         // Пока коллизий нет, пустая функция
+                     [this, game](PlayerCar& playerCar, SpeedEffectManager&, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                         sf::FloatRect playerBounds = playerCar.getBounds();
+                         for (auto it = entities.begin(); it != entities.end();) {
+                             sf::FloatRect bounds = (*it)->getBounds();
+                             if (playerBounds.intersects(bounds)) {
+                                 Logger::getInstance().log("Player collided with traffic! Game Over.");
+                                 audioManager.playSound("collision");
+                                 game->setState(new GameOverState(game, gameMode, passedDistance));
+                                 return; // Выходим из лямбды, так как игра закончилась
+                             } else {
+                                 ++it;
+                             }
+                         }
                      }, nullptr),
       totalDistance(25000.0f), passedDistance(0.0f), raceFinished(false), finishTime(0.0f),
-      trafficSpawnDelayTimer(0.0f) { // Инициализируем таймер задержки
+      trafficSpawnDelayTimer(0.0f) {
     Logger::getInstance().log("GameplayState created");
 
     audioManager.loadSound("engine", "Assets/Sounds/EngineSounds.wav");
@@ -84,7 +96,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f, initialY);
 
     roadManager.initialize();
-    countdown.initialize();
+    timerManager.initialize(); // Инициализируем TimerManager вместо Countdown
     hud.initialize();
     pauseMenuManager.initialize();
 
@@ -147,8 +159,19 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                       int index = rand() % trafficTextures.size();
                                       return std::make_unique<TrafficCar>(trafficTextures[index], roadLeft, roadRight);
                                   },
-                                  [](PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&) {
-                                      // Пока коллизий нет
+                                  [this, game](PlayerCar& playerCar, SpeedEffectManager&, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                                      sf::FloatRect playerBounds = playerCar.getBounds();
+                                      for (auto it = entities.begin(); it != entities.end();) {
+                                          sf::FloatRect bounds = (*it)->getBounds();
+                                          if (playerBounds.intersects(bounds)) {
+                                              Logger::getInstance().log("Player collided with traffic! Game Over.");
+                                              audioManager.playSound("collision");
+                                              game->setState(new GameOverState(game, gameMode, passedDistance));
+                                              return; // Выходим из лямбды, так как игра закончилась
+                                          } else {
+                                              ++it;
+                                          }
+                                      }
                                   }, nullptr);
 
     obstacleManager.initialize();
@@ -157,17 +180,19 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
 }
 
 GameplayState::~GameplayState() {
+    Logger::getInstance().log("GameplayState destructor called");
     audioManager.stopLoopingSound("engine");
+    Logger::getInstance().log("GameplayState destructor finished");
 }
 
 void GameplayState::processEvents(sf::Event& event) {
-    pauseMenuManager.processEvents(event, game, background, countdown.isCountingDown(), raceFinished);
+    pauseMenuManager.processEvents(event, game, background, timerManager.isCountingDown(), raceFinished);
 }
 
 void GameplayState::update(float deltaTime) {
-    if (countdown.isCountingDown()) {
-        countdown.update(deltaTime);
-        if (!countdown.isCountingDown() && !timer.isStarted()) {
+    if (timerManager.isCountingDown()) {
+        timerManager.update(deltaTime, passedDistance, pauseMenuManager.isPaused());
+        if (!timerManager.isCountingDown() && !timer.isStarted()) {
             timer.start();
         }
     } else if (!raceFinished && !pauseMenuManager.isPaused()) {
@@ -184,7 +209,7 @@ void GameplayState::update(float deltaTime) {
         float pitch = 0.5f + (currentSpeed - 50.0f) / (450.0f - 50.0f);
         audioManager.setPitch("engine", pitch);
 
-        roadManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+        roadManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
         float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
         float roadLeft = (windowWidth - roadManager.getRoadWidth()) / 2.0f;
         float roadRight = roadLeft + roadManager.getRoadWidth();
@@ -192,6 +217,8 @@ void GameplayState::update(float deltaTime) {
 
         passedDistance += currentSpeed * deltaTime;
 
+        timerManager.update(deltaTime, passedDistance, pauseMenuManager.isPaused());
+        timerManager.updateSpeedometer(currentSpeed);
         hud.updateTimer(timer.getElapsedTime());
         hud.updateProgress(passedDistance);
 
@@ -201,7 +228,7 @@ void GameplayState::update(float deltaTime) {
                                  ", width: " + std::to_string(playerBounds.width) +
                                  ", height: " + std::to_string(playerBounds.height) + ")");
 
-        obstacleManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+        obstacleManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
         obstacleManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
 
         Logger::getInstance().log("Player bounds before lightning collision: (left: " + std::to_string(playerBounds.left) +
@@ -209,13 +236,14 @@ void GameplayState::update(float deltaTime) {
                                  ", width: " + std::to_string(playerBounds.width) +
                                  ", height: " + std::to_string(playerBounds.height) + ")");
 
-        lightningManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+        lightningManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
         lightningManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
 
         // Обновляем таймер задержки спавна трафика
         trafficSpawnDelayTimer += deltaTime;
         if (trafficSpawnDelayTimer >= 5.0f) { // Спавним трафик только после 5 секунд
-            trafficManager.update(deltaTime, currentSpeed, countdown.isCountingDown(), pauseMenuManager.isPaused());
+            trafficManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
+            trafficManager.checkCollisions(playerCar, speedEffectManager, currentSpeed); // Проверяем коллизии с трафиком
         }
 
         speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
@@ -237,14 +265,17 @@ void GameplayState::update(float deltaTime) {
 }
 
 void GameplayState::render(Renderer& renderer) {
+    renderer.clear(sf::Color::Black); // Очищаем экран чёрным цветом
+    renderer.render(*background); // Рендерим фон
     roadManager.render(renderer);
     obstacleManager.render(renderer);
     lightningManager.render(renderer);
     trafficManager.render(renderer);
     playerCar.render(renderer);
-    countdown.render(renderer);
+    timerManager.render(renderer); // Рендерим TimerManager вместо Countdown
     hud.render(renderer);
     pauseMenuManager.render(renderer);
+    renderer.display(); // Обновляем экран
 }
 
 void GameplayState::resetAcceleration() {

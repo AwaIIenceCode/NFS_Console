@@ -1,120 +1,68 @@
-//
-// Created by AwallencePC on 19.03.2025.
-//
-
+// Core/Application/Game.cpp
 #include "Game.h"
+#include "MainMenuState.h"
+#include "../../Core/Audio/AudioManager.h"
 
 Game::Game()
-    : window(), renderer(window), currentState(nullptr) {
-    updateWindowSettings();
+    : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(), GameConfig::getInstance().getWindowHeight()), "NFS Console"), renderer(&window), currentState(nullptr) {
+    window.setFramerateLimit(GameConfig::getInstance().getMaxFPS());
 
-    // Загружаем текстуру основного фона через TextureManager
+    // Загружаем текстуру для фона
     sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
     if (backgroundTexture) {
         background.setTexture(*backgroundTexture);
-        ScaleManager::getInstance().scaleSpriteToFill(background);
+        ScaleManager::getInstance().scaleSprite(background); // Масштабируем фон
     } else {
-        Logger::getInstance().log("Failed to load background texture, using default color");
+        Logger::getInstance().log("Failed to load background texture");
     }
 
-    // Загружаем текстуру фона для экрана рекордов через TextureManager
+    // Загружаем текстуру для фона экрана рекордов
     sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundRecords.jpg");
     if (recordsBackgroundTexture) {
         recordsBackground.setTexture(*recordsBackgroundTexture);
-        ScaleManager::getInstance().scaleSpriteToFill(recordsBackground);
+        ScaleManager::getInstance().scaleSprite(recordsBackground); // Масштабируем фон
     } else {
-        Logger::getInstance().log("Failed to load records background texture, using default color");
-        sf::Image placeholder;
-        placeholder.create(1280, 720, sf::Color::Magenta); // Пурпурный фон как заглушка
-        sf::Texture tempTexture;
-        tempTexture.loadFromImage(placeholder);
-        recordsBackground.setTexture(tempTexture);
-        ScaleManager::getInstance().scaleSpriteToFill(recordsBackground);
+        Logger::getInstance().log("Failed to load records background texture");
     }
 
-    // Устанавливаем начальное состояние — главное меню
-    currentState = new MainMenuState(this, &background);
-
-    Logger::getInstance().log("Game started");
+    setState(new MainMenuState(this, &background));
 }
 
 Game::~Game() {
+    Logger::getInstance().log("Game destructor called");
+    AudioManager::getInstance().stopAllSounds(); // Останавливаем все звуки
     delete currentState;
-    Logger::getInstance().log("Game closed");
+    Logger::getInstance().log("Game destructor finished");
 }
 
 void Game::run() {
+    sf::Clock clock;
     while (window.isOpen()) {
-        float deltaTime = clock.restart().asSeconds();
-        processEvents();
-        update(deltaTime);
-        render();
-    }
-}
-
-void Game::processEvents() {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-        }
-
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
-            GameConfig::getInstance().setFullscreen(!GameConfig::getInstance().isFullscreen());
-            updateWindowSettings();
-            ScaleManager::getInstance().scaleSpriteToFill(background);
-            ScaleManager::getInstance().scaleSpriteToFill(recordsBackground); // Масштабируем новый фон
-        }
-
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            if (GameConfig::getInstance().isFullscreen()) {
-                GameConfig::getInstance().setFullscreen(false);
-                updateWindowSettings();
-                ScaleManager::getInstance().scaleSpriteToFill(background);
-                ScaleManager::getInstance().scaleSpriteToFill(recordsBackground); // Масштабируем новый фон
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (currentState) {
+                currentState->processEvents(event);
             }
         }
 
-        currentState->processEvents(event);
+        float deltaTime = clock.restart().asSeconds();
+        if (currentState) {
+            currentState->update(deltaTime);
+            currentState->render(renderer);
+        }
     }
 }
 
-void Game::update(float deltaTime) {
-    currentState->update(deltaTime);
-}
-
-void Game::render() {
-    renderer.clear();
-    currentState->render(renderer);
-    renderer.display();
-}
-
-void Game::setState(GameState* newState) {
+void Game::setState(GameState* state) {
     delete currentState;
-    currentState = newState;
+    currentState = state;
 }
 
 void Game::close() {
     window.close();
-}
-
-void Game::updateWindowSettings() {
-    GameConfig& config = GameConfig::getInstance();
-    if (config.isFullscreen()) {
-        auto modes = sf::VideoMode::getFullscreenModes();
-
-        if (!modes.empty()) {
-            sf::VideoMode fullscreenMode = modes[0];
-            config.setWindowSize(fullscreenMode.width, fullscreenMode.height);
-            window.create(fullscreenMode, "NFS Console", sf::Style::Fullscreen);
-        } else {
-            window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Fullscreen);
-        }
-    } else {
-        window.create(sf::VideoMode(config.getWindowWidth(), config.getWindowHeight()), "NFS Console", sf::Style::Default);
-    }
-
-    window.setFramerateLimit(config.getMaxFPS());
 }
 
 sf::Sprite* Game::getBackground() {

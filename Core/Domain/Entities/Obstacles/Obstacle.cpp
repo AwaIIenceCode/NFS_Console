@@ -6,21 +6,27 @@
 #include "../../../Config/Utils/Logger.h"
 
 Obstacle::Obstacle(const std::string& texturePath, float roadLeft, float roadRight) : speed(0.0f) {
-    if (!texture.loadFromFile(texturePath)) {
+    sf::Texture* texture = TextureManager::getInstance().loadTexture(texturePath);
+    if (!texture) {
         Logger::getInstance().log("Failed to load obstacle texture: " + texturePath);
+        // Создаём заглушку
         sf::Image image;
         image.create(30, 30, sf::Color::Red); // Заглушка: красный квадрат
-        if (!texture.loadFromImage(image)) {
+        sf::Texture placeholder;
+        if (!placeholder.loadFromImage(image)) {
             Logger::getInstance().log("Failed to create obstacle texture placeholder");
+        } else {
+            // Добавляем заглушку в TextureManager
+            texture = TextureManager::getInstance().addTexture(texturePath + "_placeholder", placeholder);
         }
     }
 
-    sprite.setTexture(texture);
-    float textureWidth = static_cast<float>(texture.getSize().x);
-    float textureHeight = static_cast<float>(texture.getSize().y);
+    sprite.setTexture(*texture);
+    float textureWidth = static_cast<float>(texture->getSize().x);
+    float textureHeight = static_cast<float>(texture->getSize().y);
     sprite.setOrigin(textureWidth / 2.0f, textureHeight / 2.0f);
 
-    // Уменьшаем размер камушка до 30x30 пикселей
+    // Уменьшаем размер камушка до 50x50 пикселей
     float desiredWidth = 50.0f;
     float desiredHeight = 50.0f;
     float scaleX = desiredWidth / textureWidth;

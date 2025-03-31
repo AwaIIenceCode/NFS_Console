@@ -1,7 +1,4 @@
-//
-// Created by AwallencePC on 23.03.2025.
-//
-
+// Core/Application/MainMenuState.cpp
 #include "MainMenuState.h"
 #include "../Data/States/Menu/GameModeSelectionState.h"
 #include "../Data/States/Menu/RecordsModeSelectionState.h"
@@ -9,6 +6,7 @@
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     : GameState(game), background(background), selectedOption(MenuOption::START_GAME) {
+    Logger::getInstance().log("MainMenuState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for MainMenuState");
     }
@@ -20,6 +18,10 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     selectSound.setBuffer(selectSoundBuffer);
 
     initializeMenu();
+}
+
+MainMenuState::~MainMenuState() {
+    Logger::getInstance().log("MainMenuState destructor called");
 }
 
 void MainMenuState::initializeMenu() {
@@ -112,8 +114,10 @@ void MainMenuState::update(float deltaTime) {
 }
 
 void MainMenuState::render(Renderer& renderer) {
+    renderer.clear(sf::Color::Black); // Очищаем экран чёрным цветом
     renderer.render(*background);
     for (const auto& item : menuItems) {
         renderer.render(item);
     }
+    renderer.display(); // Обновляем экран
 }

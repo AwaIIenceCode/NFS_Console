@@ -18,7 +18,7 @@ Car::Car(const std::string& texturePath) : speed(200.0f) {
     }
 }
 
-void Car::update(float deltaTime) {} // Базовая реализация, можно переопределить в наследниках
+void Car::update(float deltaTime) {}
 
 void Car::render(Renderer& renderer) {
     renderer.render(sprite);

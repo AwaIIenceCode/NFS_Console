@@ -1,23 +1,17 @@
-//
-// Created by AwallencePC on 18.03.2025.
-//
-
+// Core/Domain/Rendering/TextureManager.cpp
 #include "TextureManager.h"
 #include "../../../Core/Config/Utils/Logger.h"
 
-sf::Texture* TextureManager::loadTexture(const std::string& path)
-{
+sf::Texture* TextureManager::loadTexture(const std::string& path) {
     // Проверяем, есть ли текстура в хранилище
     auto it = textures.find(path);
-    if (it != textures.end())
-    {
+    if (it != textures.end()) {
         return &it->second;
     }
 
     // Загружаем новую текстуру
     sf::Texture texture;
-    if (!texture.loadFromFile(path))
-    {
+    if (!texture.loadFromFile(path)) {
         Logger::getInstance().log("Failed to load texture: " + path);
         return nullptr;
     }
@@ -28,7 +22,13 @@ sf::Texture* TextureManager::loadTexture(const std::string& path)
     return &textures[path];
 }
 
-TextureManager::~TextureManager()
-{
+sf::Texture* TextureManager::addTexture(const std::string& key, const sf::Texture& texture) {
+    textures[key] = texture;
+    return &textures[key];
+}
+
+TextureManager::~TextureManager() {
+    Logger::getInstance().log("TextureManager destructor called");
     textures.clear();
+    Logger::getInstance().log("TextureManager destructor finished");
 }

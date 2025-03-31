@@ -8,7 +8,7 @@
 #include "../../../Domain/Entities/Cars/TrafficCar.h"
 #include "../../Managers/Gameplay/RoadManager.h"
 #include "../../Managers/Utility/Timer.h"
-#include "../../Managers/UI/Countdown.h"
+#include "../../Managers/Utility/TimerManager.h"
 #include "../../Managers/UI/HUD.h"
 #include "../../Managers/UI/PauseMenuManager.h"
 #include "../../Managers/../Managers/Gameplay/EntityManager.h"
@@ -16,8 +16,10 @@
 #include "../../Managers/Gameplay/SpeedManager.h"
 #include "../../../Audio/AudioManager.h"
 #include "../../../Data/Managers/Interfaces/SpeedController.h"
+#include "Core/Data/States/Game/GameOverState.h"
 
-class GameplayState : public GameState, public SpeedController {
+class GameplayState : public GameState, public SpeedController
+{
 public:
     GameplayState(Game* game, sf::Sprite* background, GameMode mode);
     virtual ~GameplayState();
@@ -32,7 +34,7 @@ private:
     GameMode gameMode;
     RoadManager roadManager;
     Timer timer;
-    Countdown countdown;
+    TimerManager timerManager;
     HUD hud;
     PauseMenuManager pauseMenuManager;
     EntityManager obstacleManager;

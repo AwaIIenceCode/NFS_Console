@@ -7,6 +7,7 @@
 #include "../SpawnableEntity.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
+#include "../../Rendering/TextureManager.h" // Добавляем TextureManager
 
 class Lightning : public SpawnableEntity {
 public:
@@ -18,7 +19,6 @@ public:
     sf::Vector2f getPosition() const override;
 
 private:
-    sf::Texture texture;
     sf::Sprite sprite;
 };
 

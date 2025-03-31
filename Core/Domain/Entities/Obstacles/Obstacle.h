@@ -7,6 +7,7 @@
 #include "../SpawnableEntity.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
+#include "../../Rendering/TextureManager.h" // Добавляем TextureManager
 
 class Obstacle : public SpawnableEntity {
 public:
@@ -19,7 +20,6 @@ public:
 
 private:
     sf::Sprite sprite;
-    sf::Texture texture;
     float speed;
 };
 
