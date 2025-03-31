@@ -10,7 +10,7 @@
 #include <iomanip>
 
 FinishState::FinishState(Game* game, GameMode mode, float finishTime)
-    : GameState(game), background(game->getRecordsBackground()), mode(mode), finishTime(finishTime),
+    : GameState(game, true), background(game->getRecordsBackground()), mode(mode), finishTime(finishTime),
       selectedOption(MenuOption::RESTART) {
     Logger::getInstance().log("FinishState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
@@ -113,6 +113,9 @@ void FinishState::updateMenuPositions() {
 }
 
 void FinishState::processEvents(sf::Event& event) {
+    // Вызываем базовый метод, чтобы обработать переключение треков
+    GameState::processEvents(event);
+
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
             int current = static_cast<int>(selectedOption);
@@ -132,10 +135,10 @@ void FinishState::processEvents(sf::Event& event) {
             switch (selectedOption) {
                 case MenuOption::RESTART:
                     game->setState(new GameplayState(game, game->getBackground(), mode));
-                    break;
+                break;
                 case MenuOption::MAIN_MENU:
                     game->setState(new MainMenuState(game, game->getBackground()));
-                    break;
+                break;
             }
         }
     }

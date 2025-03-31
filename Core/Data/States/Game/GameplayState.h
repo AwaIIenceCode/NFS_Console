@@ -14,7 +14,7 @@
 #include "../../Managers/../Managers/Gameplay/EntityManager.h"
 #include "../../Managers/Gameplay/SpeedEffectManager.h"
 #include "../../Managers/Gameplay/SpeedManager.h"
-#include "../../../Audio/AudioManager.h"
+#include "../../../../Core/Data/Managers/Audio/AudioManager.h"
 #include "../../../Data/Managers/Interfaces/SpeedController.h"
 #include "Core/Data/States/Game/GameOverState.h"
 

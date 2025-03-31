@@ -8,7 +8,7 @@
 #include "Core/Config/Utils/Logger.h"
 
 GameOverState::GameOverState(Game* game, GameMode mode, float passedDistance)
-    : GameState(game), gameMode(mode), passedDistance(passedDistance), selectedOption(MenuOption::TRY_AGAIN) {
+    : GameState(game, true), gameMode(mode), passedDistance(passedDistance), selectedOption(MenuOption::TRY_AGAIN) {
     Logger::getInstance().log("GameOverState created");
 
     // Загружаем шрифт
@@ -50,6 +50,9 @@ GameOverState::GameOverState(Game* game, GameMode mode, float passedDistance)
 }
 
 void GameOverState::processEvents(sf::Event& event) {
+    // Вызываем базовый метод, чтобы обработать переключение треков
+    GameState::processEvents(event);
+
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
             int current = static_cast<int>(selectedOption);
@@ -69,12 +72,12 @@ void GameOverState::processEvents(sf::Event& event) {
             switch (selectedOption) {
                 case MenuOption::TRY_AGAIN:
                     Logger::getInstance().log("Try Again selected");
-                    game->setState(new GameplayState(game, new sf::Sprite(), gameMode));
-                    break;
+                game->setState(new GameplayState(game, new sf::Sprite(), gameMode));
+                break;
                 case MenuOption::EXIT_MENU:
                     Logger::getInstance().log("Exit Menu selected");
-                    game->setState(new MainMenuState(game, new sf::Sprite()));
-                    break;
+                game->setState(new MainMenuState(game, new sf::Sprite()));
+                break;
             }
         }
     }

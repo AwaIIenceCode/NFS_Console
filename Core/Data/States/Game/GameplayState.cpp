@@ -4,10 +4,11 @@
 #include "Core/Domain/Entities/Obstacles/Obstacle.h"
 #include "Core/Domain/Entities/Bonuses/Lightning.h"
 #include "Core/Config/Utils/Logger.h"
+#include "Core/Data/Managers/Audio/MusicManager.h"
 #include <fstream>
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
-    : GameState(game), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
+    : GameState(game, false), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), timerManager(25000.0f), hud(25000.0f),
       speedEffectManager(20.0f), speedManager(40.0f, 600.0f, 16.0f),
       audioManager(AudioManager::getInstance()),
@@ -77,7 +78,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                  Logger::getInstance().log("Player collided with traffic! Game Over.");
                                  audioManager.playSound("collision");
                                  game->setState(new GameOverState(game, gameMode, passedDistance));
-                                 return; // Выходим из лямбды, так как игра закончилась
+                                 return;
                              } else {
                                  ++it;
                              }
@@ -96,7 +97,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f, initialY);
 
     roadManager.initialize();
-    timerManager.initialize(); // Инициализируем TimerManager вместо Countdown
+    timerManager.initialize();
     hud.initialize();
     pauseMenuManager.initialize();
 
@@ -167,7 +168,7 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                               Logger::getInstance().log("Player collided with traffic! Game Over.");
                                               audioManager.playSound("collision");
                                               game->setState(new GameOverState(game, gameMode, passedDistance));
-                                              return; // Выходим из лямбды, так как игра закончилась
+                                              return;
                                           } else {
                                               ++it;
                                           }
@@ -177,6 +178,9 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     obstacleManager.initialize();
     lightningManager.initialize();
     trafficManager.initialize();
+
+    // Включаем музыку для гонки
+    MusicManager::getInstance().playGameplayMusic();
 }
 
 GameplayState::~GameplayState() {
@@ -186,6 +190,9 @@ GameplayState::~GameplayState() {
 }
 
 void GameplayState::processEvents(sf::Event& event) {
+    // Вызываем базовый метод, чтобы обработать переключение треков
+    GameState::processEvents(event);
+
     pauseMenuManager.processEvents(event, game, background, timerManager.isCountingDown(), raceFinished);
 }
 
@@ -265,14 +272,14 @@ void GameplayState::update(float deltaTime) {
 }
 
 void GameplayState::render(Renderer& renderer) {
-    renderer.clear(sf::Color::Black); // Очищаем экран чёрным цветом
-    renderer.render(*background); // Рендерим фон
+    renderer.clear(sf::Color::Black);
+    renderer.render(*background);
     roadManager.render(renderer);
     obstacleManager.render(renderer);
     lightningManager.render(renderer);
     trafficManager.render(renderer);
     playerCar.render(renderer);
-    timerManager.render(renderer); // Рендерим TimerManager вместо Countdown
+    timerManager.render(renderer);
     hud.render(renderer);
     pauseMenuManager.render(renderer);
     renderer.display(); // Обновляем экран

@@ -6,7 +6,7 @@
 #include "../../../Application/GameMode.h"
 
 GameModeSelectionState::GameModeSelectionState(Game* game, sf::Sprite* background)
-    : GameState(game), background(background), selectedOption(MenuOption::TIME_TRIAL)
+    : GameState(game, true), background(background), selectedOption(MenuOption::TIME_TRIAL)
 {
     Logger::getInstance().log("GameModeSelectionState created"); // Добавляем лог
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
@@ -57,52 +57,42 @@ void GameModeSelectionState::updateMenuPositions()
     }
 }
 
-void GameModeSelectionState::processEvents(sf::Event& event)
-{
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::Up)
-        {
+void GameModeSelectionState::processEvents(sf::Event& event) {
+    // Вызываем базовый метод, чтобы обработать переключение треков
+    GameState::processEvents(event);
+
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
         }
 
-        if (event.key.code == sf::Keyboard::Down)
-        {
+        if (event.key.code == sf::Keyboard::Down) {
             int current = static_cast<int>(selectedOption);
             current = (current + 1) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
         }
 
-        if (event.key.code == sf::Keyboard::Enter)
-        {
-            // Подтверждение выбора
+        if (event.key.code == sf::Keyboard::Enter) {
             GameMode selectedMode;
-            switch (selectedOption)
-            {
+            switch (selectedOption) {
                 case MenuOption::TIME_TRIAL:
                     selectedMode = GameMode::TIME_TRIAL;
-                    break;
-
+                break;
                 case MenuOption::ENDLESS:
                     selectedMode = GameMode::ENDLESS;
-                    break;
-
+                break;
                 case MenuOption::RACE:
                     selectedMode = GameMode::RACE;
-                    break;
-
+                break;
                 default:
                     selectedMode = GameMode::TIME_TRIAL;
             }
-            // Переходим в GameplayState с выбранным режимом
             game->setState(new GameplayState(game, background, selectedMode));
         }
 
-        if (event.key.code == sf::Keyboard::Escape)
-        {
-            // Возвращаемся в главное меню
+        if (event.key.code == sf::Keyboard::Escape) {
             game->setState(new MainMenuState(game, background));
         }
     }

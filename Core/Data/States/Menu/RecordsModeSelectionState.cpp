@@ -5,7 +5,7 @@
 #include "../../../Config/Utils/Logger.h"
 
 RecordsModeSelectionState::RecordsModeSelectionState(Game* game)
-    : GameState(game), background(game->getRecordsBackground()), selectedOption(MenuOption::TIME_TRIAL) {
+    : GameState(game, true), background(game->getRecordsBackground()), selectedOption(MenuOption::TIME_TRIAL) {
     Logger::getInstance().log("RecordsModeSelectionState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for RecordsModeSelectionState");
@@ -56,6 +56,9 @@ void RecordsModeSelectionState::updateMenuPositions() {
 }
 
 void RecordsModeSelectionState::processEvents(sf::Event& event) {
+
+    GameState::processEvents(event);
+
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
             int current = static_cast<int>(selectedOption);
@@ -75,10 +78,10 @@ void RecordsModeSelectionState::processEvents(sf::Event& event) {
             switch (selectedOption) {
                 case MenuOption::TIME_TRIAL:
                     game->setState(new RecordsState(game, GameMode::TIME_TRIAL));
-                    break;
+                break;
                 case MenuOption::BACK:
                     game->setState(new MainMenuState(game, game->getBackground()));
-                    break;
+                break;
             }
         }
     }

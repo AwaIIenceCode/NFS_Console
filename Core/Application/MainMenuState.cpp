@@ -1,36 +1,37 @@
-// Core/Application/MainMenuState.cpp
 #include "MainMenuState.h"
 #include "../Data/States/Menu/GameModeSelectionState.h"
 #include "../Data/States/Menu/RecordsModeSelectionState.h"
 #include "../Config/Utils/Logger.h"
+#include "Core/Data/Managers/Audio/MusicManager.h"
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
-    : GameState(game), background(background), selectedOption(MenuOption::START_GAME) {
+    : GameState(game, true), background(background), selectedOption(MenuOption::START_GAME) {
     Logger::getInstance().log("MainMenuState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
         Logger::getInstance().log("Failed to load font for MainMenuState");
     }
 
-    // Загружаем звук для переключения пунктов меню
     if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav")) {
         Logger::getInstance().log("Failed to load menu select sound");
     }
     selectSound.setBuffer(selectSoundBuffer);
 
-    // Проверяем, есть ли текстура у фона
     if (!background->getTexture()) {
         Logger::getInstance().log("Background texture is missing! Reloading...");
         sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
         if (backgroundTexture) {
             background->setTexture(*backgroundTexture);
             background->setPosition(0.0f, 0.0f);
-            ScaleManager::getInstance().scaleSprite(*background); // Раскомментируем
+            ScaleManager::getInstance().scaleSprite(*background);
         } else {
             Logger::getInstance().log("Failed to reload background texture!");
         }
     }
 
     initializeMenu();
+
+    // Включаем музыку для меню
+    MusicManager::getInstance().playMenuMusic();
 }
 
 MainMenuState::~MainMenuState() {
@@ -74,9 +75,11 @@ void MainMenuState::updateMenuPositions() {
 }
 
 void MainMenuState::processEvents(sf::Event& event) {
+    // Вызываем базовый метод, чтобы обработать переключение треков
+    GameState::processEvents(event);
+
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
-            // Переключаем выбор вверх
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
@@ -84,7 +87,6 @@ void MainMenuState::processEvents(sf::Event& event) {
         }
 
         if (event.key.code == sf::Keyboard::Down) {
-            // Переключаем выбор вниз
             int current = static_cast<int>(selectedOption);
             current = (current + 1) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
@@ -92,21 +94,19 @@ void MainMenuState::processEvents(sf::Event& event) {
         }
 
         if (event.key.code == sf::Keyboard::Enter) {
-            // Подтверждение выбора
             switch (selectedOption) {
                 case MenuOption::START_GAME:
-                    // Переходим в меню выбора режима
                     game->setState(new GameModeSelectionState(game, background));
-                    break;
+                break;
                 case MenuOption::RECORDS:
                     game->setState(new RecordsModeSelectionState(game));
-                    break;
+                break;
                 case MenuOption::SETTINGS:
                     Logger::getInstance().log("Settings selected (not implemented yet)");
-                    break;
+                break;
                 case MenuOption::EXIT_GAME:
                     game->close();
-                    break;
+                break;
             }
         }
     }
