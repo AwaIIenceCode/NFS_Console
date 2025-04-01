@@ -33,9 +33,9 @@ Obstacle::Obstacle(const std::string& texturePath, float roadLeft, float roadRig
     float scaleY = desiredHeight / textureHeight;
     sprite.setScale(scaleX, scaleY);
 
-    float spawnMargin = 60.0f;
-    float adjustedRoadLeft = roadLeft + spawnMargin + (desiredWidth / 1.0f);
-    float adjustedRoadRight = roadRight - spawnMargin - (desiredWidth / 1.0f);
+    float spawnMargin = 100.0f; // Увеличиваем отступ от краёв дороги
+    float adjustedRoadLeft = roadLeft + spawnMargin + (desiredWidth / 2.0f);
+    float adjustedRoadRight = roadRight - spawnMargin - (desiredWidth / 2.0f);
     float spawnRange = adjustedRoadRight - adjustedRoadLeft;
     if (spawnRange < 0) spawnRange = 0; // Защита от отрицательного диапазона
     float xPos = adjustedRoadLeft + static_cast<float>(rand() % static_cast<int>(spawnRange));

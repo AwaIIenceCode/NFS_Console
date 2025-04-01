@@ -40,7 +40,14 @@ void TrafficCar::render(Renderer& renderer) const {
 }
 
 sf::FloatRect TrafficCar::getBounds() const {
-    return sprite.getGlobalBounds();
+    sf::FloatRect bounds = sprite.getGlobalBounds();
+    float widthShrinkFactor = 0.2f;
+    float heightShrinkFactor = 0.6f;
+    float newWidth = bounds.width * (1.0f - widthShrinkFactor);
+    float newHeight = bounds.height * (1.0f - heightShrinkFactor);
+    float newLeft = bounds.left + (bounds.width - newWidth) / 2.0f;
+    float newTop = bounds.top + (bounds.height - newHeight) / 2.0f;
+    return sf::FloatRect(newLeft, newTop, newWidth, newHeight);
 }
 
 bool TrafficCar::isOffScreen() const {

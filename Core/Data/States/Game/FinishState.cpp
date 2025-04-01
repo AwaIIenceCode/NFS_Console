@@ -62,8 +62,8 @@ void FinishState::initializeMenu() {
 }
 
 void FinishState::determineMedal() {
-    const float goldThreshold = 30.0f;
-    const float silverThreshold = 45.0f;
+    const float goldThreshold = 50.0f;
+    const float silverThreshold = 55.0f;
     const float bronzeThreshold = 60.0f;
 
     if (finishTime <= goldThreshold) {
