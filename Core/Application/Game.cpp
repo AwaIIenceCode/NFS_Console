@@ -25,9 +25,8 @@ Game::Game()
         Logger::getInstance().log("Failed to load records background texture");
     }
 
-    // Инициализируем плейлисты для музыки
     std::vector<std::string> menuTracks = {
-        "J:/MyIDE/NFS_Console/Assets/Musics/MenuMusic_1.wav", // Замени на свои файлы
+        "J:/MyIDE/NFS_Console/Assets/Musics/MenuMusic_1.wav",
         "J:/MyIDE/NFS_Console/Assets/Musics/MenuMusic_2.wav"
     };
     std::vector<std::string> gameplayTracks = {
@@ -57,12 +56,10 @@ Game::Game()
 Game::~Game() {
     Logger::getInstance().log("Game destructor called");
     AudioManager::getInstance().stopAllSounds();
-    MusicManager::getInstance().stopMusic(); // Останавливаем музыку
+    MusicManager::getInstance().stopMusic();
     delete currentState;
     Logger::getInstance().log("Game destructor finished");
 }
-
-// Остальной код без изменений...
 
 void Game::run() {
     sf::Clock clock;

@@ -23,13 +23,13 @@ public:
     void setState(GameState* newState);
     void close();
     sf::Sprite* getBackground();
-    sf::Sprite* getRecordsBackground(); // Новый фон для экрана рекордов
+    sf::Sprite* getRecordsBackground();
 
 private:
     sf::RenderWindow window;
     Renderer renderer;
     sf::Sprite background;
-    sf::Sprite recordsBackground; // Спрайт для нового фона
+    sf::Sprite recordsBackground;
     GameState* currentState;
     sf::Clock clock;
     void processEvents();
