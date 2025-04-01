@@ -3,6 +3,7 @@
 
 #include "../../../Domain/Entities/Cars/PlayerCar.h"
 #include "../../../Config/Utils/ScaleManager.h"
+#include "../../../Config/Settings/GameConfig.h"
 
 PlayerCar::PlayerCar(const std::string& texturePath)
     : Car(texturePath), moveSpeed(300.0f), scaleFactor(0.2f) {
@@ -13,12 +14,23 @@ PlayerCar::PlayerCar(const std::string& texturePath)
 void PlayerCar::update(float deltaTime, float roadLeft, float roadRight) {
     float moveX = 0.0f;
 
+    // Проверяем текущую схему управления
+    GameConfig::ControlScheme scheme = GameConfig::getInstance().getControlScheme();
     InputHandler& input = InputHandler::getInstance();
-    if (input.isKeyPressed(sf::Keyboard::A)) {
-        moveX -= moveSpeed * deltaTime;
-    }
-    if (input.isKeyPressed(sf::Keyboard::D)) {
-        moveX += moveSpeed * deltaTime;
+    if (scheme == GameConfig::ControlScheme::WASD) {
+        if (input.isKeyPressed(sf::Keyboard::A)) {
+            moveX -= moveSpeed * deltaTime;
+        }
+        if (input.isKeyPressed(sf::Keyboard::D)) {
+            moveX += moveSpeed * deltaTime;
+        }
+    } else if (scheme == GameConfig::ControlScheme::ARROWS) {
+        if (input.isKeyPressed(sf::Keyboard::Left)) {
+            moveX -= moveSpeed * deltaTime;
+        }
+        if (input.isKeyPressed(sf::Keyboard::Right)) {
+            moveX += moveSpeed * deltaTime;
+        }
     }
 
     sprite.move(moveX, 0.0f);

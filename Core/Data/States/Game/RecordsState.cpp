@@ -72,7 +72,7 @@ void RecordsState::loadRecords() {
 void RecordsState::updatePositions() {
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float startY = GameConfig::getInstance().isFullscreen() ? 150.0f : 75.0f;
-    float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f;
+    float rightOffset = GameConfig::getInstance().isFullscreen() ? 400.0f : 350.0f; // Уменьшаем отступ
     float verticalSpacing = GameConfig::getInstance().isFullscreen() ? 75.0f : 40.0f;
 
     titleText.setPosition(windowWidth - rightOffset, startY);

@@ -2,7 +2,6 @@
 // Created by AwallencePC on 19.03.2025.
 //
 
-
 #ifndef GAMECONFIG_H
 #define GAMECONFIG_H
 
@@ -15,12 +14,21 @@ public:
         return instance;
     }
 
+    // Добавляем перечисление для схемы управления
+    enum class ControlScheme
+    {
+        WASD,
+        ARROWS
+    };
+
     int getWindowWidth() const { return windowWidth; }
     int getWindowHeight() const { return windowHeight; }
     int getOriginalWindowWidth() const { return originalWindowWidth; }
     int getOriginalWindowHeight() const { return originalWindowHeight; }
     int getMaxFPS() const { return maxFPS; }
     bool isFullscreen() const { return fullscreen; }
+    ControlScheme getControlScheme() const { return controlScheme; } // Геттер для схемы управления
+    void setControlScheme(ControlScheme scheme) { controlScheme = scheme; } // Сеттер для схемы управления
 
     void setWindowSize(int width, int height)
     {
@@ -43,7 +51,7 @@ private:
     GameConfig()
         : originalWindowWidth(800), originalWindowHeight(600),
           windowWidth(800), windowHeight(600),
-          maxFPS(60), fullscreen(false) {}
+          maxFPS(60), fullscreen(false), controlScheme(ControlScheme::WASD) {} // По умолчанию WASD
     GameConfig(const GameConfig&) = delete;
     GameConfig& operator=(const GameConfig&) = delete;
 
@@ -53,6 +61,7 @@ private:
     int windowHeight;
     int maxFPS;
     bool fullscreen;
+    ControlScheme controlScheme; // Текущая схема управления
 };
 
 #endif

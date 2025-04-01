@@ -1,15 +1,19 @@
-#include "MainMenuState.h"
-#include "../Data/States/Menu/GameModeSelectionState.h"
-#include "../Data/States/Menu/RecordsModeSelectionState.h"
-#include "../Data/States/Menu/SettingsState.h"
-#include "../Config/Utils/Logger.h"
-#include "Core/Data/Managers/Audio/MusicManager.h"
+//
+// Created by AwallencePC on 01.04.2025.
+//
 
-MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
-    : GameState(game, true), background(background), selectedOption(MenuOption::START_GAME) {
-    Logger::getInstance().log("MainMenuState created");
+#include "SettingsState.h"
+#include "../../../Application/MainMenuState.h"
+#include "../../../Config/Utils/Logger.h"
+#include "../../../Config/Settings/GameConfig.h"
+#include "../../../Data/Managers/Audio/MusicManager.h"
+#include <string> // Добавляем для std::string
+
+SettingsState::SettingsState(Game* game, sf::Sprite* background)
+    : GameState(game, true), background(background), selectedOption(MenuOption::CONTROLS) {
+    Logger::getInstance().log("SettingsState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
-        Logger::getInstance().log("Failed to load font for MainMenuState");
+        Logger::getInstance().log("Failed to load font for SettingsState");
     }
 
     if (!selectSoundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/ChangeChoice.wav")) {
@@ -33,17 +37,18 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     MusicManager::getInstance().playMenuMusic();
 }
 
-MainMenuState::~MainMenuState() {
-    Logger::getInstance().log("MainMenuState destructor called");
+SettingsState::~SettingsState() {
+    Logger::getInstance().log("SettingsState destructor called");
 }
 
-void MainMenuState::initializeMenu() {
+void SettingsState::initializeMenu() {
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
-    menuItems[static_cast<size_t>(MenuOption::START_GAME)].setString("Start Game");
-    menuItems[static_cast<size_t>(MenuOption::RECORDS)].setString("Records");
-    menuItems[static_cast<size_t>(MenuOption::SETTINGS)].setString("Settings");
-    menuItems[static_cast<size_t>(MenuOption::EXIT_GAME)].setString("Exit Game");
+    // Используем std::string для конкатенации
+    std::string controlsText = "Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows");
+    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString(controlsText);
+    menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound");
+    menuItems[static_cast<size_t>(MenuOption::BACK)].setString("Back");
 
     for (auto& item : menuItems) {
         item.setFont(font);
@@ -53,13 +58,15 @@ void MainMenuState::initializeMenu() {
     updateMenuPositions();
 }
 
-void MainMenuState::updateMenuPositions() {
+void SettingsState::updateMenuPositions() {
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float startY = GameConfig::getInstance().isFullscreen() ? 300.0f : 150.0f;
-    float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f;
     float verticalSpacing = GameConfig::getInstance().isFullscreen() ? 150.0f : 75.0f;
     for (size_t i = 0; i < menuItems.size(); ++i) {
-        menuItems[i].setPosition(windowWidth - rightOffset, startY + i * verticalSpacing);
+        // Центрируем текст по горизонтали
+        sf::FloatRect textBounds = menuItems[i].getLocalBounds();
+        float xPos = windowWidth / 2.0f - textBounds.width / 2.0f; // Центрируем по ширине текста
+        menuItems[i].setPosition(xPos, startY + i * verticalSpacing);
     }
 
     for (auto& item : menuItems) {
@@ -71,7 +78,7 @@ void MainMenuState::updateMenuPositions() {
     }
 }
 
-void MainMenuState::processEvents(sf::Event& event) {
+void SettingsState::processEvents(sf::Event& event) {
     GameState::processEvents(event);
 
     if (event.type == sf::Event::KeyPressed) {
@@ -91,24 +98,30 @@ void MainMenuState::processEvents(sf::Event& event) {
 
         if (event.key.code == sf::Keyboard::Enter) {
             switch (selectedOption) {
-                case MenuOption::START_GAME:
-                    game->setState(new GameModeSelectionState(game, background));
+                case MenuOption::CONTROLS: {
+                    // Переключаем схему управления
+                    if (GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD) {
+                        GameConfig::getInstance().setControlScheme(GameConfig::ControlScheme::ARROWS);
+                    } else {
+                        GameConfig::getInstance().setControlScheme(GameConfig::ControlScheme::WASD);
+                    }
+                    // Используем std::string для конкатенации
+                    std::string controlsText = "Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows");
+                    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString(controlsText);
                     break;
-                case MenuOption::RECORDS:
-                    game->setState(new RecordsModeSelectionState(game));
+                }
+                case MenuOption::SOUND:
+                    Logger::getInstance().log("Sound settings not implemented yet");
                     break;
-                case MenuOption::SETTINGS:
-                    game->setState(new SettingsState(game, background)); // Переходим в SettingsState
-                    break;
-                case MenuOption::EXIT_GAME:
-                    game->close();
+                case MenuOption::BACK:
+                    game->setState(new MainMenuState(game, background));
                     break;
             }
         }
     }
 }
 
-void MainMenuState::update(float deltaTime) {
+void SettingsState::update(float deltaTime) {
     for (size_t i = 0; i < menuItems.size(); ++i) {
         if (i == static_cast<size_t>(selectedOption)) {
             menuItems[i].setFillColor(sf::Color::Yellow);
@@ -120,18 +133,12 @@ void MainMenuState::update(float deltaTime) {
     updateMenuPositions();
 }
 
-void MainMenuState::render(Renderer& renderer) {
+void SettingsState::render(Renderer& renderer) {
     renderer.clear(sf::Color::Black);
     if (background->getTexture()) {
-        Logger::getInstance().log("Rendering background in MainMenuState at position: (" +
-                                 std::to_string(background->getPosition().x) + ", " +
-                                 std::to_string(background->getPosition().y) + ")");
-        Logger::getInstance().log("Background scale: (" +
-                                 std::to_string(background->getScale().x) + ", " +
-                                 std::to_string(background->getScale().y) + ")");
         renderer.render(*background);
     } else {
-        Logger::getInstance().log("Background texture is missing in MainMenuState!");
+        Logger::getInstance().log("Background texture is missing in SettingsState!");
     }
     for (const auto& item : menuItems) {
         renderer.render(item);
