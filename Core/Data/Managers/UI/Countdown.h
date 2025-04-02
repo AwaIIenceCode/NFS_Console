@@ -10,7 +10,8 @@
 #include "../../../Config/Utils/Logger.h"
 #include "../../../Domain/Rendering/Renderer.h"
 
-class Countdown {
+class Countdown
+{
 public:
     Countdown();
     void initialize();

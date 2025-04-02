@@ -5,11 +5,13 @@
 
 Timer::Timer() : started(false) {}
 
-void Timer::start() {
+void Timer::start()
+{
     started = true;
     clock.restart();
 }
 
-float Timer::getElapsedTime() const {
+float Timer::getElapsedTime() const
+{
     return clock.getElapsedTime().asSeconds();
 }

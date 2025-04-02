@@ -7,8 +7,10 @@
 
 HUD::HUD(float totalDistance) : totalDistance(totalDistance) {}
 
-void HUD::initialize() {
-    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
+void HUD::initialize()
+{
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
+    {
         Logger::getInstance().log("Failed to load font for HUD");
     }
 
@@ -30,34 +32,40 @@ void HUD::initialize() {
     speedText.setString("Speed: 0 km/h");
 }
 
-void HUD::updateTimer(float elapsedTime) {
+void HUD::updateTimer(float elapsedTime)
+{
     int minutes = static_cast<int>(elapsedTime) / 60;
     int seconds = static_cast<int>(elapsedTime) % 60;
     int milliseconds = static_cast<int>(elapsedTime * 1000) % 1000 / 10;
 
     std::stringstream ss;
+
     ss << std::setfill('0') << std::setw(2) << minutes << ":"
        << std::setfill('0') << std::setw(2) << seconds << ":"
        << std::setfill('0') << std::setw(2) << milliseconds;
     timerText.setString(ss.str());
 }
 
-void HUD::updateProgress(float passedDistance) {
+void HUD::updateProgress(float passedDistance)
+{
     float progress = (passedDistance / totalDistance) * 100.0f;
+
     if (progress > 100.0f) progress = 100.0f;
     std::stringstream ss;
     ss << "Progress: " << static_cast<int>(progress) << "%";
     progressText.setString(ss.str());
 }
 
-void HUD::updateSpeedometer(float currentSpeed) {
+void HUD::updateSpeedometer(float currentSpeed)
+{
     std::stringstream ss;
     float displaySpeed = currentSpeed / 2.18f;
     ss << "Speed: " << static_cast<int>(displaySpeed) << " km/h";
     speedText.setString(ss.str());
 }
 
-void HUD::render(Renderer& renderer) {
+void HUD::render(Renderer& renderer)
+{
     renderer.render(timerText);
     renderer.render(progressText);
     renderer.render(speedText);

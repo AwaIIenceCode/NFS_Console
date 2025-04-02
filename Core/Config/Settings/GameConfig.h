@@ -14,7 +14,6 @@ public:
         return instance;
     }
 
-    // Добавляем перечисление для схемы управления
     enum class ControlScheme
     {
         WASD,
@@ -41,7 +40,6 @@ public:
         fullscreen = enable;
         if (!enable)
         {
-            // Восстанавливаем оригинальные размеры при выходе из полноэкранного режима
             windowWidth = originalWindowWidth;
             windowHeight = originalWindowHeight;
         }
@@ -51,17 +49,17 @@ private:
     GameConfig()
         : originalWindowWidth(800), originalWindowHeight(600),
           windowWidth(800), windowHeight(600),
-          maxFPS(60), fullscreen(false), controlScheme(ControlScheme::WASD) {} // По умолчанию WASD
+          maxFPS(60), fullscreen(false), controlScheme(ControlScheme::WASD) {}
     GameConfig(const GameConfig&) = delete;
     GameConfig& operator=(const GameConfig&) = delete;
 
-    int originalWindowWidth;  // Оригинальные размеры для оконного режима
+    int originalWindowWidth;
     int originalWindowHeight;
-    int windowWidth;          // Текущие размеры (могут меняться в полноэкранном режиме)
+    int windowWidth;
     int windowHeight;
     int maxFPS;
     bool fullscreen;
-    ControlScheme controlScheme; // Текущая схема управления
+    ControlScheme controlScheme;
 };
 
 #endif

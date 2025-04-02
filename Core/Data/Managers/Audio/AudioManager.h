@@ -22,11 +22,13 @@ public:
     void loadSound(const std::string& name, const std::string& path)
     {
         sf::SoundBuffer buffer;
+
         if (!buffer.loadFromFile(path))
         {
             Logger::getInstance().log("Failed to load sound: " + path);
             return;
         }
+
         soundBuffers[name] = buffer;
         sounds[name] = sf::Sound();
         sounds[name].setBuffer(soundBuffers[name]);
@@ -36,11 +38,13 @@ public:
     void playSound(const std::string& name)
     {
         auto it = sounds.find(name);
+
         if (it != sounds.end())
         {
             it->second.stop();
             it->second.play();
         }
+
         else
         {
             Logger::getInstance().log("Sound not found: " + name);
@@ -55,6 +59,7 @@ public:
             it->second.setLoop(true);
             it->second.play();
         }
+
         else
         {
             Logger::getInstance().log("Looping sound not found: " + name);
@@ -107,6 +112,7 @@ private:
         soundBuffers.clear();
         Logger::getInstance().log("AudioManager destructor finished");
     }
+
     AudioManager(const AudioManager&) = delete;
     AudioManager& operator=(const AudioManager&) = delete;
 

@@ -27,12 +27,10 @@ void Logger::log(const std::string& message)
 {
     if (!logFile.is_open()) return;
 
-    // Получаем текущее время
     time_t now = time(nullptr);
     std::string timeStr = ctime(&now);
-    timeStr.pop_back(); // Убираем \n из ctime
+    timeStr.pop_back();
 
-    // Записываем сообщение с временной меткой
     logFile << "[" << timeStr << "] " << message << std::endl;
     logFile.flush();
 }

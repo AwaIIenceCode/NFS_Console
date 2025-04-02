@@ -9,9 +9,11 @@
 #include "../GameState.h"
 #include "../../../Application/GameMode.h"
 
-class GameOverState : public GameState {
+class GameOverState : public GameState
+{
 public:
-    enum class MenuOption {
+    enum class MenuOption
+    {
         TRY_AGAIN,
         EXIT_MENU,
         COUNT

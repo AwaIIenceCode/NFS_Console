@@ -3,5 +3,3 @@
 //
 
 #include "ScaleManager.h"
-
-// clear file, because all logic in .h

@@ -9,15 +9,17 @@
 #include "../../../Application/Game.h"
 #include "../../../Application/GameMode.h"
 #include "../../../Config/Settings/GameConfig.h"
-#include "../../../Data/Managers/Utility/SaveManager.h" // Добавляем SaveManager
+#include "../../../Data/Managers/Utility/SaveManager.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iomanip>
 
-class RecordsState : public GameState {
+class RecordsState : public GameState
+{
 public:
     RecordsState(Game* game, GameMode mode);
-    ~RecordsState(); // Добавляем деструктор
+    ~RecordsState();
+
     void processEvents(sf::Event& event) override;
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;

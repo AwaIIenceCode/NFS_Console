@@ -7,13 +7,14 @@
 #include <SFML/Graphics.hpp>
 #include "../../../Config/Utils/Logger.h"
 
-class SpeedManager {
+class SpeedManager
+{
 public:
     SpeedManager(float initialSpeed, float baseSpeed, float accelerationTime);
     void update(float deltaTime);
     void resetAcceleration();
     float getCurrentSpeed() const { return currentSpeed; }
-    void setCurrentSpeed(float newSpeed); // Добавляем метод для установки скорости
+    void setCurrentSpeed(float newSpeed);
 
 private:
     float initialSpeed;

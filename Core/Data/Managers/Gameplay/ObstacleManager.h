@@ -11,7 +11,8 @@
 #include "../Interfaces/SpeedController.h"
 #include "../../../Domain/Rendering/Renderer.h"
 
-class ObstacleManager {
+class ObstacleManager
+{
 public:
     ObstacleManager(float roadWidth, SpeedController* speedController);
     void initialize();

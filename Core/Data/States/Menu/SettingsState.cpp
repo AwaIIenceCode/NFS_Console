@@ -9,6 +9,8 @@
 #include "../../../Data/Managers/Audio/MusicManager.h"
 #include <string> // Добавляем для std::string
 
+#include "Core/Config/Utils/ScaleManager.h"
+
 SettingsState::SettingsState(Game* game, sf::Sprite* background)
     : GameState(game, true), background(background), selectedOption(MenuOption::CONTROLS) {
     Logger::getInstance().log("SettingsState created");

@@ -17,7 +17,6 @@ public:
         return instance;
     }
 
-    // Масштабировать спрайт с сохранением пропорций (оставляет чёрные полосы)
     void scaleSprite(sf::Sprite& sprite) const
     {
         const sf::Texture* texture = sprite.getTexture();
@@ -35,7 +34,6 @@ public:
         );
     }
 
-    // Масштабировать спрайт, чтобы заполнить окно (убирает чёрные полосы, обрезает края)
     void scaleSpriteToFill(sf::Sprite& sprite) const
     {
         const sf::Texture* texture = sprite.getTexture();
@@ -47,7 +45,6 @@ public:
 
         sprite.setScale(scale, scale);
 
-        // Центрируем спрайт, чтобы обрезка была равномерной
         sf::FloatRect bounds = sprite.getLocalBounds();
         sprite.setPosition(
             (GameConfig::getInstance().getWindowWidth() - bounds.width * scale) / 2.0f,

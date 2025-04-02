@@ -5,6 +5,7 @@
 #include "PauseMenuManager.h"
 #include "../../../Application/MainMenuState.h"
 #include "../../States/GameState.h"
+#include "Core/Config/Settings/GameConfig.h"
 
 PauseMenuManager::PauseMenuManager() : isPausedFlag(false), selectedPauseOption(PauseOption::RESUME) {}
 
@@ -19,6 +20,7 @@ void PauseMenuManager::initialize()
     {
         Logger::getInstance().log("Failed to load menu select sound");
     }
+
     selectSound.setBuffer(selectSoundBuffer);
 
     pauseMessage.setFont(font);

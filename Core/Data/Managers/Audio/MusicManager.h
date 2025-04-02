@@ -11,112 +11,143 @@
 #include <random>
 #include "../../../Config/Utils/Logger.h"
 
-class MusicManager {
+class MusicManager
+{
 public:
-    static MusicManager& getInstance() {
+    static MusicManager& getInstance()
+    {
         static MusicManager instance;
         return instance;
     }
 
-    // Инициализация плейлистов
-    void initializeMenuPlaylist(const std::vector<std::string>& menuTracks) {
+    void initializeMenuPlaylist(const std::vector<std::string>& menuTracks)
+    {
         menuPlaylist = menuTracks;
-        if (!menuPlaylist.empty()) {
+        if (!menuPlaylist.empty())
+        {
             currentMenuTrackIndex = getRandomTrackIndex(menuPlaylist.size());
         }
     }
 
-    void initializeGameplayPlaylist(const std::vector<std::string>& gameplayTracks) {
+    void initializeGameplayPlaylist(const std::vector<std::string>& gameplayTracks)
+    {
         gameplayPlaylist = gameplayTracks;
-        if (!gameplayPlaylist.empty()) {
+        if (!gameplayPlaylist.empty())
+        {
             currentGameplayTrackIndex = getRandomTrackIndex(gameplayPlaylist.size());
         }
     }
 
-    // Воспроизведение музыки для меню
-    void playMenuMusic() {
-        stopMusic(); // Останавливаем текущую музыку
-        if (menuPlaylist.empty()) {
+    void playMenuMusic()
+    {
+        stopMusic();
+        if (menuPlaylist.empty())
+        {
             Logger::getInstance().log("Menu playlist is empty!");
             return;
         }
-        if (currentMenuTrackIndex >= menuPlaylist.size()) {
+
+        if (currentMenuTrackIndex >= menuPlaylist.size())
+        {
             currentMenuTrackIndex = 0;
         }
-        if (music.openFromFile(menuPlaylist[currentMenuTrackIndex])) {
+
+        if (music.openFromFile(menuPlaylist[currentMenuTrackIndex]))
+        {
             music.setLoop(true);
-            music.setVolume(50.0f); // Устанавливаем громкость (0-100)
+            music.setVolume(50.0f);
             music.play();
             Logger::getInstance().log("Playing menu music: " + menuPlaylist[currentMenuTrackIndex]);
-        } else {
+        }
+
+        else
+        {
             Logger::getInstance().log("Failed to load menu music: " + menuPlaylist[currentMenuTrackIndex]);
         }
     }
 
-    // Воспроизведение музыки для гонки
-    void playGameplayMusic() {
-        stopMusic(); // Останавливаем текущую музыку
-        if (gameplayPlaylist.empty()) {
+    void playGameplayMusic()
+    {
+        stopMusic();
+        if (gameplayPlaylist.empty())
+        {
             Logger::getInstance().log("Gameplay playlist is empty!");
             return;
         }
-        if (currentGameplayTrackIndex >= gameplayPlaylist.size()) {
+
+        if (currentGameplayTrackIndex >= gameplayPlaylist.size())
+        {
             currentGameplayTrackIndex = 0;
         }
-        if (music.openFromFile(gameplayPlaylist[currentGameplayTrackIndex])) {
+
+        if (music.openFromFile(gameplayPlaylist[currentGameplayTrackIndex]))
+        {
             music.setLoop(true);
-            music.setVolume(50.0f); // Устанавливаем громкость (0-100)
+            music.setVolume(50.0f);
             music.play();
             Logger::getInstance().log("Playing gameplay music: " + gameplayPlaylist[currentGameplayTrackIndex]);
-        } else {
+        }
+
+        else
+        {
             Logger::getInstance().log("Failed to load gameplay music: " + gameplayPlaylist[currentGameplayTrackIndex]);
         }
     }
 
-    // Переключение на следующий трек
-    void nextTrack(bool isMenu) {
+    void nextTrack(bool isMenu)
+    {
         stopMusic();
-        if (isMenu) {
+        if (isMenu)
+        {
             if (menuPlaylist.empty()) return;
             currentMenuTrackIndex = (currentMenuTrackIndex + 1) % menuPlaylist.size();
             playMenuMusic();
-        } else {
+        }
+
+        else
+        {
             if (gameplayPlaylist.empty()) return;
             currentGameplayTrackIndex = (currentGameplayTrackIndex + 1) % gameplayPlaylist.size();
             playGameplayMusic();
         }
     }
 
-    // Переключение на предыдущий трек
-    void previousTrack(bool isMenu) {
+    void previousTrack(bool isMenu)
+    {
         stopMusic();
-        if (isMenu) {
+        if (isMenu)
+        {
             if (menuPlaylist.empty()) return;
             currentMenuTrackIndex = (currentMenuTrackIndex - 1 + menuPlaylist.size()) % menuPlaylist.size();
             playMenuMusic();
-        } else {
+        }
+
+        else
+        {
             if (gameplayPlaylist.empty()) return;
             currentGameplayTrackIndex = (currentGameplayTrackIndex - 1 + gameplayPlaylist.size()) % gameplayPlaylist.size();
             playGameplayMusic();
         }
     }
 
-    // Остановка музыки
-    void stopMusic() {
-        if (music.getStatus() == sf::Music::Playing) {
+    void stopMusic()
+    {
+        if (music.getStatus() == sf::Music::Playing)
+        {
             music.stop();
             Logger::getInstance().log("Music stopped");
         }
     }
 
 private:
-    MusicManager() : currentMenuTrackIndex(0), currentGameplayTrackIndex(0) {
-        // Инициализация генератора случайных чисел
+    MusicManager() : currentMenuTrackIndex(0), currentGameplayTrackIndex(0)
+    {
         std::random_device rd;
         rng = std::mt19937(rd());
     }
 
-    ~MusicManager() {
+    ~MusicManager()
+    {
         stopMusic();
         Logger::getInstance().log("MusicManager destructor called");
     }
@@ -124,8 +155,8 @@ private:
     MusicManager(const MusicManager&) = delete;
     MusicManager& operator=(const MusicManager&) = delete;
 
-    // Получение случайного индекса трека
-    size_t getRandomTrackIndex(size_t playlistSize) {
+    size_t getRandomTrackIndex(size_t playlistSize)
+    {
         if (playlistSize == 0) return 0;
         std::uniform_int_distribution<size_t> dist(0, playlistSize - 1);
         return dist(rng);
@@ -136,7 +167,7 @@ private:
     size_t currentMenuTrackIndex;
     size_t currentGameplayTrackIndex;
     sf::Music music;
-    std::mt19937 rng; // Генератор случайных чисел
+    std::mt19937 rng;
 };
 
 #endif // MUSICMANAGER_H

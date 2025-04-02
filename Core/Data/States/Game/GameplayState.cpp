@@ -10,52 +10,65 @@
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game, false), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
       gameMode(mode), timer(), timerManager(25000.0f), hud(25000.0f),
-      speedEffectManager(20.0f), speedManager(40.0f, 600.0f, 16.0f),
+      speedEffectManager(20.0f), speedManager(50.0f, 600.0f, 16.0f),
       audioManager(AudioManager::getInstance()),
       obstacleManager(0.0f, 6.0f,
-                      [](float roadLeft, float roadRight) {
+                      [](float roadLeft, float roadRight)
+                      {
                           return std::make_unique<Obstacle>("Assets/Textures/Rock.png", roadLeft, roadRight);
                       },
-                      [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController* speedController, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                      [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController* speedController, std::vector<std::unique_ptr<SpawnableEntity>>& entities)
+                      {
                           sf::FloatRect playerBounds = playerCar.getBounds();
-                          for (auto it = entities.begin(); it != entities.end();) {
+
+                          for (auto it = entities.begin(); it != entities.end();)
+                          {
                               sf::FloatRect bounds = (*it)->getBounds();
                               Logger::getInstance().log("Obstacle bounds: (left: " + std::to_string(bounds.left) +
                                                        ", top: " + std::to_string(bounds.top) +
                                                        ", width: " + std::to_string(bounds.width) +
                                                        ", height: " + std::to_string(bounds.height) + ")");
-                              if (playerBounds.intersects(bounds)) {
+                              if (playerBounds.intersects(bounds))
+                              {
                                   Logger::getInstance().log("Player hit an obstacle! Applying speed reduction.");
                                   speedEffectManager.applySlowdown(currentSpeed);
                                   speedController->resetAcceleration();
                                   audioManager.playSound("collision");
                                   it = entities.erase(it);
-                              } else {
-                                  ++it;
                               }
+
+                              else { ++it; }
                           }
                       }, this),
       lightningManager(0.0f, 10.0f,
-                       [](float roadLeft, float roadRight) {
+                       [](float roadLeft, float roadRight)
+                       {
                            return std::make_unique<Lightning>("Assets/Textures/Lightning.png", roadLeft, roadRight);
                        },
-                       [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                       [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities)
+                       {
                            sf::FloatRect playerBounds = playerCar.getBounds();
-                           for (auto it = entities.begin(); it != entities.end();) {
+
+                           for (auto it = entities.begin(); it != entities.end();)
+                           {
                                sf::FloatRect bounds = (*it)->getBounds();
-                               if (playerBounds.intersects(bounds)) {
+
+                               if (playerBounds.intersects(bounds))
+                               {
                                    Logger::getInstance().log("Player picked up a lightning! Applying speed boost.");
                                    speedEffectManager.applyBoost(currentSpeed);
                                    audioManager.playSound("boost");
                                    it = entities.erase(it);
-                               } else {
-                                   ++it;
                                }
+
+                               else { ++it; }
                            }
                        }, this),
       trafficManager(0.0f, 1.5f,
-                     [](float roadLeft, float roadRight) {
-                         static const std::vector<std::string> trafficTextures = {
+                     [](float roadLeft, float roadRight)
+                     {
+                         static const std::vector<std::string> trafficTextures =
+                         {
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",
                              "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_3.png",
@@ -70,18 +83,23 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                          int index = rand() % trafficTextures.size();
                          return std::make_unique<TrafficCar>(trafficTextures[index], roadLeft, roadRight);
                      },
-                     [this, game](PlayerCar& playerCar, SpeedEffectManager&, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                     [this, game](PlayerCar& playerCar, SpeedEffectManager&, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities)
+                     {
                          sf::FloatRect playerBounds = playerCar.getBounds();
-                         for (auto it = entities.begin(); it != entities.end();) {
+
+                         for (auto it = entities.begin(); it != entities.end();)
+                         {
                              sf::FloatRect bounds = (*it)->getBounds();
-                             if (playerBounds.intersects(bounds)) {
+
+                             if (playerBounds.intersects(bounds))
+                             {
                                  Logger::getInstance().log("Player collided with traffic! Game Over.");
                                  audioManager.playSound("collision");
                                  game->setState(new GameOverState(game, gameMode, passedDistance));
                                  return;
-                             } else {
-                                 ++it;
                              }
+
+                             else { ++it; }
                          }
                      }, nullptr),
       totalDistance(25000.0f), passedDistance(0.0f), raceFinished(false), finishTime(0.0f),
@@ -103,49 +121,62 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
 
     float roadWidth = roadManager.getRoadWidth();
     obstacleManager = EntityManager(roadWidth, 6.0f,
-                                [](float roadLeft, float roadRight) {
+                                [](float roadLeft, float roadRight)
+                                {
                                     return std::make_unique<Obstacle>("Assets/Textures/Rock.png", roadLeft, roadRight);
                                 },
-                                [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController* speedController, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                                [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController* speedController, std::vector<std::unique_ptr<SpawnableEntity>>& entities)
+                                {
                                     sf::FloatRect playerBounds = playerCar.getBounds();
-                                    for (auto it = entities.begin(); it != entities.end();) {
+                                    for (auto it = entities.begin(); it != entities.end();)
+                                    {
                                         sf::FloatRect bounds = (*it)->getBounds();
                                         Logger::getInstance().log("Obstacle bounds: (left: " + std::to_string(bounds.left) +
                                                                  ", top: " + std::to_string(bounds.top) +
                                                                  ", width: " + std::to_string(bounds.width) +
                                                                  ", height: " + std::to_string(bounds.height) + ")");
-                                        if (playerBounds.intersects(bounds)) {
+
+                                        if (playerBounds.intersects(bounds))
+                                        {
                                             Logger::getInstance().log("Player hit an obstacle! Applying speed reduction.");
                                             speedEffectManager.applySlowdown(currentSpeed);
                                             speedController->resetAcceleration();
                                             audioManager.playSound("collision");
                                             it = entities.erase(it);
-                                        } else {
-                                            ++it;
                                         }
+
+                                        else { ++it; }
                                     }
                                 }, this);
     lightningManager = EntityManager(roadWidth, 10.0f,
-                                     [](float roadLeft, float roadRight) {
+                                     [](float roadLeft, float roadRight)
+                                     {
                                          return std::make_unique<Lightning>("Assets/Textures/Lightning.png", roadLeft, roadRight);
                                      },
-                                     [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
+                                     [this](PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities)
+                                     {
                                          sf::FloatRect playerBounds = playerCar.getBounds();
-                                         for (auto it = entities.begin(); it != entities.end();) {
+
+                                         for (auto it = entities.begin(); it != entities.end();)
+                                         {
                                              sf::FloatRect bounds = (*it)->getBounds();
-                                             if (playerBounds.intersects(bounds)) {
+
+                                             if (playerBounds.intersects(bounds))
+                                             {
                                                  Logger::getInstance().log("Player picked up a lightning! Applying speed boost.");
                                                  speedEffectManager.applyBoost(currentSpeed);
                                                  audioManager.playSound("boost");
                                                  it = entities.erase(it);
-                                             } else {
-                                                 ++it;
                                              }
+
+                                             else { ++it; }
                                          }
                                      }, this);
     trafficManager = EntityManager(roadWidth, 1.5f,
-                                  [](float roadLeft, float roadRight) {
-                                      static const std::vector<std::string> trafficTextures = {
+                                  [](float roadLeft, float roadRight)
+                                  {
+                                      static const std::vector<std::string> trafficTextures =
+                                      {
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_1.png",
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_2.png",
                                           "J:/MyIDE/NFS_Console/Assets/Textures/TrafficCar_3.png",
@@ -162,16 +193,19 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                   },
                                   [this, game](PlayerCar& playerCar, SpeedEffectManager&, float& currentSpeed, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>& entities) {
                                       sf::FloatRect playerBounds = playerCar.getBounds();
-                                      for (auto it = entities.begin(); it != entities.end();) {
+
+                                      for (auto it = entities.begin(); it != entities.end();)
+                                      {
                                           sf::FloatRect bounds = (*it)->getBounds();
-                                          if (playerBounds.intersects(bounds)) {
+                                          if (playerBounds.intersects(bounds))
+                                          {
                                               Logger::getInstance().log("Player collided with traffic! Game Over.");
                                               audioManager.playSound("collision");
                                               game->setState(new GameOverState(game, gameMode, passedDistance));
                                               return;
-                                          } else {
-                                              ++it;
                                           }
+
+                                          else { ++it; }
                                       }
                                   }, nullptr);
 
@@ -179,32 +213,41 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     lightningManager.initialize();
     trafficManager.initialize();
 
-    // Включаем музыку для гонки
     MusicManager::getInstance().playGameplayMusic();
 }
 
-GameplayState::~GameplayState() {
+GameplayState::~GameplayState()
+{
     Logger::getInstance().log("GameplayState destructor called");
     audioManager.stopLoopingSound("engine");
     Logger::getInstance().log("GameplayState destructor finished");
 }
 
-void GameplayState::processEvents(sf::Event& event) {
-    // Вызываем базовый метод, чтобы обработать переключение треков
+void GameplayState::processEvents(sf::Event& event)
+{
     GameState::processEvents(event);
 
     pauseMenuManager.processEvents(event, game, background, timerManager.isCountingDown(), raceFinished);
 }
 
-void GameplayState::update(float deltaTime) {
-    if (timerManager.isCountingDown()) {
+void GameplayState::update(float deltaTime)
+{
+    if (timerManager.isCountingDown())
+    {
         timerManager.update(deltaTime, passedDistance, pauseMenuManager.isPaused());
-        if (!timerManager.isCountingDown() && !timer.isStarted()) {
+
+        if (!timerManager.isCountingDown() && !timer.isStarted())
+        {
             timer.start();
         }
-    } else if (!raceFinished && !pauseMenuManager.isPaused()) {
+    }
+
+    else if (!raceFinished && !pauseMenuManager.isPaused())
+    {
         static bool accelerationStarted = false;
-        if (!accelerationStarted) {
+
+        if (!accelerationStarted)
+        {
             speedManager.resetAcceleration();
             accelerationStarted = true;
         }
@@ -246,11 +289,12 @@ void GameplayState::update(float deltaTime) {
         lightningManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
         lightningManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
 
-        // Обновляем таймер задержки спавна трафика
         trafficSpawnDelayTimer += deltaTime;
-        if (trafficSpawnDelayTimer >= 5.0f) { // Спавним трафик только после 5 секунд
+
+        if (trafficSpawnDelayTimer >= 7.0f)
+        {
             trafficManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
-            trafficManager.checkCollisions(playerCar, speedEffectManager, currentSpeed); // Проверяем коллизии с трафиком
+            trafficManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
         }
 
         speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
@@ -259,7 +303,8 @@ void GameplayState::update(float deltaTime) {
 
         hud.updateSpeedometer(currentSpeed);
 
-        if (passedDistance >= totalDistance) {
+        if (passedDistance >= totalDistance)
+        {
             raceFinished = true;
             finishTime = timer.getElapsedTime();
             Logger::getInstance().log("Race finished! Time: " + std::to_string(finishTime) + " seconds");
@@ -271,7 +316,8 @@ void GameplayState::update(float deltaTime) {
     pauseMenuManager.update(pauseMenuManager.isPaused());
 }
 
-void GameplayState::render(Renderer& renderer) {
+void GameplayState::render(Renderer& renderer)
+{
     renderer.clear(sf::Color::Black);
     renderer.render(*background);
     roadManager.render(renderer);
@@ -282,9 +328,10 @@ void GameplayState::render(Renderer& renderer) {
     timerManager.render(renderer);
     hud.render(renderer);
     pauseMenuManager.render(renderer);
-    renderer.display(); // Обновляем экран
+    renderer.display();
 }
 
-void GameplayState::resetAcceleration() {
+void GameplayState::resetAcceleration()
+{
     speedManager.resetAcceleration();
 }

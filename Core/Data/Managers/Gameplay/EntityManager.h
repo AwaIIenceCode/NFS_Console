@@ -12,7 +12,8 @@
 #include "../Gameplay/SpeedEffectManager.h"
 #include <memory>
 
-class EntityManager {
+class EntityManager
+{
 public:
     using SpawnFunction = std::function<std::unique_ptr<SpawnableEntity>(float, float)>;
     using CollisionHandler = std::function<void(PlayerCar&, SpeedEffectManager&, float&, SpeedController*, std::vector<std::unique_ptr<SpawnableEntity>>&)>;

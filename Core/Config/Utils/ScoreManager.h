@@ -6,12 +6,6 @@
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
-
-
-class ScoreManager {
-
-};
-
-
+class ScoreManager {};
 
 #endif //SCOREMANAGER_H

@@ -5,8 +5,10 @@
 
 Countdown::Countdown() : countingDown(true) {}
 
-void Countdown::initialize() {
-    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf")) {
+void Countdown::initialize()
+{
+    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
+    {
         Logger::getInstance().log("Failed to load font for Countdown");
     }
 
@@ -17,7 +19,8 @@ void Countdown::initialize() {
                      GameConfig::getInstance().getWindowHeight() / 2.0f - 50.0f);
     text.setString("3");
 
-    if (!soundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/StartSound_1.wav")) {
+    if (!soundBuffer.loadFromFile("J:/MyIDE/NFS_Console/Assets/Sounds/StartSound_1.wav"))
+    {
         Logger::getInstance().log("Failed to load countdown sound");
     }
 
@@ -25,7 +28,8 @@ void Countdown::initialize() {
     sound.play();
 }
 
-void Countdown::update(float deltaTime) {
+void Countdown::update(float deltaTime)
+{
     float elapsed = clock.getElapsedTime().asSeconds();
     if (elapsed < 1.0f) { text.setString("3"); }
     else if (elapsed < 2.0f) { text.setString("2"); }
@@ -34,8 +38,7 @@ void Countdown::update(float deltaTime) {
     else { countingDown = false; }
 }
 
-void Countdown::render(Renderer& renderer) {
-    if (countingDown) {
-        renderer.render(text);
-    }
+void Countdown::render(Renderer& renderer)
+{
+    if (countingDown) { renderer.render(text); }
 }

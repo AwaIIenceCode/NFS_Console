@@ -9,7 +9,8 @@
 #include "../../../Config/Utils/Logger.h"
 #include "../../../Domain/Rendering/Renderer.h"
 
-class HUD {
+class HUD
+{
 public:
     HUD(float totalDistance);
     void initialize();

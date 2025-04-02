@@ -7,7 +7,8 @@
 #include <SFML/Graphics.hpp>
 #include "../../../Config/Utils/Logger.h"
 
-class SpeedEffectManager {
+class SpeedEffectManager
+{
 public:
     SpeedEffectManager(float initialSpeed);
     void update(float deltaTime, float& currentSpeed, float baseSpeed);
@@ -15,7 +16,8 @@ public:
     void applySlowdown(float& currentSpeed);
 
 private:
-    struct BoostEffect {
+    struct BoostEffect
+    {
         bool isActive;
         float timer;
         float duration;
@@ -24,12 +26,13 @@ private:
         BoostEffect() : isActive(false), timer(0.0f), duration(1.5f), multiplier(1.5f), preEffectSpeed(0.0f) {}
     };
 
-    struct SlowdownEffect {
+    struct SlowdownEffect
+    {
         bool isActive;
         float timer;
         float duration;
-        float multiplier; // Добавляем множитель для замедления
-        SlowdownEffect() : isActive(false), timer(0.0f), duration(1.5f), multiplier(0.5f) {} // Замедление в 2 раза
+        float multiplier;
+        SlowdownEffect() : isActive(false), timer(0.0f), duration(1.5f), multiplier(0.5f) {}
     };
 
     BoostEffect boostEffect;

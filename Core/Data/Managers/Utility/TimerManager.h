@@ -8,7 +8,8 @@
 #include <SFML/Audio.hpp>
 #include "../../../Domain/Rendering/Renderer.h"
 
-class TimerManager {
+class TimerManager
+{
 public:
     TimerManager(float totalDistance);
     void initialize();
@@ -29,12 +30,12 @@ private:
     float totalDistance;
     float passedDistance;
     bool timerStarted;
+    bool isCountingDownFlag;
     sf::Clock gameTimer;
     sf::Text timerText;
     sf::Text progressText;
     sf::Text speedText;
     sf::Font font;
-    bool isCountingDownFlag;
     sf::Text countdownText;
     sf::Clock countdownClock;
     sf::SoundBuffer countdownBuffer;

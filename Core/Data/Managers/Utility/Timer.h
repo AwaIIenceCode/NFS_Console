@@ -7,7 +7,8 @@
 #include <SFML/Graphics.hpp>
 #include "../../../Config/Utils/Logger.h"
 
-class Timer {
+class Timer
+{
 public:
     Timer();
     void start();

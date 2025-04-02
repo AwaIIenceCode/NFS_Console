@@ -2,34 +2,42 @@
 #include "MainMenuState.h"
 #include "../../Core/Data/Managers/Audio/AudioManager.h"
 #include "../../Core/Data/Managers/Audio/MusicManager.h"
+#include "../Config/Settings/GameConfig.h"
+#include "Core/Config/Utils/ScaleManager.h"
 
 Game::Game()
-    : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(), GameConfig::getInstance().getWindowHeight()), "NFS Console"), renderer(&window), currentState(nullptr) {
+    : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(), GameConfig::getInstance().getWindowHeight()), "NFS Console"), renderer(&window), currentState(nullptr)
+{
     window.setFramerateLimit(GameConfig::getInstance().getMaxFPS());
 
-    // Загружаем текстуру для фона
-    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundMenu.jpg");
-    if (backgroundTexture) {
+    sf::Texture* backgroundTexture = TextureManager::getInstance().loadTexture("Assets/Textures/BackgroundMenu.jpg");
+
+    if (backgroundTexture)
+    {
         background.setTexture(*backgroundTexture);
         ScaleManager::getInstance().scaleSprite(background);
-    } else {
-        Logger::getInstance().log("Failed to load background texture");
     }
 
-    // Загружаем текстуру для фона экрана рекордов
+    else { Logger::getInstance().log("Failed to load background texture"); }
+
     sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundRecords.jpg");
-    if (recordsBackgroundTexture) {
+
+    if (recordsBackgroundTexture)
+    {
         recordsBackground.setTexture(*recordsBackgroundTexture);
         ScaleManager::getInstance().scaleSprite(recordsBackground);
-    } else {
-        Logger::getInstance().log("Failed to load records background texture");
     }
 
-    std::vector<std::string> menuTracks = {
+    else { Logger::getInstance().log("Failed to load records background texture"); }
+
+    std::vector<std::string> menuTracks =
+    {
         "J:/MyIDE/NFS_Console/Assets/Musics/MenuMusic_1.wav",
         "J:/MyIDE/NFS_Console/Assets/Musics/MenuMusic_2.wav"
     };
-    std::vector<std::string> gameplayTracks = {
+
+    std::vector<std::string> gameplayTracks =
+    {
         "J:/MyIDE/NFS_Console/Assets/Musics/GameMusic_1.wav",
         "J:/MyIDE/NFS_Console/Assets/Musics/GameMusic_2.wav",
         "J:/MyIDE/NFS_Console/Assets/Musics/GameMusic_3.wav",
@@ -47,13 +55,15 @@ Game::Game()
         "J:/MyIDE/NFS_Console/Assets/Musics/GameMusic_15.wav",
         "J:/MyIDE/NFS_Console/Assets/Musics/GameMusic_16.wav",
     };
+
     MusicManager::getInstance().initializeMenuPlaylist(menuTracks);
     MusicManager::getInstance().initializeGameplayPlaylist(gameplayTracks);
 
     setState(new MainMenuState(this, &background));
 }
 
-Game::~Game() {
+Game::~Game()
+{
     Logger::getInstance().log("Game destructor called");
     AudioManager::getInstance().stopAllSounds();
     MusicManager::getInstance().stopMusic();
@@ -61,40 +71,47 @@ Game::~Game() {
     Logger::getInstance().log("Game destructor finished");
 }
 
-void Game::run() {
+void Game::run()
+{
     sf::Clock clock;
-    while (window.isOpen()) {
+
+    while (window.isOpen())
+    {
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            if (currentState) {
-                currentState->processEvents(event);
-            }
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) { window.close(); }
+
+            if (currentState) { currentState->processEvents(event); }
         }
 
         float deltaTime = clock.restart().asSeconds();
-        if (currentState) {
+
+        if (currentState)
+        {
             currentState->update(deltaTime);
             currentState->render(renderer);
         }
     }
 }
 
-void Game::setState(GameState* state) {
+void Game::setState(GameState* state)
+{
     delete currentState;
     currentState = state;
 }
 
-void Game::close() {
+void Game::close()
+{
     window.close();
 }
 
-sf::Sprite* Game::getBackground() {
+sf::Sprite* Game::getBackground()
+{
     return &background;
 }
 
-sf::Sprite* Game::getRecordsBackground() {
+sf::Sprite* Game::getRecordsBackground()
+{
     return &recordsBackground;
 }
