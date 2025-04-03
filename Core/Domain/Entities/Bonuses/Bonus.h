@@ -9,9 +9,7 @@
 
 
 
-class Bonus {
-
-};
+class Bonus {};
 
 
 

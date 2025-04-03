@@ -7,35 +7,47 @@
 #include <random>
 #include "../../../Config/Settings/GameConfig.h"
 
-Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadRight) {
+Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadRight)
+{
     sf::Texture* texture = TextureManager::getInstance().loadTexture(texturePath);
-    if (!texture) {
+
+    if (!texture)
+    {
         Logger::getInstance().log("Failed to load lightning texture: " + texturePath);
         sf::Image image;
+
         image.create(30, 30, sf::Color::Yellow);
         sf::Texture placeholder;
-        if (!placeholder.loadFromImage(image)) {
+
+        if (!placeholder.loadFromImage(image))
+        {
             Logger::getInstance().log("Failed to create lightning texture placeholder");
-        } else {
-            // Добавляем заглушку в TextureManager
+        }
+
+        else
+        {
             texture = TextureManager::getInstance().addTexture(texturePath + "_placeholder", placeholder);
         }
-    } else {
+    }
+
+    else
+    {
         Logger::getInstance().log("Successfully loaded lightning texture: " + texturePath);
     }
 
     sprite.setTexture(*texture);
-    // Увеличиваем масштаб до 0.07f (7% от исходного размера)
     sprite.setScale(0.07f, 0.07f);
 
-    // Новый способ генерации xPos с учётом тротуаров
     float textureWidth = texture->getSize().x * sprite.getScale().x;
-    float sidewalkWidth = 100.0f; // Ширина тротуара с каждой стороны
+    float sidewalkWidth = 100.0f;
     float spawnRange = (roadRight - sidewalkWidth) - (roadLeft + sidewalkWidth) - textureWidth;
-    if (spawnRange < 0) {
+
+    if (spawnRange < 0)
+    {
         Logger::getInstance().log("Warning: spawnRange is negative (" + std::to_string(spawnRange) + "), adjusting to 0");
         spawnRange = 0;
     }
+
     float xPos = (roadLeft + sidewalkWidth) + static_cast<float>(rand()) / RAND_MAX * spawnRange;
 
     Logger::getInstance().log("Generated xPos: " + std::to_string(xPos) +
@@ -44,7 +56,6 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
 
     sprite.setPosition(xPos, 0.0f);
 
-    // Логируем границы молнии после создания
     sf::FloatRect bounds = sprite.getGlobalBounds();
     Logger::getInstance().log("Lightning created with bounds: (left: " + std::to_string(bounds.left) +
                              ", top: " + std::to_string(bounds.top) +
@@ -52,25 +63,30 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
                              ", height: " + std::to_string(bounds.height) + ")");
 }
 
-sf::Vector2f Lightning::getPosition() const {
+sf::Vector2f Lightning::getPosition() const
+{
     return sprite.getPosition();
 }
 
-void Lightning::update(float deltaTime, float roadSpeed) {
+void Lightning::update(float deltaTime, float roadSpeed)
+{
     sprite.move(0.0f, roadSpeed * deltaTime);
 }
 
-bool Lightning::isOffScreen() const {
+bool Lightning::isOffScreen() const
+{
     float yPos = sprite.getPosition().y;
     float windowHeight = GameConfig::getInstance().getWindowHeight();
     bool offScreen = yPos > windowHeight;
     return offScreen;
 }
 
-void Lightning::render(Renderer& renderer) const {
+void Lightning::render(Renderer& renderer) const
+{
     renderer.render(sprite);
 }
 
-sf::FloatRect Lightning::getBounds() const {
+sf::FloatRect Lightning::getBounds() const
+{
     return sprite.getGlobalBounds();
 }

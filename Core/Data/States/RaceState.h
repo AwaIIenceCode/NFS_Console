@@ -8,9 +8,7 @@
 
 
 
-class RaceState {
-
-};
+class RaceState {};
 
 
 

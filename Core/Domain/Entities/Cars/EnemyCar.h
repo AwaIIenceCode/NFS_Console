@@ -8,9 +8,7 @@
 
 
 
-class EnemyCar {
-
-};
+class EnemyCar {};
 
 
 

@@ -7,9 +7,7 @@
 
 
 
-class Track {
-
-};
+class Track {};
 
 
 

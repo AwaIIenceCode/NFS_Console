@@ -23,10 +23,10 @@ private:
         TIME_TRIAL,
         ENDLESS,
         RACE,
-        COUNT // Для подсчёта количества опций
+        COUNT
     };
 
-    sf::Sprite* background; // Фон (передаём из Game)
+    sf::Sprite* background;
     sf::Font font;
     std::vector<sf::Text> menuItems;
     MenuOption selectedOption;

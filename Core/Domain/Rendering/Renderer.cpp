@@ -5,14 +5,17 @@
 
 Renderer::Renderer(sf::RenderWindow* window) : window(window) {}
 
-void Renderer::clear(sf::Color color) const {
+void Renderer::clear(sf::Color color) const
+{
     window->clear(color);
 }
 
-void Renderer::render(const sf::Drawable& drawable) const {
+void Renderer::render(const sf::Drawable& drawable) const
+{
     window->draw(drawable);
 }
 
-void Renderer::display() const {
+void Renderer::display() const
+{
     window->display();
 }

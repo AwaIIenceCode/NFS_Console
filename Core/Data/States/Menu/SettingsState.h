@@ -10,7 +10,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class SettingsState : public GameState {
+class SettingsState : public GameState
+{
 public:
     SettingsState(Game* game, sf::Sprite* background);
     ~SettingsState();
@@ -19,7 +20,8 @@ public:
     void render(Renderer& renderer) override;
 
 private:
-    enum class MenuOption {
+    enum class MenuOption
+    {
         CONTROLS,
         SOUND,
         BACK,

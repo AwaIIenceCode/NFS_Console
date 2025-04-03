@@ -1,6 +1,5 @@
 //
 // Created by AwallencePC on 18.03.2025.
-// PlayerCar: Машина игрока, наследуется от Car (управление через InputHandler).
 //
 
 #ifndef PLAYERCAR_H
@@ -10,14 +9,15 @@
 #include "Car.h"
 #include "../../../UI/Input/InputHandler.h"
 
-class PlayerCar : public Car {
+class PlayerCar : public Car
+{
 public:
     PlayerCar(const std::string& texturePath);
-    void update(float deltaTime, float roadLeft, float roadRight); // Оставляем только этот метод
+    void update(float deltaTime, float roadLeft, float roadRight);
 
 private:
-    float moveSpeed; // Скорость движения влево/вправо
-    float scaleFactor; // Масштаб текстуры
+    float moveSpeed;
+    float scaleFactor;
 };
 
 #endif //PLAYERCAR_H

@@ -6,9 +6,10 @@
 
 #include <SFML/Graphics.hpp>
 
-class Renderer {
+class Renderer
+{
 public:
-    Renderer(sf::RenderWindow* window); // Оставляем указатель, как было в твоём коде
+    Renderer(sf::RenderWindow* window);
 
     void clear(sf::Color color = sf::Color::Black) const;
     void render(const sf::Drawable& drawable) const;

@@ -7,9 +7,10 @@
 #include "../SpawnableEntity.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
-#include "../../Rendering/TextureManager.h" // Добавляем TextureManager
+#include "../../Rendering/TextureManager.h"
 
-class Obstacle : public SpawnableEntity {
+class Obstacle : public SpawnableEntity
+{
 public:
     Obstacle(const std::string& texturePath, float roadLeft, float roadRight);
     void update(float deltaTime, float roadSpeed) override;

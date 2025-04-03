@@ -1,4 +1,3 @@
-// Core/Data/States/Menu/GameModeSelectionState.cpp
 #include "GameModeSelectionState.h"
 #include <Core/Data/States/Game/GameplayState.h>
 #include "../GameState.h"
@@ -8,7 +7,7 @@
 GameModeSelectionState::GameModeSelectionState(Game* game, sf::Sprite* background)
     : GameState(game, true), background(background), selectedOption(MenuOption::TIME_TRIAL)
 {
-    Logger::getInstance().log("GameModeSelectionState created"); // Добавляем лог
+    Logger::getInstance().log("GameModeSelectionState created");
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
     {
         Logger::getInstance().log("Failed to load font for GameModeSelectionState");
@@ -20,7 +19,6 @@ void GameModeSelectionState::initializeMenu()
 {
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
-    // Настраиваем текст для каждой опции
     menuItems[static_cast<size_t>(MenuOption::TIME_TRIAL)].setString("Time Trial");
     menuItems[static_cast<size_t>(MenuOption::ENDLESS)].setString("Endless (WIP)");
     menuItems[static_cast<size_t>(MenuOption::RACE)].setString("Race (WIP)");
@@ -30,6 +28,7 @@ void GameModeSelectionState::initializeMenu()
         item.setFont(font);
 
         if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(80); }
+
         else { item.setCharacterSize(40); }
 
         item.setFillColor(sf::Color::White);
@@ -57,42 +56,52 @@ void GameModeSelectionState::updateMenuPositions()
     }
 }
 
-void GameModeSelectionState::processEvents(sf::Event& event) {
-    // Вызываем базовый метод, чтобы обработать переключение треков
+void GameModeSelectionState::processEvents(sf::Event& event)
+{
+
     GameState::processEvents(event);
 
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Up) {
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Up)
+        {
             int current = static_cast<int>(selectedOption);
             current = (current - 1 + static_cast<int>(MenuOption::COUNT)) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
         }
 
-        if (event.key.code == sf::Keyboard::Down) {
+        if (event.key.code == sf::Keyboard::Down)
+        {
             int current = static_cast<int>(selectedOption);
             current = (current + 1) % static_cast<int>(MenuOption::COUNT);
             selectedOption = static_cast<MenuOption>(current);
         }
 
-        if (event.key.code == sf::Keyboard::Enter) {
+        if (event.key.code == sf::Keyboard::Enter)
+        {
             GameMode selectedMode;
-            switch (selectedOption) {
+            switch (selectedOption)
+            {
                 case MenuOption::TIME_TRIAL:
                     selectedMode = GameMode::TIME_TRIAL;
                 break;
+
                 case MenuOption::ENDLESS:
                     selectedMode = GameMode::ENDLESS;
                 break;
+
                 case MenuOption::RACE:
                     selectedMode = GameMode::RACE;
                 break;
+
                 default:
                     selectedMode = GameMode::TIME_TRIAL;
             }
             game->setState(new GameplayState(game, background, selectedMode));
         }
 
-        if (event.key.code == sf::Keyboard::Escape) {
+        if (event.key.code == sf::Keyboard::Escape)
+        {
             game->setState(new MainMenuState(game, background));
         }
     }
@@ -100,10 +109,10 @@ void GameModeSelectionState::processEvents(sf::Event& event) {
 
 void GameModeSelectionState::update(float deltaTime)
 {
-    // Обновляем подсветку выбранной опции
     for (size_t i = 0; i < menuItems.size(); ++i)
     {
         if (i == static_cast<size_t>(selectedOption)) { menuItems[i].setFillColor(sf::Color::Yellow); }
+
         else { menuItems[i].setFillColor(sf::Color::White); }
     }
 
@@ -113,8 +122,8 @@ void GameModeSelectionState::update(float deltaTime)
 void GameModeSelectionState::render(Renderer& renderer)
 {
     Logger::getInstance().log("Rendering GameModeSelectionState");
-    renderer.clear(sf::Color::Black); // Очищаем экран
+    renderer.clear(sf::Color::Black);
     renderer.render(*background);
     for (const auto& item : menuItems) { renderer.render(item); }
-    renderer.display(); // Обновляем экран
+    renderer.display();
 }

@@ -18,7 +18,8 @@ public:
     void render(Renderer& renderer) override;
 
 private:
-    enum class MenuOption {
+    enum class MenuOption
+    {
         TIME_TRIAL,
         BACK,
         COUNT

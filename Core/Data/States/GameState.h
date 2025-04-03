@@ -13,15 +13,21 @@ class Game;
 
 class GameState {
 public:
-    GameState(Game* game) : game(game), isMenuState(true) {} // По умолчанию считаем, что это меню
-    GameState(Game* game, bool isMenu) : game(game), isMenuState(isMenu) {} // Указываем явно
+    GameState(Game* game) : game(game), isMenuState(true) {}
+    GameState(Game* game, bool isMenu) : game(game), isMenuState(isMenu) {}
+
     virtual ~GameState() = default;
-    virtual void processEvents(sf::Event& event) {
-        // Добавляем переключение музыки
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::M) { // Следующий трек
+    virtual void processEvents(sf::Event& event)
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::M)
+            {
                 MusicManager::getInstance().nextTrack(isMenuState);
-            } else if (event.key.code == sf::Keyboard::N) { // Предыдущий трек
+            }
+
+            else if (event.key.code == sf::Keyboard::N)
+            {
                 MusicManager::getInstance().previousTrack(isMenuState);
             }
         }

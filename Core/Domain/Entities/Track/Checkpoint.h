@@ -7,9 +7,7 @@
 
 
 
-class Checkpoint {
-
-};
+class Checkpoint {};
 
 
 
