@@ -17,6 +17,7 @@ public:
     GameState(Game* game, bool isMenu) : game(game), isMenuState(isMenu) {}
 
     virtual ~GameState() = default;
+
     virtual void processEvents(sf::Event& event)
     {
         if (event.type == sf::Event::KeyPressed)

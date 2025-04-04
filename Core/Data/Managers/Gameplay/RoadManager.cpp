@@ -10,16 +10,13 @@ RoadManager::RoadManager() : roadWidth(0.0f), roadHeight(0.0f) {}
 
 void RoadManager::initialize()
 {
+
     if (!roadTexture.loadFromFile("J:/MyIDE/NFS_Console/Assets/Textures/TimeTrialRoad.png"))
     {
         Logger::getInstance().log("Failed to load road texture");
         sf::Image image;
         image.create(400, 800, sf::Color(100, 100, 100, 255));
-
-        if (!roadTexture.loadFromImage(image))
-        {
-            Logger::getInstance().log("Failed to create road texture placeholder");
-        }
+        roadTexture.loadFromImage(image);
     }
 
     road1.setTexture(roadTexture);
@@ -39,15 +36,8 @@ void RoadManager::initialize()
     roadWidth = textureWidth * scaleX;
     roadHeight = textureHeight * scaleY;
 
-    road1.setPosition(0.0f, -roadHeight + windowHeight);
-    road2.setPosition(0.0f, -roadHeight * 2.0f + windowHeight);
-
-    Logger::getInstance().log("Window width: " + std::to_string(windowWidth));
-    Logger::getInstance().log("Window height: " + std::to_string(windowHeight));
-    Logger::getInstance().log("Road width after scaling: " + std::to_string(roadWidth));
-    Logger::getInstance().log("Road height after scaling: " + std::to_string(roadHeight));
-    Logger::getInstance().log("road1 position: (" + std::to_string(road1.getPosition().x) + ", " + std::to_string(road1.getPosition().y) + ")");
-    Logger::getInstance().log("road2 position: (" + std::to_string(road2.getPosition().x) + ", " + std::to_string(road2.getPosition().y) + ")");
+    road1.setPosition(0.0f, 0.0f);
+    road2.setPosition(0.0f, -roadHeight);
 }
 
 void RoadManager::update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused)

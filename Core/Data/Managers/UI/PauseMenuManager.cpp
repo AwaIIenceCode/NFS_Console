@@ -102,29 +102,25 @@ void PauseMenuManager::update(bool isPaused)
 void PauseMenuManager::updatePauseMenuPositions()
 {
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
-    float startY = GameConfig::getInstance().isFullscreen() ? 150.0f : 75.0f;
-    float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f;
-    float verticalSpacing = GameConfig::getInstance().isFullscreen() ? 75.0f : 40.0f;
+    float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+
+    float rightOffset = windowWidth * 0.25f;
+    float startY = windowHeight * 0.2f;
+    float verticalSpacing = windowHeight * 0.1f;
+    float baseFontSize = windowHeight * 0.05f;
+    float messageFontSize = windowHeight * 0.07f;
 
     pauseMessage.setPosition(windowWidth - rightOffset, startY);
-
     for (size_t i = 0; i < pauseMenuItems.size(); ++i)
     {
         pauseMenuItems[i].setPosition(windowWidth - rightOffset, startY + (1 + i) * verticalSpacing);
     }
 
-    if (GameConfig::getInstance().isFullscreen())
+    pauseMessage.setCharacterSize(static_cast<unsigned int>(messageFontSize));
+
+    for (auto& item : pauseMenuItems)
     {
-        pauseMessage.setCharacterSize(80);
-
-        for (auto& item : pauseMenuItems) { item.setCharacterSize(40); }
-    }
-
-    else
-    {
-        pauseMessage.setCharacterSize(40);
-
-        for (auto& item : pauseMenuItems) { item.setCharacterSize(20); }
+        item.setCharacterSize(static_cast<unsigned int>(baseFontSize));
     }
 }
 

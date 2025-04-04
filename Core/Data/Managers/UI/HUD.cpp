@@ -9,27 +9,24 @@ HUD::HUD(float totalDistance) : totalDistance(totalDistance) {}
 
 void HUD::initialize()
 {
-    if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
-    {
-        Logger::getInstance().log("Failed to load font for HUD");
-    }
+    float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
+    float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+
+    float baseFontSize = windowHeight * 0.04f;
+    float paddingX = windowWidth * 0.02f;
+    float paddingY = windowHeight * 0.02f;
 
     timerText.setFont(font);
-    timerText.setCharacterSize(40);
-    timerText.setFillColor(sf::Color::White);
-    timerText.setPosition(20.0f, 20.0f);
+    timerText.setCharacterSize(static_cast<unsigned int>(baseFontSize));
+    timerText.setPosition(paddingX, paddingY);
 
     progressText.setFont(font);
-    progressText.setCharacterSize(40);
-    progressText.setFillColor(sf::Color::White);
-    progressText.setPosition(20.0f, 70.0f);
+    progressText.setCharacterSize(static_cast<unsigned int>(baseFontSize));
+    progressText.setPosition(paddingX, paddingY * 2 + baseFontSize);
 
     speedText.setFont(font);
-    speedText.setCharacterSize(40);
-    speedText.setFillColor(sf::Color::White);
-    float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
-    speedText.setPosition(windowWidth - 350.0f, 30.0f);
-    speedText.setString("Speed: 0 km/h");
+    speedText.setCharacterSize(static_cast<unsigned int>(baseFontSize));
+    speedText.setPosition(windowWidth - paddingX - speedText.getGlobalBounds().width, paddingY);
 }
 
 void HUD::updateTimer(float elapsedTime)

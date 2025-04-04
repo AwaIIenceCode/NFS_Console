@@ -2,9 +2,11 @@
 #include "../Data/States/Menu/GameModeSelectionState.h"
 #include "../Data/States/Menu/RecordsModeSelectionState.h"
 #include "../Data/States/Menu/SettingsState.h"
+#include "../Data/States/Game/RecordsState.h"
 #include "../Config/Utils/Logger.h"
 #include "Core/Config/Utils/ScaleManager.h"
 #include "Core/Data/Managers/Audio/MusicManager.h"
+#include "Core/Data/States/Game/GameplayState.h"
 
 MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
     : GameState(game, true), background(background), selectedOption(MenuOption::START_GAME)
@@ -32,7 +34,7 @@ MainMenuState::MainMenuState(Game* game, sf::Sprite* background)
         {
             background->setTexture(*backgroundTexture);
             background->setPosition(0.0f, 0.0f);
-            ScaleManager::getInstance().scaleSprite(*background);
+            ScaleManager::getInstance().scaleSpriteToFill(*background);
         }
 
         else
@@ -55,9 +57,9 @@ void MainMenuState::initializeMenu()
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
     menuItems[static_cast<size_t>(MenuOption::START_GAME)].setString("Start Game");
-    menuItems[static_cast<size_t>(MenuOption::RECORDS)].setString("Records");
     menuItems[static_cast<size_t>(MenuOption::SETTINGS)].setString("Settings");
-    menuItems[static_cast<size_t>(MenuOption::EXIT_GAME)].setString("Exit Game");
+    menuItems[static_cast<size_t>(MenuOption::RECORDS)].setString("Records");
+    menuItems[static_cast<size_t>(MenuOption::EXIT)].setString("Exit");
 
     for (auto& item : menuItems)
     {
@@ -71,9 +73,12 @@ void MainMenuState::initializeMenu()
 void MainMenuState::updateMenuPositions()
 {
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
-    float startY = GameConfig::getInstance().isFullscreen() ? 300.0f : 150.0f;
-    float rightOffset = GameConfig::getInstance().isFullscreen() ? 800.0f : 300.0f;
-    float verticalSpacing = GameConfig::getInstance().isFullscreen() ? 150.0f : 75.0f;
+    float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+
+    float rightOffset = windowWidth * 0.25f;
+    float startY = windowHeight * 0.2f;
+    float verticalSpacing = windowHeight * 0.1f;
+    float baseFontSize = windowHeight * 0.05f;
 
     for (size_t i = 0; i < menuItems.size(); ++i)
     {
@@ -82,16 +87,12 @@ void MainMenuState::updateMenuPositions()
 
     for (auto& item : menuItems)
     {
-        if (GameConfig::getInstance().isFullscreen()) { item.setCharacterSize(80); }
-
-        else { item.setCharacterSize(40); }
+        item.setCharacterSize(static_cast<unsigned int>(baseFontSize));
     }
 }
 
 void MainMenuState::processEvents(sf::Event& event)
 {
-    GameState::processEvents(event);
-
     if (event.type == sf::Event::KeyPressed)
     {
         if (event.key.code == sf::Keyboard::Up)
@@ -118,15 +119,15 @@ void MainMenuState::processEvents(sf::Event& event)
                     game->setState(new GameModeSelectionState(game, background));
                     break;
 
+                case MenuOption::SETTINGS:
+                    game->setState(new SettingsState(game, background));
+                    break;
+
                 case MenuOption::RECORDS:
                     game->setState(new RecordsModeSelectionState(game));
                     break;
 
-                case MenuOption::SETTINGS:
-                    game->setState(new SettingsState(game, background)); // Переходим в SettingsState
-                    break;
-
-                case MenuOption::EXIT_GAME:
+                case MenuOption::EXIT:
                     game->close();
                     break;
             }
@@ -142,7 +143,6 @@ void MainMenuState::update(float deltaTime)
         {
             menuItems[i].setFillColor(sf::Color::Yellow);
         }
-
         else
         {
             menuItems[i].setFillColor(sf::Color::White);
@@ -166,7 +166,6 @@ void MainMenuState::render(Renderer& renderer)
                                  std::to_string(background->getScale().y) + ")");
         renderer.render(*background);
     }
-
     else
     {
         Logger::getInstance().log("Background texture is missing in MainMenuState!");

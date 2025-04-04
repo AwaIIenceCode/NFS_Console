@@ -1,4 +1,3 @@
-// Core/Data/States/Game/GameplayState.cpp
 #include "GameplayState.h"
 #include "FinishState.h"
 #include "Core/Domain/Entities/Obstacles/Obstacle.h"
@@ -36,7 +35,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                   audioManager.playSound("collision");
                                   it = entities.erase(it);
                               }
-
                               else { ++it; }
                           }
                       }, this),
@@ -60,7 +58,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                    audioManager.playSound("boost");
                                    it = entities.erase(it);
                                }
-
                                else { ++it; }
                            }
                        }, this),
@@ -98,7 +95,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                  game->setState(new GameOverState(game, gameMode, passedDistance));
                                  return;
                              }
-
                              else { ++it; }
                          }
                      }, nullptr),
@@ -111,8 +107,10 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     audioManager.loadSound("collision", "Assets/Sounds/RockSounds.wav");
     audioManager.playLoopingSound("engine");
 
-    float initialY = GameConfig::getInstance().getWindowHeight() * 2.0f / 3.0f + 100.0f;
-    playerCar.setPosition(GameConfig::getInstance().getWindowWidth() / 2.0f, initialY);
+    float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+    float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
+    float initialY = windowHeight * 0.75f;
+    playerCar.setPosition(windowWidth / 2.0f, initialY);
 
     roadManager.initialize();
     timerManager.initialize();
@@ -144,7 +142,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                             audioManager.playSound("collision");
                                             it = entities.erase(it);
                                         }
-
                                         else { ++it; }
                                     }
                                 }, this);
@@ -168,7 +165,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                                  audioManager.playSound("boost");
                                                  it = entities.erase(it);
                                              }
-
                                              else { ++it; }
                                          }
                                      }, this);
@@ -204,7 +200,6 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
                                               game->setState(new GameOverState(game, gameMode, passedDistance));
                                               return;
                                           }
-
                                           else { ++it; }
                                       }
                                   }, nullptr);
@@ -241,7 +236,6 @@ void GameplayState::update(float deltaTime)
             timer.start();
         }
     }
-
     else if (!raceFinished && !pauseMenuManager.isPaused())
     {
         static bool accelerationStarted = false;
@@ -329,6 +323,21 @@ void GameplayState::render(Renderer& renderer)
     hud.render(renderer);
     pauseMenuManager.render(renderer);
     renderer.display();
+}
+
+void GameplayState::updatePositions()
+{
+    float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
+    float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
+
+    float initialY = windowHeight * 0.75f;
+    playerCar.setPosition(windowWidth / 2.0f, initialY);
+
+    hud.initialize();
+
+    roadManager.initialize();
+
+    pauseMenuManager.initialize();
 }
 
 void GameplayState::resetAcceleration()

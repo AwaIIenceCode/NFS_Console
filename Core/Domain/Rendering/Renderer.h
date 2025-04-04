@@ -14,6 +14,7 @@ public:
     void clear(sf::Color color = sf::Color::Black) const;
     void render(const sf::Drawable& drawable) const;
     void display() const;
+    void setWindow(sf::RenderWindow* newWindow) { window = newWindow; }
 
 private:
     sf::RenderWindow* window;

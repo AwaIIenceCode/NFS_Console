@@ -20,6 +20,7 @@ public:
     void run();
     void setState(GameState* newState);
     void close();
+    void toggleFullscreen();
     sf::Sprite* getBackground();
     sf::Sprite* getRecordsBackground();
 

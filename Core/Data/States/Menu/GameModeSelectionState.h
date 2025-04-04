@@ -30,10 +30,9 @@ private:
     sf::Font font;
     std::vector<sf::Text> menuItems;
     MenuOption selectedOption;
+    bool modeSelected;
     void initializeMenu();
     void updateMenuPositions();
 };
-
-
 
 #endif //GAMEMODESELECTIONSTATE_H

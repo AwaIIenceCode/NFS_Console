@@ -4,6 +4,7 @@
 #include "../../Core/Data/Managers/Audio/MusicManager.h"
 #include "../Config/Settings/GameConfig.h"
 #include "Core/Config/Utils/ScaleManager.h"
+#include "Core/Data/States/Game/GameplayState.h"
 
 Game::Game()
     : window(sf::VideoMode(GameConfig::getInstance().getWindowWidth(), GameConfig::getInstance().getWindowHeight()), "NFS Console"), renderer(&window), currentState(nullptr)
@@ -15,9 +16,8 @@ Game::Game()
     if (backgroundTexture)
     {
         background.setTexture(*backgroundTexture);
-        ScaleManager::getInstance().scaleSprite(background);
+        ScaleManager::getInstance().scaleSpriteToFill(background);
     }
-
     else { Logger::getInstance().log("Failed to load background texture"); }
 
     sf::Texture* recordsBackgroundTexture = TextureManager::getInstance().loadTexture("J:/MyIDE/NFS_Console/Assets/Textures/BackgroundRecords.jpg");
@@ -25,9 +25,8 @@ Game::Game()
     if (recordsBackgroundTexture)
     {
         recordsBackground.setTexture(*recordsBackgroundTexture);
-        ScaleManager::getInstance().scaleSprite(recordsBackground);
+        ScaleManager::getInstance().scaleSpriteToFill(recordsBackground);
     }
-
     else { Logger::getInstance().log("Failed to load records background texture"); }
 
     std::vector<std::string> menuTracks =
@@ -60,6 +59,36 @@ Game::Game()
     MusicManager::getInstance().initializeGameplayPlaylist(gameplayTracks);
 
     setState(new MainMenuState(this, &background));
+}
+
+void Game::toggleFullscreen()
+{
+    if (dynamic_cast<GameplayState*>(currentState))
+    {
+        Logger::getInstance().log("Cannot toggle fullscreen during gameplay!");
+        return;
+    }
+
+    GameConfig& config = GameConfig::getInstance();
+    config.setFullscreen(!config.isFullscreen());
+
+    window.close();
+
+    if (config.isFullscreen()) {
+        window.create(sf::VideoMode::getDesktopMode(), "NFS Console", sf::Style::Fullscreen);
+        config.setWindowSize(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
+    } else {
+        window.create(sf::VideoMode(config.getOriginalWindowWidth(), config.getOriginalWindowHeight()), "NFS Console", sf::Style::Default);
+        config.setWindowSize(config.getOriginalWindowWidth(), config.getOriginalWindowHeight());
+    }
+
+    window.setFramerateLimit(config.getMaxFPS());
+    renderer.setWindow(&window);
+
+    ScaleManager::getInstance().scaleSpriteToFill(background);
+    ScaleManager::getInstance().scaleSpriteToFill(recordsBackground);
+
+    Logger::getInstance().log("Toggled fullscreen mode: " + std::string(config.isFullscreen() ? "ON" : "OFF"));
 }
 
 Game::~Game()

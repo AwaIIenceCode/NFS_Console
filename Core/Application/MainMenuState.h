@@ -19,13 +19,15 @@ public:
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
 
+
+
 private:
     enum class MenuOption
     {
         START_GAME,
-        RECORDS,
         SETTINGS,
-        EXIT_GAME,
+        RECORDS,
+        EXIT,
         COUNT
     };
 

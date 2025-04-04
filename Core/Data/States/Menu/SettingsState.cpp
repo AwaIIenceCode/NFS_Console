@@ -1,18 +1,12 @@
-//
-// Created by AwallencePC on 01.04.2025.
-//
-
 #include "SettingsState.h"
 #include "../../../Application/MainMenuState.h"
 #include "../../../Config/Utils/Logger.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Data/Managers/Audio/MusicManager.h"
-#include <string>
-
 #include "Core/Config/Utils/ScaleManager.h"
 
 SettingsState::SettingsState(Game* game, sf::Sprite* background)
-    : GameState(game, true), background(background), selectedOption(MenuOption::CONTROLS) {
+    : GameState(game, true), background(background), selectedOption(MenuOption::FULLSCREEN) {
     Logger::getInstance().log("SettingsState created");
 
     if (!font.loadFromFile("J:/MyIDE/NFS_Console/Assets/Fonts/Pencils.ttf"))
@@ -24,7 +18,6 @@ SettingsState::SettingsState(Game* game, sf::Sprite* background)
     {
         Logger::getInstance().log("Failed to load menu select sound");
     }
-
     selectSound.setBuffer(selectSoundBuffer);
 
     if (!background->getTexture())
@@ -36,13 +29,18 @@ SettingsState::SettingsState(Game* game, sf::Sprite* background)
         {
             background->setTexture(*backgroundTexture);
             background->setPosition(0.0f, 0.0f);
-            ScaleManager::getInstance().scaleSprite(*background);
+            ScaleManager::getInstance().scaleSpriteToFill(*background);  // Растягиваем фон на всё окно
         }
 
         else
         {
             Logger::getInstance().log("Failed to reload background texture!");
         }
+    }
+
+    else
+    {
+        ScaleManager::getInstance().scaleSpriteToFill(*background);  // Если фон уже загружен, всё равно растягиваем
     }
 
     initializeMenu();
@@ -58,8 +56,8 @@ void SettingsState::initializeMenu()
 {
     menuItems.resize(static_cast<size_t>(MenuOption::COUNT));
 
-    std::string controlsText = "Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows");
-    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString(controlsText);
+    menuItems[static_cast<size_t>(MenuOption::FULLSCREEN)].setString("Fullscreen: " + std::string(GameConfig::getInstance().isFullscreen() ? "ON" : "OFF"));
+    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString("Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows"));
     menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound");
     menuItems[static_cast<size_t>(MenuOption::BACK)].setString("Back");
 
@@ -90,7 +88,6 @@ void SettingsState::updateMenuPositions()
         {
             item.setCharacterSize(80);
         }
-
         else
         {
             item.setCharacterSize(40);
@@ -124,27 +121,27 @@ void SettingsState::processEvents(sf::Event& event)
         {
             switch (selectedOption)
             {
+                case MenuOption::FULLSCREEN:
+                    game->toggleFullscreen();
+                    menuItems[static_cast<size_t>(MenuOption::FULLSCREEN)].setString("Fullscreen: " + std::string(GameConfig::getInstance().isFullscreen() ? "ON" : "OFF"));
+                    updateMenuPositions();
+                    break;
                 case MenuOption::CONTROLS:
                 {
                     if (GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD)
                     {
                         GameConfig::getInstance().setControlScheme(GameConfig::ControlScheme::ARROWS);
                     }
-
                     else
                     {
                         GameConfig::getInstance().setControlScheme(GameConfig::ControlScheme::WASD);
                     }
-
-                    std::string controlsText = "Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows");
-                    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString(controlsText);
+                    menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString("Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows"));
                     break;
                 }
-
                 case MenuOption::SOUND:
                     Logger::getInstance().log("Sound settings not implemented yet");
                     break;
-
                 case MenuOption::BACK:
                     game->setState(new MainMenuState(game, background));
                     break;
@@ -161,7 +158,6 @@ void SettingsState::update(float deltaTime)
         {
             menuItems[i].setFillColor(sf::Color::Yellow);
         }
-
         else
         {
             menuItems[i].setFillColor(sf::Color::White);
@@ -178,7 +174,6 @@ void SettingsState::render(Renderer& renderer)
     {
         renderer.render(*background);
     }
-
     else
     {
         Logger::getInstance().log("Background texture is missing in SettingsState!");

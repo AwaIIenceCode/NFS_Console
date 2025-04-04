@@ -27,6 +27,7 @@ public:
     void update(float deltaTime) override;
     void render(Renderer& renderer) override;
     void resetAcceleration() override;
+    void updatePositions();
 
 private:
     sf::Sprite* background;

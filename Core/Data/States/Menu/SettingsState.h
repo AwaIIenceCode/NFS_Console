@@ -22,6 +22,7 @@ public:
 private:
     enum class MenuOption
     {
+        FULLSCREEN,
         CONTROLS,
         SOUND,
         BACK,
@@ -38,6 +39,5 @@ private:
     void initializeMenu();
     void updateMenuPositions();
 };
-
 
 #endif //SETTINGSSTATE_H
