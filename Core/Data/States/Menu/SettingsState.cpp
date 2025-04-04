@@ -29,19 +29,21 @@ SettingsState::SettingsState(Game* game, sf::Sprite* background)
         {
             background->setTexture(*backgroundTexture);
             background->setPosition(0.0f, 0.0f);
-            ScaleManager::getInstance().scaleSpriteToFill(*background);  // Растягиваем фон на всё окно
+            ScaleManager::getInstance().scaleSpriteToFill(*background);
         }
-
         else
         {
             Logger::getInstance().log("Failed to reload background texture!");
         }
     }
-
     else
     {
-        ScaleManager::getInstance().scaleSpriteToFill(*background);  // Если фон уже загружен, всё равно растягиваем
+        ScaleManager::getInstance().scaleSpriteToFill(*background);
     }
+
+    // Синхронизируем громкость из GameConfig с MusicManager
+    float volume = GameConfig::getInstance().getMusicVolume();
+    MusicManager::getInstance().setVolume(volume);
 
     initializeMenu();
     MusicManager::getInstance().playMenuMusic();
@@ -58,7 +60,7 @@ void SettingsState::initializeMenu()
 
     menuItems[static_cast<size_t>(MenuOption::FULLSCREEN)].setString("Fullscreen: " + std::string(GameConfig::getInstance().isFullscreen() ? "ON" : "OFF"));
     menuItems[static_cast<size_t>(MenuOption::CONTROLS)].setString("Controls: " + std::string(GameConfig::getInstance().getControlScheme() == GameConfig::ControlScheme::WASD ? "WASD" : "Arrows"));
-    menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound");
+    menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound: " + std::to_string(static_cast<int>(GameConfig::getInstance().getMusicVolume())));
     menuItems[static_cast<size_t>(MenuOption::BACK)].setString("Back");
 
     for (auto& item : menuItems)
@@ -140,11 +142,37 @@ void SettingsState::processEvents(sf::Event& event)
                     break;
                 }
                 case MenuOption::SOUND:
-                    Logger::getInstance().log("Sound settings not implemented yet");
                     break;
                 case MenuOption::BACK:
                     game->setState(new MainMenuState(game, background));
                     break;
+            }
+        }
+
+        if (selectedOption == MenuOption::SOUND)
+        {
+            float volume = GameConfig::getInstance().getMusicVolume();
+            if (event.key.code == sf::Keyboard::Left)
+            {
+                volume -= 10.0f;
+                if (volume >= 0.0f)  // Проверяем, чтобы не уйти в отрицательные значения
+                {
+                    GameConfig::getInstance().setMusicVolume(volume);
+                    MusicManager::getInstance().setVolume(volume);
+                    menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound: " + std::to_string(static_cast<int>(volume)));
+                    selectSound.play();
+                }
+            }
+            if (event.key.code == sf::Keyboard::Right)
+            {
+                volume += 10.0f;
+                if (volume <= 100.0f)
+                {
+                    GameConfig::getInstance().setMusicVolume(volume);
+                    MusicManager::getInstance().setVolume(volume);
+                    menuItems[static_cast<size_t>(MenuOption::SOUND)].setString("Sound: " + std::to_string(static_cast<int>(volume)));
+                    selectSound.play();
+                }
             }
         }
     }

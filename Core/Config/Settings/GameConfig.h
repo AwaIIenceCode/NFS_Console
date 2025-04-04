@@ -1,9 +1,9 @@
-//
 // Created by AwallencePC on 19.03.2025.
-//
 
 #ifndef GAMECONFIG_H
 #define GAMECONFIG_H
+
+#include <algorithm>
 
 class GameConfig
 {
@@ -26,8 +26,8 @@ public:
     int getOriginalWindowHeight() const { return originalWindowHeight; }
     int getMaxFPS() const { return maxFPS; }
     bool isFullscreen() const { return fullscreen; }
-    ControlScheme getControlScheme() const { return controlScheme; } // Геттер для схемы управления
-    void setControlScheme(ControlScheme scheme) { controlScheme = scheme; } // Сеттер для схемы управления
+    ControlScheme getControlScheme() const { return controlScheme; }
+    void setControlScheme(ControlScheme scheme) { controlScheme = scheme; }
 
     void setWindowSize(int width, int height)
     {
@@ -45,11 +45,19 @@ public:
         }
     }
 
+    float getMusicVolume() const { return musicVolume; }
+
+    void setMusicVolume(float volume)
+    {
+        musicVolume = std::max(0.0f, std::min(100.0f, volume));
+    }
+
 private:
     GameConfig()
         : originalWindowWidth(800), originalWindowHeight(600),
           windowWidth(800), windowHeight(600),
-          maxFPS(60), fullscreen(false), controlScheme(ControlScheme::WASD) {}
+          maxFPS(60), fullscreen(false), controlScheme(ControlScheme::WASD),
+          musicVolume(50.0f) {}
     GameConfig(const GameConfig&) = delete;
     GameConfig& operator=(const GameConfig&) = delete;
 
@@ -60,6 +68,7 @@ private:
     int maxFPS;
     bool fullscreen;
     ControlScheme controlScheme;
+    float musicVolume;
 };
 
 #endif
