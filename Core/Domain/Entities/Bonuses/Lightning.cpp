@@ -42,7 +42,7 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
 
     float textureWidth = texture->getSize().x * sprite.getScale().x;
     float sidewalkWidth = 100.0f;
-    float spawnMargin = 60.0f;
+    float spawnMargin = 200.0f;
     float adjustedRoadLeft = roadLeft + sidewalkWidth + spawnMargin;
     float adjustedRoadRight = roadRight - sidewalkWidth - spawnMargin - textureWidth;
     float spawnRange = adjustedRoadRight - adjustedRoadLeft;
