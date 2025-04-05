@@ -75,7 +75,7 @@ sf::Vector2f Lightning::getPosition() const
 
 void Lightning::update(float deltaTime, float roadSpeed, float speedMultiplier)
 {
-    float adjustedSpeed = roadSpeed / speedMultiplier;
+    float adjustedSpeed = roadSpeed + (roadSpeed * (speedMultiplier - 1.0f));
     sprite.move(0.0f, adjustedSpeed * deltaTime);
 }
 

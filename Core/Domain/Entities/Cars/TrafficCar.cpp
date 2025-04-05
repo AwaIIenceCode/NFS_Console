@@ -8,7 +8,6 @@
 
 TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roadRight)
     : Car(texturePath), scaleFactor(0.2f) {
-
     trafficSpeed = 300.0f + static_cast<float>(rand() % 451);
     Logger::getInstance().log("TrafficCar spawned with speed: " + std::to_string(trafficSpeed));
 
@@ -17,7 +16,7 @@ TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roa
 
     float sidewalkWidth = 100.0f;
     float carWidth = sprite.getGlobalBounds().width;
-    float spawnMargin = 60.0f;
+    float spawnMargin = 120.0f;
     float adjustedRoadLeft = roadLeft + sidewalkWidth + spawnMargin + (carWidth / 2.0f);
     float adjustedRoadRight = roadRight - sidewalkWidth - spawnMargin - (carWidth / 2.0f);
     float spawnRange = adjustedRoadRight - adjustedRoadLeft;
@@ -30,9 +29,10 @@ TrafficCar::TrafficCar(const std::string& texturePath, float roadLeft, float roa
     Logger::getInstance().log("TrafficCar spawned at x: " + std::to_string(xPos));
 }
 
-void TrafficCar::update(float deltaTime, float roadSpeed)
+void TrafficCar::update(float deltaTime, float roadSpeed, float speedMultiplier)
 {
-    sprite.move(0.0f, trafficSpeed * deltaTime);
+    float adjustedTrafficSpeed = trafficSpeed / speedMultiplier;  // Корректируем скорость трафика
+    sprite.move(0.0f, adjustedTrafficSpeed * deltaTime);
 }
 
 void TrafficCar::render(Renderer& renderer) const

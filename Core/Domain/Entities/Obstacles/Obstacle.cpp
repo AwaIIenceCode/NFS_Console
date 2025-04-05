@@ -50,8 +50,8 @@ Obstacle::Obstacle(const std::string& texturePath, float roadLeft, float roadRig
 
 void Obstacle::update(float deltaTime, float roadSpeed, float speedMultiplier)
 {
-    speed = roadSpeed / speedMultiplier;
-    sprite.move(0.0f, speed * deltaTime);
+    float adjustedSpeed = roadSpeed + (roadSpeed * (speedMultiplier - 1.0f));
+    sprite.move(0.0f, adjustedSpeed * deltaTime);
 }
 
 void Obstacle::render(Renderer& renderer) const

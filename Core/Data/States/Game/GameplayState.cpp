@@ -268,7 +268,13 @@ void GameplayState::update(float deltaTime)
         playerCar->updatePosition(deltaTime, roadLeft, roadRight);
 
         float speedMultiplier = roadManager.getSpeedMultiplier();
-        passedDistance += (currentSpeed * deltaTime) / speedMultiplier;
+        float distanceDelta = (currentSpeed * deltaTime) / speedMultiplier;
+        if (GameConfig::getInstance().isFullscreen())
+        {
+            float scaleFactor = static_cast<float>(GameConfig::getInstance().getWindowHeight()) / GameConfig::getInstance().getOriginalWindowHeight();
+            distanceDelta *= scaleFactor;
+        }
+        passedDistance += distanceDelta;
 
         timerManager.update(deltaTime, passedDistance, pauseMenuManager.isPaused());
         timerManager.updateSpeedometer(currentSpeed);
