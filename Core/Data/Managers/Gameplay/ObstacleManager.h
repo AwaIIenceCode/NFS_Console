@@ -11,12 +11,14 @@
 #include "../Interfaces/SpeedController.h"
 #include "../../../Domain/Rendering/Renderer.h"
 
+class PlayerCar;
+
 class ObstacleManager
 {
 public:
     ObstacleManager(float roadWidth, SpeedController* speedController);
     void initialize();
-    void update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused);
+    void update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused);
     void checkCollisions(PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed);
     void render(Renderer& renderer);
 

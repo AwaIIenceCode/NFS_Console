@@ -13,7 +13,7 @@ class Obstacle : public SpawnableEntity
 {
 public:
     Obstacle(const std::string& texturePath, float roadLeft, float roadRight);
-    void update(float deltaTime, float roadSpeed) override;
+    void update(float deltaTime, float roadSpeed, float speedMultiplier) override;
     void render(Renderer& renderer) const override;
     sf::FloatRect getBounds() const override;
     bool isOffScreen() const override;

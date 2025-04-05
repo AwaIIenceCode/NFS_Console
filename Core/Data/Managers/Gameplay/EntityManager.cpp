@@ -3,6 +3,7 @@
 
 #include "EntityManager.h"
 #include <Core/Config/Settings/GameConfig.h>
+#include "../../../Domain/Entities/Cars/PlayerCar.h"
 
 EntityManager::EntityManager(float roadWidth, float spawnInterval, SpawnFunction spawnFunc, CollisionHandler collisionHandler, SpeedController* speedController)
     : roadWidth(roadWidth), spawnInterval(spawnInterval), spawnFunction(spawnFunc), collisionHandler(collisionHandler), speedController(speedController) {}
@@ -12,13 +13,13 @@ void EntityManager::initialize()
     Logger::getInstance().log("EntityManager initialized with spawn interval: " + std::to_string(spawnInterval));
 }
 
-void EntityManager::update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused)
+void EntityManager::update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused)
 {
     if (!isCountingDown && !isPaused)
     {
         for (auto it = entities.begin(); it != entities.end();)
         {
-            (*it)->update(deltaTime, currentSpeed);
+            (*it)->update(deltaTime, currentSpeed, speedMultiplier);  // Передаём speedMultiplier
 
             if ((*it)->isOffScreen())
             {

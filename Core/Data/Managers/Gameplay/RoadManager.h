@@ -1,7 +1,6 @@
 //
 // Created by AwallencePC on 26.03.2025.
 //
-
 #ifndef NFS_CONSOLE_ROADMANAGER_H
 #define NFS_CONSOLE_ROADMANAGER_H
 
@@ -18,6 +17,7 @@ public:
 
     float getRoadWidth() const { return roadWidth; }
     float getRoadHeight() const { return roadHeight; }
+    float getSpeedMultiplier() const;
 
 private:
     sf::Sprite road1, road2;

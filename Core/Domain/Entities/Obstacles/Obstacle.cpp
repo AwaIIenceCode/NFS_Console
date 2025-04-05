@@ -33,23 +33,24 @@ Obstacle::Obstacle(const std::string& texturePath, float roadLeft, float roadRig
 
     float desiredWidth = 50.0f;
     float desiredHeight = 50.0f;
-    float scaleX = desiredWidth / textureWidth;
-    float scaleY = desiredHeight / textureHeight;
+    float scaleMultiplier = GameConfig::getInstance().isFullscreen() ? 1.5f : 1.0f;  // Увеличиваем размер в полноэкранном режиме
+    float scaleX = (desiredWidth / textureWidth) * scaleMultiplier;
+    float scaleY = (desiredHeight / textureHeight) * scaleMultiplier;
     sprite.setScale(scaleX, scaleY);
 
-    float spawnMargin = 100.0f;
-    float adjustedRoadLeft = roadLeft + spawnMargin + (desiredWidth / 2.0f);
-    float adjustedRoadRight = roadRight - spawnMargin - (desiredWidth / 2.0f);
+    float spawnMargin = 160.0f;
+    float adjustedRoadLeft = roadLeft + spawnMargin + (desiredWidth * scaleMultiplier / 2.0f);
+    float adjustedRoadRight = roadRight - spawnMargin - (desiredWidth * scaleMultiplier / 2.0f);
     float spawnRange = adjustedRoadRight - adjustedRoadLeft;
     if (spawnRange < 0) spawnRange = 0;
     float xPos = adjustedRoadLeft + static_cast<float>(rand() % static_cast<int>(spawnRange));
 
-    sprite.setPosition(xPos, -desiredHeight);
+    sprite.setPosition(xPos, -desiredHeight * scaleMultiplier);
 }
 
-void Obstacle::update(float deltaTime, float roadSpeed)
+void Obstacle::update(float deltaTime, float roadSpeed, float speedMultiplier)
 {
-    speed = roadSpeed;
+    speed = roadSpeed / speedMultiplier;
     sprite.move(0.0f, speed * deltaTime);
 }
 

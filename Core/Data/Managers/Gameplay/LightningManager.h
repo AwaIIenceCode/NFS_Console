@@ -6,19 +6,20 @@
 #define LIGHTNINGMANAGER_H
 
 #include <SFML/Graphics.hpp>
-
 #include "SpeedEffectManager.h"
 #include "../../../Config/Settings/GameConfig.h"
 #include "../../../Config/Utils/Logger.h"
 #include "../../../Domain/Entities/Bonuses/Lightning.h"
 #include "../../../Domain/Entities/Cars/PlayerCar.h"
 
+class PlayerCar;
+
 class LightningManager
 {
 public:
     LightningManager(float roadWidth);
     void initialize();
-    void update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused);
+    void update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused);
     void checkCollisions(PlayerCar& playerCar, SpeedEffectManager& boostManager, float& currentSpeed);
     void render(Renderer& renderer);
 

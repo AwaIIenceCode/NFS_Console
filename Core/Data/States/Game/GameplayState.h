@@ -4,19 +4,22 @@
 #include "../../../Data/Managers/Utility/SaveManager.h"
 #include "../GameState.h"
 #include "../../../Application/GameMode.h"
-#include "../../../Domain/Entities/Cars/PlayerCar.h"
 #include "../../../Domain/Entities/Cars/TrafficCar.h"
 #include "../../Managers/Gameplay/RoadManager.h"
 #include "../../Managers/Utility/Timer.h"
 #include "../../Managers/Utility/TimerManager.h"
 #include "../../Managers/UI/HUD.h"
 #include "../../Managers/UI/PauseMenuManager.h"
-#include "../../Managers/../Managers/Gameplay/EntityManager.h"
+#include "../../Managers/Gameplay/EntityManager.h"
 #include "../../Managers/Gameplay/SpeedEffectManager.h"
 #include "../../Managers/Gameplay/SpeedManager.h"
 #include "../../../../Core/Data/Managers/Audio/AudioManager.h"
 #include "../../../Data/Managers/Interfaces/SpeedController.h"
 #include "Core/Data/States/Game/GameOverState.h"
+
+// Убираем #include "../../../Domain/Entities/Cars/PlayerCar.h"
+// Добавляем предварительное объявление
+class PlayerCar;
 
 class GameplayState : public GameState, public SpeedController
 {
@@ -31,7 +34,7 @@ public:
 
 private:
     sf::Sprite* background;
-    PlayerCar playerCar;
+    std::unique_ptr<PlayerCar> playerCar;  // Используем умный указатель
     GameMode gameMode;
     RoadManager roadManager;
     Timer timer;

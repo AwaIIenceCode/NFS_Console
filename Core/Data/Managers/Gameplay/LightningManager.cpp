@@ -2,23 +2,24 @@
 // Created by AwallencePC on 26.03.2025.
 //
 
+#include "../../../Domain/Entities/Cars/PlayerCar.h"
 #include "LightningManager.h"
 
 LightningManager::LightningManager(float roadWidth)
-    : roadWidth(roadWidth), lightningSpawnInterval(10.0f) {} // Увеличиваем с 5.0f до 10.0f
+    : roadWidth(roadWidth), lightningSpawnInterval(10.0f) {}
 
 void LightningManager::initialize()
 {
     Logger::getInstance().log("LightningManager initialized with spawn interval: " + std::to_string(lightningSpawnInterval));
 }
 
-void LightningManager::update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused)
+void LightningManager::update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused)
 {
     if (!isCountingDown && !isPaused)
     {
         for (auto it = lightnings.begin(); it != lightnings.end();)
         {
-            it->update(deltaTime, currentSpeed);
+            it->update(deltaTime, currentSpeed, speedMultiplier);
 
             if (it->isOffScreen())
             {

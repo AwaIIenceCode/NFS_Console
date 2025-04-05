@@ -1,6 +1,7 @@
 // Created by AwallencePC on 26.03.2025.
 //
 
+#include "../../../Domain/Entities/Cars/PlayerCar.h"  // Подключаем первым
 #include "ObstacleManager.h"
 
 ObstacleManager::ObstacleManager(float roadWidth, SpeedController* speedController)
@@ -11,13 +12,13 @@ void ObstacleManager::initialize()
     Logger::getInstance().log("ObstacleManager initialized with spawn interval: " + std::to_string(obstacleSpawnInterval));
 }
 
-void ObstacleManager::update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused)
+void ObstacleManager::update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused)
 {
     if (!isCountingDown && !isPaused)
     {
         for (auto it = obstacles.begin(); it != obstacles.end();)
         {
-            it->update(deltaTime, currentSpeed);
+            it->update(deltaTime, currentSpeed, speedMultiplier);
             if (it->isOffScreen())
             {
                 Logger::getInstance().log("Obstacle position before removal: (" +

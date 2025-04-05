@@ -5,9 +5,12 @@
 #include "Core/Config/Utils/Logger.h"
 #include "Core/Data/Managers/Audio/MusicManager.h"
 #include <fstream>
+#include "../../../Domain/Entities/Cars/PlayerCar.h"
+#include <memory>  // Для std::make_unique
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
-    : GameState(game, false), background(background), playerCar("Assets/Textures/PurpleCar_1.png"),
+    : GameState(game, false), background(background),
+      playerCar(std::make_unique<PlayerCar>("Assets/Textures/PurpleCar_1.png")),  // Инициализация через std::make_unique
       gameMode(mode), timer(), timerManager(25000.0f), hud(25000.0f),
       speedEffectManager(20.0f), speedManager(50.0f, 600.0f, 16.0f),
       audioManager(AudioManager::getInstance()),
@@ -110,7 +113,11 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float initialY = windowHeight * 0.75f;
-    playerCar.setPosition(windowWidth / 2.0f, initialY);
+    float offset = playerCar->getBounds().height * 0.75f;  // Изменяем . на ->
+    if (GameConfig::getInstance().isFullscreen()) {
+        offset *= 1.5f;  // Увеличиваем смещение в полноэкранном режиме
+    }
+    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);  // Изменяем . на ->
 
     roadManager.initialize();
     timerManager.initialize();
@@ -257,38 +264,39 @@ void GameplayState::update(float deltaTime)
         float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
         float roadLeft = (windowWidth - roadManager.getRoadWidth()) / 2.0f;
         float roadRight = roadLeft + roadManager.getRoadWidth();
-        playerCar.update(deltaTime, roadLeft, roadRight);
+        playerCar->updatePosition(deltaTime, roadLeft, roadRight);
 
-        passedDistance += currentSpeed * deltaTime;
+        float speedMultiplier = roadManager.getSpeedMultiplier();
+        passedDistance += (currentSpeed * deltaTime) / speedMultiplier;
 
         timerManager.update(deltaTime, passedDistance, pauseMenuManager.isPaused());
         timerManager.updateSpeedometer(currentSpeed);
         hud.updateTimer(timer.getElapsedTime());
         hud.updateProgress(passedDistance);
 
-        sf::FloatRect playerBounds = playerCar.getBounds();
+        sf::FloatRect playerBounds = playerCar->getBounds();  // Изменяем . на ->
         Logger::getInstance().log("Player bounds before obstacle collision: (left: " + std::to_string(playerBounds.left) +
                                  ", top: " + std::to_string(playerBounds.top) +
                                  ", width: " + std::to_string(playerBounds.width) +
                                  ", height: " + std::to_string(playerBounds.height) + ")");
 
-        obstacleManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
-        obstacleManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
+        obstacleManager.update(deltaTime, currentSpeed, speedMultiplier, timerManager.isCountingDown(), pauseMenuManager.isPaused());
+        obstacleManager.checkCollisions(*playerCar, speedEffectManager, currentSpeed);  // Разыменовываем указатель
 
         Logger::getInstance().log("Player bounds before lightning collision: (left: " + std::to_string(playerBounds.left) +
                                  ", top: " + std::to_string(playerBounds.top) +
                                  ", width: " + std::to_string(playerBounds.width) +
                                  ", height: " + std::to_string(playerBounds.height) + ")");
 
-        lightningManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
-        lightningManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
+        lightningManager.update(deltaTime, currentSpeed, speedMultiplier, timerManager.isCountingDown(), pauseMenuManager.isPaused());
+        lightningManager.checkCollisions(*playerCar, speedEffectManager, currentSpeed);  // Разыменовываем указатель
 
         trafficSpawnDelayTimer += deltaTime;
 
         if (trafficSpawnDelayTimer >= 7.0f)
         {
-            trafficManager.update(deltaTime, currentSpeed, timerManager.isCountingDown(), pauseMenuManager.isPaused());
-            trafficManager.checkCollisions(playerCar, speedEffectManager, currentSpeed);
+            trafficManager.update(deltaTime, currentSpeed, speedMultiplier, timerManager.isCountingDown(), pauseMenuManager.isPaused());
+            trafficManager.checkCollisions(*playerCar, speedEffectManager, currentSpeed);  // Разыменовываем указатель
         }
 
         speedEffectManager.update(deltaTime, currentSpeed, 420.0f);
@@ -318,7 +326,7 @@ void GameplayState::render(Renderer& renderer)
     obstacleManager.render(renderer);
     lightningManager.render(renderer);
     trafficManager.render(renderer);
-    playerCar.render(renderer);
+    playerCar->render(renderer);  // Изменяем . на ->
     timerManager.render(renderer);
     hud.render(renderer);
     pauseMenuManager.render(renderer);
@@ -331,12 +339,14 @@ void GameplayState::updatePositions()
     float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
 
     float initialY = windowHeight * 0.75f;
-    playerCar.setPosition(windowWidth / 2.0f, initialY);
+    float offset = playerCar->getBounds().height * 0.75f;  // Изменяем . на ->
+    if (GameConfig::getInstance().isFullscreen()) {
+        offset *= 1.5f;
+    }
+    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);  // Изменяем . на ->
 
     hud.initialize();
-
     roadManager.initialize();
-
     pauseMenuManager.initialize();
 }
 

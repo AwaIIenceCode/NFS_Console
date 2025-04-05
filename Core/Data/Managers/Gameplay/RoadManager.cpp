@@ -8,9 +8,13 @@
 
 RoadManager::RoadManager() : roadWidth(0.0f), roadHeight(0.0f) {}
 
+float RoadManager::getSpeedMultiplier() const
+{
+    return GameConfig::getInstance().isFullscreen() ? 1.5f : 1.0f;
+}
+
 void RoadManager::initialize()
 {
-
     if (!roadTexture.loadFromFile("J:/MyIDE/NFS_Console/Assets/Textures/TimeTrialRoad.png"))
     {
         Logger::getInstance().log("Failed to load road texture");
@@ -44,7 +48,8 @@ void RoadManager::update(float deltaTime, float currentSpeed, bool isCountingDow
 {
     if (!isCountingDown && !isPaused)
     {
-        float moveDistance = currentSpeed * deltaTime;
+        float speedMultiplier = getSpeedMultiplier();
+        float moveDistance = currentSpeed * speedMultiplier * deltaTime;
         road1.move(0.0f, moveDistance);
         road2.move(0.0f, moveDistance);
 

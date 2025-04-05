@@ -36,11 +36,16 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
     }
 
     sprite.setTexture(*texture);
-    sprite.setScale(0.07f, 0.07f);
+    float baseScale = 0.07f;
+    float scaleMultiplier = GameConfig::getInstance().isFullscreen() ? 1.5f : 1.0f;
+    sprite.setScale(baseScale * scaleMultiplier, baseScale * scaleMultiplier);
 
     float textureWidth = texture->getSize().x * sprite.getScale().x;
     float sidewalkWidth = 100.0f;
-    float spawnRange = (roadRight - sidewalkWidth) - (roadLeft + sidewalkWidth) - textureWidth;
+    float spawnMargin = 60.0f;
+    float adjustedRoadLeft = roadLeft + sidewalkWidth + spawnMargin;
+    float adjustedRoadRight = roadRight - sidewalkWidth - spawnMargin - textureWidth;
+    float spawnRange = adjustedRoadRight - adjustedRoadLeft;
 
     if (spawnRange < 0)
     {
@@ -48,11 +53,11 @@ Lightning::Lightning(const std::string& texturePath, float roadLeft, float roadR
         spawnRange = 0;
     }
 
-    float xPos = (roadLeft + sidewalkWidth) + static_cast<float>(rand()) / RAND_MAX * spawnRange;
+    float xPos = adjustedRoadLeft + static_cast<float>(rand()) / RAND_MAX * spawnRange;
 
     Logger::getInstance().log("Generated xPos: " + std::to_string(xPos) +
-                             ", range: [" + std::to_string(roadLeft + sidewalkWidth) + ", " +
-                             std::to_string(roadRight - sidewalkWidth - textureWidth) + "]");
+                             ", range: [" + std::to_string(adjustedRoadLeft) + ", " +
+                             std::to_string(adjustedRoadRight) + "]");
 
     sprite.setPosition(xPos, 0.0f);
 
@@ -68,9 +73,10 @@ sf::Vector2f Lightning::getPosition() const
     return sprite.getPosition();
 }
 
-void Lightning::update(float deltaTime, float roadSpeed)
+void Lightning::update(float deltaTime, float roadSpeed, float speedMultiplier)
 {
-    sprite.move(0.0f, roadSpeed * deltaTime);
+    float adjustedSpeed = roadSpeed / speedMultiplier;
+    sprite.move(0.0f, adjustedSpeed * deltaTime);
 }
 
 bool Lightning::isOffScreen() const

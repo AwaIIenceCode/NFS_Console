@@ -11,7 +11,7 @@ class SpawnableEntity
 {
 public:
     virtual ~SpawnableEntity() = default;
-    virtual void update(float deltaTime, float roadSpeed) = 0;
+    virtual void update(float deltaTime, float roadSpeed, float speedMultiplier) = 0;
     virtual void render(Renderer& renderer) const = 0;
     virtual sf::FloatRect getBounds() const = 0;
     virtual bool isOffScreen() const = 0;

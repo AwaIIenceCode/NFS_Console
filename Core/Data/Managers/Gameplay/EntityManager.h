@@ -12,6 +12,8 @@
 #include "../Gameplay/SpeedEffectManager.h"
 #include <memory>
 
+class PlayerCar;
+
 class EntityManager
 {
 public:
@@ -20,7 +22,7 @@ public:
 
     EntityManager(float roadWidth, float spawnInterval, SpawnFunction spawnFunc, CollisionHandler collisionHandler, SpeedController* speedController);
     void initialize();
-    void update(float deltaTime, float currentSpeed, bool isCountingDown, bool isPaused);
+    void update(float deltaTime, float currentSpeed, float speedMultiplier, bool isCountingDown, bool isPaused);
     void checkCollisions(PlayerCar& playerCar, SpeedEffectManager& speedEffectManager, float& currentSpeed);
     void render(Renderer& renderer);
 
