@@ -6,7 +6,7 @@
 #include "Core/Data/Managers/Audio/MusicManager.h"
 #include <fstream>
 #include "../../../Domain/Entities/Cars/PlayerCar.h"
-#include <memory>  // Для std::make_unique
+#include <memory>
 
 GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     : GameState(game, false), background(background),
@@ -113,11 +113,12 @@ GameplayState::GameplayState(Game* game, sf::Sprite* background, GameMode mode)
     float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
     float windowWidth = static_cast<float>(GameConfig::getInstance().getWindowWidth());
     float initialY = windowHeight * 0.75f;
-    float offset = playerCar->getBounds().height * 0.75f;  // Изменяем . на ->
+    float offset = playerCar->getBounds().height * 0.75f;
     if (GameConfig::getInstance().isFullscreen()) {
-        offset *= 1.5f;  // Увеличиваем смещение в полноэкранном режиме
+        offset *= 1.5f;
+        initialY -= 100.0f;
     }
-    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);  // Изменяем . на ->
+    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);
 
     roadManager.initialize();
     timerManager.initialize();
@@ -326,7 +327,7 @@ void GameplayState::render(Renderer& renderer)
     obstacleManager.render(renderer);
     lightningManager.render(renderer);
     trafficManager.render(renderer);
-    playerCar->render(renderer);  // Изменяем . на ->
+    playerCar->render(renderer);
     timerManager.render(renderer);
     hud.render(renderer);
     pauseMenuManager.render(renderer);
@@ -339,11 +340,12 @@ void GameplayState::updatePositions()
     float windowHeight = static_cast<float>(GameConfig::getInstance().getWindowHeight());
 
     float initialY = windowHeight * 0.75f;
-    float offset = playerCar->getBounds().height * 0.75f;  // Изменяем . на ->
+    float offset = playerCar->getBounds().height * 0.75f;
     if (GameConfig::getInstance().isFullscreen()) {
         offset *= 1.5f;
+        initialY -= 100.0f;
     }
-    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);  // Изменяем . на ->
+    playerCar->setPosition(windowWidth / 2.0f, initialY + offset);
 
     hud.initialize();
     roadManager.initialize();
